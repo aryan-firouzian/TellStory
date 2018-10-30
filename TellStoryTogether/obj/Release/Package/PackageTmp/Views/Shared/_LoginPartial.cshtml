@@ -1,0 +1,37 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Create", new { identifier = "new" })">
+            Create
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Home")">
+            Favourites
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Home")">
+            My Scripts
+        </a>
+    </li>
+    <li class="nav-item">
+        @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link", title = "Manage" })
+    </li>
+    <li class="nav-item">
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link", @style = "padding: 0" }))
+        {
+        @Html.AntiForgeryToken()
+    <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log out</a>
+        }
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</a>
+    </li>
+    <li class="nav-item">
+        <a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</a>
+    </li>
+}

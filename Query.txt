@@ -1,0 +1,7 @@
+CREATE TABLE FREECOMMENT(
+    [ID] [int] IDENTITY(1,1) NOT NULL,
+    [AUTHOR] [varchar](32) NOT NULL,
+    [COMMENT] [nvarchar](1024) NOT NULL,
+    [FREEURL] [nvarchar](3224) NOT NULL,
+    PRIMARY KEY (ID)
+)

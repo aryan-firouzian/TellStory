@@ -1,0 +1,40 @@
+Language: LanguageId, Name
+
+genre: GenreId, Name
+
+tags: TagId, Name
+
+article: ArticleId, ArticleInitId, Serial, Parallel, Owner, Text, Points, Seen, Favortie, PictureUrl, Title, Language, Time
+ArticleInitId = -1 for non-starter articles
+
+user: UserId, Reputation, Joined, Username, Name, Profession, Bio, Image
+
+comment: CommentId, Owner, Order, ArticleId, Time
+ArticleId = -1 for wikis
+
+notification: NotificationiId, UserId, IsSeen, Time, ArticleId, CommentId, 
+
+article-tag
+article-vote
+article-genre
+cooment-vote
+user-friend
+article-seen
+article-favorite
+
+
+Role: 
+
+every 1000 reputation you can create a tag.
+
+every article drived from your article give you 5 reputation
+
+every article created by you gives you 10 reputation
+
+every article created by you which is starter gives you 20 reputation
+
+every comment upVote gives you 1 point
+
+every artilce seen  on your article gives 1 point
+
+every article upVote gives you 5 points

@@ -1,0 +1,7 @@
+Setup CDN first and if fails then local
+
+Add description of buttons as a message on top of Read.Index page.
+Create github account
+Modify structure of Read.Index to have button attached to sliders.
+
+Check user authentication in the controllers.

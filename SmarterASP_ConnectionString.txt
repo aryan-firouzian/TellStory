@@ -1,0 +1,4 @@
+<connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=SQL5028.SmarterASP.NET;Initial Catalog=DB_9D807E_aryanfirouzian;User Id=DB_9D807E_aryanfirouzian_admin;Password=Abas161Abas161;" providerName="System.Data.SqlClient" />
+    <add name="EchoDBEntities" connectionString="metadata=res://*/Models.EchoModel.csdl|res://*/Models.EchoModel.ssdl|res://*/Models.EchoModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=SQL5028.SmarterASP.NET;Initial Catalog=DB_9D807E_aryanfirouzian;User Id=DB_9D807E_aryanfirouzian_admin;Password=Abas161Abas161;integrated security=False;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+</connectionStrings>

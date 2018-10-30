@@ -1,0 +1,123 @@
+﻿
+@section featured {
+    <section id="main-section">
+        <div class="ui basic segment" style="height: 420px; margin: 0 !important; margin-bottom: 50px !important; width: auto">
+            <div>
+                <div class="ui active centered loader"></div>
+            </div>
+            <div class="show-label item-hide">
+                <h3 class="ui horizontal divider header">
+                    <a href="" class="title-ellipsis">Basic</a>
+                </h3>
+                <p class="text-ellipsis">Some details about the tag</p>
+            </div>
+            <div id="slider" class="slickcarousel item-hide"></div>
+            <div class="item-hide">
+                <div class="ui justified container segment story-container">
+                    <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                    <h3>
+                        <a href="" id="title" class="title-ellipsis">title</a>
+                    </h3>
+                    <p id="owner" class="title-ellipsis">username</p>
+                    <p id="text" class="text-ellipsis">text</p>
+                    <div class="seen-heart">
+                        <div id="seen" class="ui green label ">
+                            seen
+                            <i class="universal access icon"></i>
+                        </div>
+                        <div id="heart" class="ui green label">
+                            points
+                            <i class="heart icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+
+            var listOfGenre = [];
+
+            function removeFromGenreLoadSliderWithContent(repeatParam) {
+                if (listOfGenre.length > 0) {
+                    repeatParam--;
+                    var paramGenre = listOfGenre[0];
+                    listOfGenre = jQuery.grep(listOfGenre, function(value) {
+                        return value != paramGenre;
+                    });
+                    var $section = $('#main-section');
+                    var $show = $section.children().eq(0).clone();
+                    var $loader = $show.children().eq(0);
+                    var $label = $show.children().eq(1);
+                    var $slider = $show.children().eq(2);
+                    $slider.attr('id', 'slider-' + paramGenre);
+                    var $sliderItem = $show.children().eq(3);
+                    $section.append($show);
+                    $show.removeClass('item-hide');
+                    $loader.removeClass('item-hide');
+                    var loadArticleRequest = new XMLHttpRequest();
+                    loadArticleRequest.onload = function() {
+                        var resultList = $.parseJSON(this.responseText);
+                        $loader.addClass('item-hide');
+                        $label.children().eq(0).html(resultList[0].Genre.Name);
+                        $label.children().eq(1).html(resultList[0].Genre.Detail);
+                        $label.removeClass('item-hide');
+                        $.each(resultList, function(index, value) {
+                            var $newSliderItem = $sliderItem.clone();
+                            $newSliderItem.find('#image').attr('src', value.PictureUrl).attr('id', 'image-' + value.ArticleId);
+                            $newSliderItem.find('#title').attr('id', 'title-' + value.ArticleId).attr('href', '/Read?identifier=' + value.ArticleId).html(value.Title);
+                            $newSliderItem.find('#owner').attr('id', 'owner-' + value.ArticleId).html(value.Owner.UserName);
+                            $newSliderItem.find('#text').attr('id', 'text-' + value.ArticleId).html(value.Text);
+                            $newSliderItem.find('#seen').attr('id', 'seen-' + value.ArticleId).html(value.Seen + ' <i class="universal access icon"></i>');
+                            $newSliderItem.find('#heart').attr('id', 'heart-' + value.ArticleId).html(value.Point + ' <i class="heart icon"></i>');
+                            $newSliderItem.removeClass('item-hide');
+                            $slider.append($newSliderItem);
+                        });
+                        $slider.removeClass('item-hide');
+                        $('#slider-' + paramGenre).slick(({
+                            infinite: true,
+                            slidesToShow: offSet,
+                            slidesToScroll: 1,
+                            arrows: true,
+                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
+                            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+                        }));
+                        if (repeatParam > 0) {
+                            removeFromGenreLoadSliderWithContent(repeatParam);
+                        }
+                    }
+                    loadArticleRequest.open("POST", "/Home/LoadArticles?genre=" + paramGenre);
+                    loadArticleRequest.send();
+                }
+
+            }
+
+
+            var offSet = 3;
+            if ($(window).width() <= 1000) {
+                offSet = 1;
+            }
+
+            var loadGenreRequest = new XMLHttpRequest();
+            loadGenreRequest.onload = function() {
+                listOfGenre = $.parseJSON(this.responseText);
+                $('#main-section').children().eq(0).addClass('item-hide');
+                removeFromGenreLoadSliderWithContent(3);
+            }
+            loadGenreRequest.open("POST", "/Home/LoadGenre");
+            loadGenreRequest.send();
+
+            $(window).scroll(function() {
+                if ($(window).scrollTop() + window.innerHeight == $(document).height()) {
+                    removeFromGenreLoadSliderWithContent(1);
+                }
+            });
+
+        });
+    </script>
+}

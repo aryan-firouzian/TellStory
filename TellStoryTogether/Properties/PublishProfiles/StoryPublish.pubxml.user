@@ -1,0 +1,1094 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA7ROWn6yXpkqC20QBlrbDOQAAAAACAAAAAAAQZgAAAAEAACAAAAAHdFT2iZIgOBAUHZw3r1RFStC1YcAPx+9CzJBzxyvYXQAAAAAOgAAAAAIAACAAAAAXqXc2fUSHURCmLkchFv8cf2jByD3k1jhWNZxgyMUf1CAAAACc0mGYcHz2hzU8cokXM3QOdOodW38s+fnM/pKxRnT3H0AAAADqAiSM2Y+qK2MZsaf8JEMJhcDqDUAp9m6FFUEgepHXLE1VbB2EMnN9MfDtbwp0/KFQ1shQY5tVDkrpuqCZLgks</EncryptedPassword>
+    <_PublishTargetUrl>ftp://FTP.SMARTERASP.NET/Story</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Data/aspnet-TellStoryTogether-20181001202441.mdf">
+      <publishTime>10/06/2018 21:00:25</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>10/01/2018 20:26:41</publishTime>
+    </File>
+    <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:34</publishTime>
+    </File>
+    <File Include="bin/de/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/de/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.AspNet.dll">
+      <publishTime>10/01/2018 20:26:28</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.Core.dll">
+      <publishTime>10/01/2018 20:26:28</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OAuth.Consumer.dll">
+      <publishTime>10/01/2018 20:26:29</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OAuth.dll">
+      <publishTime>10/01/2018 20:26:29</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OpenId.dll">
+      <publishTime>10/01/2018 20:26:30</publishTime>
+    </File>
+    <File Include="bin/DotNetOpenAuth.OpenId.RelyingParty.dll">
+      <publishTime>10/01/2018 20:26:31</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>10/03/2018 00:54:00</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>10/03/2018 00:54:00</publishTime>
+    </File>
+    <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/es/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/es/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/fr/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/fr/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/fr/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/it/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/it/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/ja/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/ja/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/ja/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/ko/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/ko/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/ko/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Data.Edm.dll">
+      <publishTime>10/01/2018 20:26:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Data.OData.dll">
+      <publishTime>10/01/2018 20:26:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>10/01/2018 20:26:20</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Mvc.FixedDisplayModes.dll">
+      <publishTime>10/01/2018 20:26:22</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.WebPages.OAuth.dll">
+      <publishTime>10/01/2018 20:26:27</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>10/01/2018 20:26:20</publishTime>
+    </File>
+    <File Include="bin/ru/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/ru/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/ru/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>10/01/2018 20:26:23</publishTime>
+    </File>
+    <File Include="bin/System.Spatial.dll">
+      <publishTime>10/01/2018 20:26:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>10/01/2018 20:26:21</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>10/01/2018 20:26:24</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.OData.dll">
+      <publishTime>10/01/2018 20:26:40</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>10/01/2018 20:26:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>10/01/2018 20:26:22</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>10/01/2018 20:26:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>10/01/2018 20:26:20</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>10/01/2018 20:26:21</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>10/01/2018 20:26:21</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>10/01/2018 20:26:21</publishTime>
+    </File>
+    <File Include="bin/TellStoryTogether.dll">
+      <publishTime>10/22/2018 01:32:52</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>10/01/2018 20:26:41</publishTime>
+    </File>
+    <File Include="bin/WebMatrix.Data.dll">
+      <publishTime>07/09/2013 11:05:10</publishTime>
+    </File>
+    <File Include="bin/WebMatrix.WebData.dll">
+      <publishTime>10/01/2018 20:26:27</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:32</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/Microsoft.Data.Edm.resources.dll">
+      <publishTime>10/01/2018 20:26:35</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/Microsoft.Data.OData.resources.dll">
+      <publishTime>10/01/2018 20:26:37</publishTime>
+    </File>
+    <File Include="bin/zh-Hant/System.Spatial.resources.dll">
+      <publishTime>10/01/2018 20:26:33</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold It.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold It.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold It.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold It.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Bold.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light It.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light It.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light It.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light It.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Light.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg It.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg It.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg It.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg It.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg.eot">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg.svg">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg.ttf">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/Proxima Nova Reg.woff">
+      <publishTime>12/28/2014 05:19:32</publishTime>
+    </File>
+    <File Include="Content/fonts/proximanova-light-webfont.woff">
+      <publishTime>02/06/2018 01:02:13</publishTime>
+    </File>
+    <File Include="Content/MyScript.js">
+      <publishTime>10/05/2018 00:26:02</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/.versions">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/accordion.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/accordion.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/accordion.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/accordion.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/ad.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/ad.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/api.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/api.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/breadcrumb.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/breadcrumb.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/button.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/button.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/card.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/card.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/checkbox.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/checkbox.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/checkbox.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/checkbox.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/colorize.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/colorize.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/comment.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/comment.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/container.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/container.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dimmer.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dimmer.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dimmer.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dimmer.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/divider.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/divider.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dropdown.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dropdown.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dropdown.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/dropdown.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/embed.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/embed.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/embed.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/embed.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/feed.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/feed.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/flag.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/flag.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/form.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/form.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/form.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/form.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/grid.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/grid.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/header.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/header.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/icon.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/icon.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/image.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/image.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/input.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/input.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/item.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/item.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/label.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/label.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/list.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/list.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/loader.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/loader.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/menu.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/menu.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/message.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/message.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/modal.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/modal.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/modal.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/modal.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/nag.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/nag.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/nag.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/nag.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/popup.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/popup.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/popup.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/popup.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/progress.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/progress.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/progress.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/progress.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rail.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rail.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rating.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rating.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rating.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/rating.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/reset.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/reset.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/reveal.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/reveal.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/search.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/search.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/search.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/search.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/segment.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/segment.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/shape.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/shape.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/shape.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/shape.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sidebar.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sidebar.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sidebar.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sidebar.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/site.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/site.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/site.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/site.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/state.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/state.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/statistic.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/statistic.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/step.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/step.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sticky.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sticky.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sticky.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/sticky.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/tab.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/tab.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/tab.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/tab.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/table.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/table.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/transition.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/transition.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/transition.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/transition.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/video.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/video.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/video.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/video.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/visibility.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/visibility.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/visit.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/components/visit.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/LICENSE">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/npm-debug.log">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/package.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/package.json">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/rating.min.css">
+      <publishTime>02/20/2017 22:13:46</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/rating.min.js">
+      <publishTime>02/20/2017 22:13:46</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/README.md">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/semantic.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/semantic.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/semantic.min.css">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/semantic.min.js">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.eot">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.otf">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.svg">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.ttf">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.woff">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/fonts/icons.woff2">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/themes/default/assets/images/flags.png">
+      <publishTime>10/27/2016 21:17:48</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/transition.min.css">
+      <publishTime>02/07/2017 17:58:55</publishTime>
+    </File>
+    <File Include="Content/Semantic-UI-CSS-master/transition.min.js">
+      <publishTime>02/07/2017 17:58:55</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>10/21/2018 03:53:07</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_222222_256x240.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_454545_256x240.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_888888_256x240.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery-ui.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.accordion.css">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.all.css">
+      <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.autocomplete.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.base.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.button.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.core.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.datepicker.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.dialog.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.progressbar.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.resizable.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.selectable.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.slider.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.tabs.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery.ui.theme.css">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_55_fbf9ee_1x400.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png">
+      <publishTime>10/01/2018 20:26:12</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_222222_256x240.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_454545_256x240.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_888888_256x240.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery-ui.min.css">
+      <publishTime>10/01/2018 20:26:10</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.accordion.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.autocomplete.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.button.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.core.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.datepicker.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.dialog.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.progressbar.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.resizable.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.selectable.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.slider.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.tabs.min.css">
+      <publishTime>10/01/2018 20:26:11</publishTime>
+    </File>
+    <File Include="Content/themes/base/minified/jquery.ui.theme.min.css">
+      <publishTime>10/01/2018 20:26:10</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/accent.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/bullet.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/heroAccent.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/leftArrow.png">
+      <publishTime>10/07/2018 00:11:44</publishTime>
+    </File>
+    <File Include="Images/orderedList0.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList1.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList2.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList3.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList4.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList5.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList6.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList7.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList8.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/orderedList9.png">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Images/StoryImage/89391248-176-k423531.jpg">
+      <publishTime>10/04/2018 17:27:04</publishTime>
+    </File>
+    <File Include="Images/TellStoryTogether.png">
+      <publishTime>10/01/2018 23:25:50</publishTime>
+    </File>
+    <File Include="Images/TellStoryTogether1.png">
+      <publishTime>10/01/2018 23:25:50</publishTime>
+    </File>
+    <File Include="Images/TellStoryTogether2.png">
+      <publishTime>10/02/2018 00:02:14</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/03/2018 00:54:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.8.2.js">
+      <publishTime>10/01/2018 20:25:49</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.8.2.min.js">
+      <publishTime>10/01/2018 20:25:49</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.24.js">
+      <publishTime>10/01/2018 20:26:10</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.8.24.min.js">
+      <publishTime>10/01/2018 20:26:10</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.js">
+      <publishTime>10/01/2018 20:26:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>10/01/2018 20:26:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>10/01/2018 20:25:56</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>10/01/2018 20:25:56</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>10/01/2018 20:26:15</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>10/01/2018 20:26:14</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.2.0.debug.js">
+      <publishTime>10/01/2018 20:26:41</publishTime>
+    </File>
+    <File Include="Scripts/knockout-2.2.0.js">
+      <publishTime>10/01/2018 20:26:41</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>10/01/2018 20:26:19</publishTime>
+    </File>
+    <File Include="Scripts/_references.js">
+      <publishTime>10/01/2018 20:26:19</publishTime>
+    </File>
+    <File Include="Views/Account/ExternalLoginConfirmation.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/ExternalLoginFailure.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/Login.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/Manage.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/Register.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/_ChangePasswordPartial.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/_ExternalLoginsListPartial.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/_RemoveExternalLoginsPartial.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Account/_SetPasswordPartial.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Create/Index.cshtml">
+      <publishTime>10/21/2018 04:31:32</publishTime>
+    </File>
+    <File Include="Views/Home/About.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Home/Contact.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>10/13/2018 22:16:31</publishTime>
+    </File>
+    <File Include="Views/Read/Index.cshtml">
+      <publishTime>10/22/2018 01:32:32</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>10/17/2018 19:36:11</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginPartial.cshtml">
+      <publishTime>10/15/2018 23:46:35</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>10/01/2018 20:24:42</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/22/2018 01:32:58</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

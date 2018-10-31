@@ -162,3 +162,23 @@ z-index:3;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
+
+.divider{margin: 50px !important}
+
+@media (max-width: 500px) {
+    .account {
+        width:95% !important;
+    }
+}
+
+@media (max-width: 900px) and (min-width: 500px) {
+    .account {
+        width:65% !important;
+    }    
+}
+
+@media (min-width: 900px) {
+        .account {
+        width:40% !important;
+    }
+}

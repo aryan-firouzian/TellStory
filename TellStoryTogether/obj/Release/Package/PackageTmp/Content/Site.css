@@ -165,8 +165,13 @@ z-index:3;
 
 .divider{margin: 50px !important}
 
+
 .top-container {
     margin-top: 100px !important;
+}
+
+.show-title {
+    margin-top: 20px !important; 
 }
 
 @media (max-width: 500px) {

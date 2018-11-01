@@ -196,3 +196,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogethe
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.csproj.GenerateResource.Cache
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.dll
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.pdb
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.LanguageMinMaxAddedToArticle.resources

@@ -39,6 +39,8 @@ namespace TellStoryTogether.Controllers
             }
             ViewBag.length = length;
             ViewBag.title = articles.Count == 0 ? "" : articles[0].Title;
+            ViewBag.charMin = articles.Count == 0 ? "300" : articles[0].MinChar.ToString();
+            ViewBag.charMax = articles.Count == 0 ? "2000" : articles[0].MaxChar.ToString();
             ViewBag.articleInitId = articles.Count == 0 ? -1 : articles.Last().ArticleId;
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
             ViewBag.identifier = identifier;

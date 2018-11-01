@@ -158,7 +158,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>10/22/2018 01:32:52</publishTime>
+      <publishTime>11/01/2018 23:42:06</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -761,7 +761,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2017 17:58:55</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/01/2018 13:48:23</publishTime>
+      <publishTime>11/01/2018 19:12:19</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
@@ -801,6 +801,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/themes/base/images/ui-icons_cd0a0a_256x240.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery-ui-1.12.1.css">
+      <publishTime>09/14/2016 18:34:06</publishTime>
+    </File>
+    <File Include="Content/themes/base/jquery-ui-1.12.1.min.css">
+      <publishTime>09/14/2016 18:34:06</publishTime>
     </File>
     <File Include="Content/themes/base/jquery-ui.css">
       <publishTime>10/01/2018 20:26:12</publishTime>
@@ -994,6 +1000,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/jquery-1.8.2.min.js">
       <publishTime>10/01/2018 20:25:49</publishTime>
     </File>
+    <File Include="Scripts/jquery-3.3.1.js">
+      <publishTime>11/01/2018 14:58:39</publishTime>
+    </File>
+    <File Include="Scripts/jquery-3.3.1.min.js">
+      <publishTime>11/01/2018 14:43:05</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.12.1.js">
+      <publishTime>09/14/2016 18:34:06</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.12.1.min.js">
+      <publishTime>09/14/2016 18:34:06</publishTime>
+    </File>
     <File Include="Scripts/jquery-ui-1.8.24.js">
       <publishTime>10/01/2018 20:26:10</publishTime>
     </File>
@@ -1058,7 +1076,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
     <File Include="Views/Create/Index.cshtml">
-      <publishTime>10/31/2018 23:26:46</publishTime>
+      <publishTime>11/01/2018 22:38:16</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>10/31/2018 19:59:11</publishTime>
@@ -1076,7 +1094,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/01/2018 14:13:15</publishTime>
+      <publishTime>11/01/2018 16:03:10</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>11/01/2018 14:12:32</publishTime>

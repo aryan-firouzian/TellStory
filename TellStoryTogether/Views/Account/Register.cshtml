@@ -3,7 +3,7 @@
     ViewBag.Title = "Register";
 }
 
-<div class="ui account container segment">
+<div class="ui account top-container container segment">
 
     <hgroup class="title">
         <h1>@ViewBag.Title.</h1>
@@ -29,7 +29,7 @@
                 @Html.LabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </div>
-            <input type="submit" value="Register" />
+            <input type="submit" class="ui basic button" value="Register" />
         </fieldset>
     }
 

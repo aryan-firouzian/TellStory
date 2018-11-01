@@ -188,6 +188,7 @@
     <Compile Include="Controllers\CreateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReadController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,6 +232,10 @@
     <Compile Include="Migrations\201810061833236_LanguageDSetIsAdded.cs" />
     <Compile Include="Migrations\201810061833236_LanguageDSetIsAdded.Designer.cs">
       <DependentUpon>201810061833236_LanguageDSetIsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811012043476_LanguageMinMaxAddedToArticle.cs" />
+    <Compile Include="Migrations\201811012043476_LanguageMinMaxAddedToArticle.Designer.cs">
+      <DependentUpon>201811012043476_LanguageMinMaxAddedToArticle.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -405,6 +410,8 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui-1.12.1.css" />
+    <Content Include="Content\themes\base\jquery-ui-1.12.1.min.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
@@ -495,11 +502,11 @@
     <Content Include="Images\TellStoryTogether.png" />
     <Content Include="Images\TellStoryTogether1.png" />
     <Content Include="Images\TellStoryTogether2.png" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.8.24.js" />
-    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -554,6 +561,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Create\Index.cshtml" />
+    <None Include="Views\Schedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -591,6 +599,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810061833236_LanguageDSetIsAdded.resx">
       <DependentUpon>201810061833236_LanguageDSetIsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811012043476_LanguageMinMaxAddedToArticle.resx">
+      <DependentUpon>201811012043476_LanguageMinMaxAddedToArticle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

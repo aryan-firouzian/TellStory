@@ -5,7 +5,7 @@
 }
 
 
-<section class="ui account container segment" id="loginForm">
+<section class="ui account top-container container segment" id="loginForm">
     @*<h2>Use a local account to log in.</h2>*@
     @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
     {
@@ -28,7 +28,7 @@
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </div>
-            <input type="submit" value="Log in" />
+            <input type="submit" class="ui basic button" value="Log in" />
         </fieldset>
         <p>
             @Html.ActionLink("Register", "Register") if you don't have an account.

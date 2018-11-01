@@ -40,7 +40,12 @@ namespace TellStoryTogether.Models
         public DateTime Time { get; set; }
 
         public Genre Genre { get; set; }
-        // language and genre
+
+        public Language Language { get; set; }
+
+        public int MinChar { get; set; }
+
+        public int MaxChar { get; set; }
     }
 
 }

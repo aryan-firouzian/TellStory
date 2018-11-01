@@ -47,9 +47,8 @@ namespace TellStoryTogether.Controllers
 
 
         [HttpPost]
-        public ActionResult GetImage(HttpPostedFileBase blob, string title, int articleInitId, string text, int serial)
-        {
-            
+        public ActionResult GetImage(HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
+        {            
             try
             {
                 if (User.Identity.IsAuthenticated)
@@ -74,7 +73,9 @@ namespace TellStoryTogether.Controllers
                         Selected = false,
                         Owner = user,
                         Genre = genre,
-                        Time = DateTime.Now
+                        Time = DateTime.Now,
+                        MinChar = min,
+                        MaxChar = max
                     };
                     _userContext.Articles.Add(newArticle);
                     _userContext.SaveChanges();

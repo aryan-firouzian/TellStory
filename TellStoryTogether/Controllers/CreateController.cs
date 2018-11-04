@@ -49,7 +49,7 @@ namespace TellStoryTogether.Controllers
 
 
         [HttpPost]
-        public ActionResult GetImage(HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
+        public ActionResult GetImage(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
         {            
             try
             {
@@ -82,10 +82,13 @@ namespace TellStoryTogether.Controllers
                     _userContext.Articles.Add(newArticle);
                     _userContext.SaveChanges();
                     blob.SaveAs(Server.MapPath(fullPath));
+                    string newIdentifier = articleInitId == -1
+                        ? newArticle.ArticleId.ToString()
+                        : identifier + "-" + parallel;
                     return Json(new[]
                     {
                         "added",
-                        parallel.ToString()
+                        newIdentifier
                     });
                 }
                 else

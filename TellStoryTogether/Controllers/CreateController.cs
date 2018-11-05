@@ -50,14 +50,14 @@ namespace TellStoryTogether.Controllers
 
         [HttpPost]
         public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
-        {            
+        {
             try
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     Guid guid = Guid.NewGuid();
                     string uniqueString = guid.ToString();
-                    var fullPath = "~/Images/StoryImage/" + uniqueString + ".png";
+                    var fullPath = blob == null ? null : "/Images/StoryImage/" + uniqueString + ".png";
                     int parallel = 1;
                     if (articleInitId != -1)
                     {
@@ -71,7 +71,7 @@ namespace TellStoryTogether.Controllers
                         ArticleInitId = articleInitId,
                         Title = title,
                         Text = text,
-                        PictureUrl = "/Images/StoryImage/" + uniqueString + ".png",
+                        PictureUrl = fullPath,
                         Point = 0,
                         Seen = 0,
                         Serial = serial,
@@ -86,7 +86,7 @@ namespace TellStoryTogether.Controllers
                     };
                     _userContext.Articles.Add(newArticle);
                     _userContext.SaveChanges();
-                    blob.SaveAs(Server.MapPath(fullPath));
+                    if (blob != null) blob.SaveAs(Server.MapPath("~" + fullPath));
                     string newIdentifier = articleInitId == -1
                         ? newArticle.ArticleId.ToString()
                         : identifier + "-" + parallel;

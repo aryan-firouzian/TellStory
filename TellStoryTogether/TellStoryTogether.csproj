@@ -499,6 +499,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\leftArrow.png" />
     <Content Include="Images\StoryImage\89391248-176-k423531.jpg" />
+    <Content Include="Images\StoryImage\testFileName.png" />
     <Content Include="Images\TellStoryTogether.png" />
     <Content Include="Images\TellStoryTogether1.png" />
     <Content Include="Images\TellStoryTogether2.png" />

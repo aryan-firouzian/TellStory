@@ -139,8 +139,14 @@
     <script>
     $(document).ready(function() {
 
+        var minChar = 140;
+        var maxChar = 4000;
+        var isImageAdded = false;
+
         var $message = $('#message-temp').clone();
         $message.removeClass('hidden');
+        $('#min-char').attr('min', minChar);
+        $('#max-char').attr('max', maxChar);
 
         $([document.documentElement, document.body]).animate({
             scrollTop: $("#show-create").offset().top - 60
@@ -149,8 +155,8 @@
         var basic = $('#main-cropper').croppie({
             viewport: { width: 175, height: 275 },
             boundary: { width: 250, height: 350 },
-            showZoomer: false
-            //url: 'Images/StoryImage/testFileName.png'
+            showZoomer: false,
+            url: 'Images/StoryImage/testFileName.png'
 
         });
 
@@ -164,6 +170,7 @@
                     });
                 }
                 reader.readAsDataURL(inputParam.files[0]);
+                isImageAdded = true;
             }
         }
 
@@ -197,12 +204,12 @@
 
         $('#slider-range').slider({
             range: true,
-            min: 140,
-            max: 4000,
+            min: minChar,
+            max: maxChar,
             values: [300, 2000],
             slide: function(event, ui) {
-                $("#min-char").val(ui.values[0]);
-                $("#max-char").val(ui.values[1]);
+                $('#min-char').val(ui.values[0]);
+                $('#max-char').val(ui.values[1]);
             }
         });
 
@@ -232,11 +239,20 @@
                         min = $('#min-char').val();
                         max = $('#max-char').val();
                     }
-                    if (title == null || title.trim() === '') {
+                if (@ViewBag.length === 0 && !isImageAdded) {
+                    error = 'An image should be uploaded as story cover.';
+                    showMessage("Error", error, true);
+                    } else if (title == null || title.trim() === '') {
                         error = 'Title field cannot be empty.';
                         showMessage("Error", error, true);
                     } else if (text == null || text.trim() === '') {
                         error = 'Story field cannot be empty.';
+                        showMessage("Error", error, true);
+                    } else if (text.length <= minChar) {
+                        error = 'Story should have more than ' + minChar + ' characters.';
+                        showMessage("Error", error, true);
+                    } else if (text.length >= maxChar) {
+                        error = 'Story should have less than ' + maxChar + ' characters.';
                         showMessage("Error", error, true);
                     } else if (text.length <= Number(min)) {
                         error = 'Story should have more than ' + min + ' characters.';
@@ -247,16 +263,18 @@
                     } else {
                         var formData = new FormData();
                         formData.append('identifier', "@ViewBag.identifier");
+                    if (isImageAdded) {
                         formData.append('blob', blob);
-                        formData.append('title', title);
-                        formData.append('articleInitId', articleInitId);
-                        formData.append('text', text);
-                        formData.append('serial', serial);
-                        formData.append('min', min);
-                        formData.append('max', max);
+                    }
+                    formData.append('title', title);
+                    formData.append('articleInitId', articleInitId);
+                    formData.append('text', text);
+                    formData.append('serial', serial);
+                    formData.append('min', min);
+                    formData.append('max', max);
 
-                        var myAppUrlSettings = {
-                            MyUsefulUrl: '@Url.Action("SaveArticle", "Create")'
+                    var myAppUrlSettings = {
+                        MyUsefulUrl: '@Url.Action("SaveArticle", "Create")'
                     }
                     var request = new XMLHttpRequest();
                     request.onload = function() {

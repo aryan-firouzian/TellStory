@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <title>Tell Story Together</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -46,7 +46,7 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light navbar-static-top" style="position: fixed; top: 0; width: 100%; z-index: 100;">
         <a class="navbar-brand" href="@Url.Action("Index", "Home", null)">
-            <img class="logo" src="@Url.Content("~/Images/TellStoryTogether2.png")">
+            <img class="logo" src="@Url.Content("~/Images/TellStoryTogether3.png")">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -73,7 +73,7 @@
             </ul>
         </div>
     </nav>
-    <div id="body" style="margin-top: 70px;">
+    <div id="body" style="margin-top: 30px;">
         @RenderSection("featured", required: false)
         <section class="content-wrapper main-content clear-fix">
             @RenderBody()
@@ -99,7 +99,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
 
-<script src="~/Content/MyScript.js"></script>
+@*<script src="~/Content/MyScript.js"></script>*@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
 </body>
 </html>

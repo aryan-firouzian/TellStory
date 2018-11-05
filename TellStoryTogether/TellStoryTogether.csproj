@@ -504,6 +504,7 @@
     <Content Include="Images\TellStoryTogether1.png" />
     <Content Include="Images\TellStoryTogether2.png" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Images\TellStoryTogether3.png" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

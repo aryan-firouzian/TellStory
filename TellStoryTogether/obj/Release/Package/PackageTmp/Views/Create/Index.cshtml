@@ -88,20 +88,7 @@
                                     Story
                                 </div>
                                 <textarea id="text" style="text-align: left; vertical-align: top; width: 100%; height: 400px; white-space: pre-line; white-space: pre-wrap;"></textarea>
-                                <div id="message-added" class="ui hidden message positive">
-                                    <div class="header">
-                                        Added
-                                    </div>
-                                    <p>
-                                        Your story is added. You will be redirected to read this story in <span id="second-timer">5</span> seconds.
-                                    </p>
-                                </div>
-                                <div id="message-rejected" class="ui hidden message negative">
-                                    <div class="header">
-                                        Rejected
-                                    </div>
-                                    <p>Unfortunately, the story failed to be stored in the server. Please try after five mintues.</p>
-                                </div>
+                                <div id="message-div" class="col-12 show-title"></div>
                                 <div class="text-right col-12">
                                     <div class="ui icon button green" id="upload-button" style="margin: 12px">
                                         <i class="save icon"></i> Save
@@ -126,11 +113,20 @@
             </p>
         </div>
     }
+    <div id="message-temp" class="ui hidden message">
+        <div id="message-temp-header" class="header">
+        </div>
+        <p id="message-temp-content">
+        </p>
+    </div>
 </section>
 
 @section Scripts{
     <script>
     $(document).ready(function() {
+
+        var $message = $('#message-temp').clone();
+        $message.removeClass('hidden');
 
         $([document.documentElement, document.body]).animate({
             scrollTop: $("#show-create").offset().top - 60
@@ -144,8 +140,8 @@
 
         });
 
-        function readFile(input) {
-            if (input.files && input.files[0]) {
+        function readFile(inputParam) {
+            if (inputParam.files && inputParam.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
@@ -154,8 +150,35 @@
                     });
                 }
 
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(inputParam.files[0]);
             }
+        }
+
+        function showMessage(messageHeader, messageContent, isErrorType, isRedirect, redirectTo) {
+            var $messageTemp = $message.clone();
+            $messageTemp.removeAttr('id');
+            $messageTemp.find('#message-temp-header').html(messageHeader + ' - <span class="second-timer">5</span> Seconds');
+            $messageTemp.find('#message-temp-content').html(messageContent);
+            $messageTemp.find('#message-temp-header').removeAttr('id');
+            $messageTemp.find('#message-temp-content').removeAttr('id');
+            if (isErrorType) {
+                $messageTemp.addClass('negative');
+            } else {
+                $messageTemp.addClass('positive');
+            }
+            $('#message-div').html($messageTemp);
+            var counter = 5;
+            var interval = setInterval(function() {
+                counter--;
+                $messageTemp.find('.second-timer').html(counter);
+                if (counter === 0) {
+                    $messageTemp.remove();
+                    if (isRedirect) {
+                        window.location.href = redirectTo;
+                    }
+                    clearInterval(interval);
+                }
+            }, 1000);
         }
 
         $('#slider-range').slider({
@@ -164,14 +187,14 @@
             max: 4000,
             values: [300, 2000],
             slide: function(event, ui) {
-                $("#min-char").val( ui.values[0]);
-                $("#max-char").val( ui.values[1]);
+                $("#min-char").val(ui.values[0]);
+                $("#max-char").val(ui.values[1]);
             }
         });
 
         $('#text').on('keyup', function(event) {
             var len = $(this).val().length;
-            $('#story-title').html('Story (' +len + ' chars)');
+            $('#story-title').html('Story (' + len + ' chars)');
         });
 
         $("#divUpload").on("click", function() {
@@ -181,6 +204,7 @@
         $('#select').on('change', function() { readFile(this); });
         $('#upload-button').on('click', function() {
             basic.croppie('result', 'blob').then(function(blob) {
+                var error = "";
                 var title = "@ViewBag.title";
                 var articleInitId = @ViewBag.articleInitId;
                 var serial = @ViewBag.serial;
@@ -188,47 +212,53 @@
                 var max = @ViewBag.charMax;
                 var text = $('#text').val();
                 if (@ViewBag.length == 0) {
-                    title = $('#title').val();
-                    min = $('#min-char').val();
-                    max = $('#max-char').val();
-                }
-                var formData = new FormData();
-                formData.append('blob', blob);
-                formData.append('title', title);
-                formData.append('articleInitId', articleInitId);
-                formData.append('text', text);
-                formData.append('serial', serial);
-                formData.append('min', min);
-                formData.append('max', max);
-
-                var myAppUrlSettings = {
-                    MyUsefulUrl: '@Url.Action("GetImage", "Create")'
-                }
-
-                var request = new XMLHttpRequest();
-                request.onload = function() {
-                    var response = $.parseJSON(this.responseText);
-                    if (response[0] == 'added') {
-                        var identifier = "@ViewBag.identifier" + "-" + response[1];
-                        var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
-                        $('#message-added').removeClass('hidden');
-                        var counter = 5;
-                        var interval = setInterval(function() {
-                            counter--;
-                            $('#second-timer').html(counter);
-                            if (counter == 0) {
-                                // Display a login box
-                                window.location.href = url.replace('__param__', encodeURIComponent(identifier));
-                                clearInterval(interval);
-                            }
-                        }, 1000);
-
-                    } else {
-                        $('#message-rejected').removeClass('hidden');
+                        title = $('#title').val();
+                        min = $('#min-char').val();
+                        max = $('#max-char').val();
                     }
+                    if (title == null || title.trim() === '') {
+                        error = 'Title field cannot be empty.';
+                        showMessage("Error", error, true);
+                    } else if (text == null || text.trim() === '') {
+                        error = 'Story field cannot be empty.';
+                        showMessage("Error", error, true);
+                    } else if (text.length <= Number(min)) {
+                        error = 'Story should have more than ' + min + ' characters.';
+                        showMessage("Error", error, true);
+                    } else if (text.length >= Number(max)) {
+                        error = 'story should have less than ' + max + ' characters';
+                        showMessage("Error", error, true);
+                    } else {
+                        var formData = new FormData();
+                        formData.append('identifier', "@ViewBag.identifier");
+                        formData.append('blob', blob);
+                        formData.append('title', title);
+                        formData.append('articleInitId', articleInitId);
+                        formData.append('text', text);
+                        formData.append('serial', serial);
+                        formData.append('min', min);
+                        formData.append('max', max);
+
+                        var myAppUrlSettings = {
+                            MyUsefulUrl: '@Url.Action("GetImage", "Create")'
+                    }
+                    var request = new XMLHttpRequest();
+                    request.onload = function() {
+                        var response = $.parseJSON(this.responseText);
+                        if (response[0] === 'added') {
+                            var identifier = response[1];
+                            var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
+                            var redirectTo = url.replace('__param__', encodeURIComponent(identifier));
+                            showMessage('Added', 'The story is added. You will be redirected to story page.', false, true, redirectTo);
+
+                        } else {
+                            error = 'Unhandled server error happened. Try after 5 minutes.';
+                            showMessage('Sever Error', error, true);
+                        }
+                    }
+                    request.open('POST', myAppUrlSettings.MyUsefulUrl);
+                    request.send(formData);
                 }
-                request.open('POST', myAppUrlSettings.MyUsefulUrl);
-                request.send(formData);
             });
         });
 
@@ -237,3 +267,4 @@
     </script>
 }
     
+

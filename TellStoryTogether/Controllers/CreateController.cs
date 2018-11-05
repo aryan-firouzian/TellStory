@@ -49,7 +49,7 @@ namespace TellStoryTogether.Controllers
 
 
         [HttpPost]
-        public ActionResult GetImage(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
+        public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
         {            
             try
             {
@@ -58,7 +58,12 @@ namespace TellStoryTogether.Controllers
                     Guid guid = Guid.NewGuid();
                     string uniqueString = guid.ToString();
                     var fullPath = "~/Images/StoryImage/" + uniqueString + ".png";
-                    int parallel = _userContext.Articles.Count(p => p.ArticleInitId == articleInitId) + 1;
+                    int parallel = 1;
+                    if (articleInitId != -1)
+                    {
+                        parallel = _userContext.Articles.Count(p => p.ArticleInitId == articleInitId) + 1;
+                    }
+                    
                     UserProfile user = _userContext.UserProfiles.First(p => p.UserName == User.Identity.Name);
                     Genre genre = _userContext.Genres.First();
                     Article newArticle = new Article

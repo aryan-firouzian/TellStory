@@ -158,7 +158,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>11/02/2018 00:08:43</publishTime>
+      <publishTime>11/04/2018 02:39:40</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -1076,7 +1076,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
     <File Include="Views/Create/Index.cshtml">
-      <publishTime>11/01/2018 22:38:16</publishTime>
+      <publishTime>11/04/2018 02:35:38</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>10/31/2018 19:59:11</publishTime>

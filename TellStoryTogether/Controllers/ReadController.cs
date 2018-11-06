@@ -15,11 +15,11 @@ namespace TellStoryTogether.Controllers
 
         public ActionResult Index(string identifier)
         {
-            string[] articleId_identifier = Identifier(identifier);
-            int firstArticleId = Int32.Parse(articleId_identifier[0]);
-            string restArticle = articleId_identifier[1];
+            string[] articleIdIdentifier = Identifier(identifier);
+            int firstArticleId = Int32.Parse(articleIdIdentifier[0]);
+            string restArticle = articleIdIdentifier[1];
             
-            Article firstArticle = _userContext.Articles.First(p => p.ArticleId == firstArticleId);
+            Article firstArticle = _userContext.Articles.Include("Owner").First(p => p.ArticleId == firstArticleId);
             ViewBag.Identifier = restArticle;
             return View(firstArticle);
         }
@@ -33,7 +33,7 @@ namespace TellStoryTogether.Controllers
             parallelList.RemoveAt(0);
             foreach (int i in parallelList)
             {
-                List<Article> tempArticles = _userContext.Articles.Where(p => p.ArticleInitId == sourceId).OrderByDescending(p=>p.Parallel==i).ThenByDescending(p=>p.Point).ToList();
+                List<Article> tempArticles = _userContext.Articles.Include("Owner").Where(p => p.ArticleInitId == sourceId).OrderByDescending(p => p.Parallel == i).ThenByDescending(p => p.Point).ToList();
                 sourceId = tempArticles[0].ArticleId;
                 output.Add(tempArticles);
             }

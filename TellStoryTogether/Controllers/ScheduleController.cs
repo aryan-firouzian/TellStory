@@ -11,7 +11,7 @@ namespace TellStoryTogether.Controllers
     {
         readonly UsersContext _userContext = new UsersContext();
         //
-        // GET: /Schedule/
+        // GET: /Schedule?identifier=1
         public ActionResult Index(string identifier)
         {
             string result = "";
@@ -21,15 +21,13 @@ namespace TellStoryTogether.Controllers
                 {
                     if (identifier == "1")
                     {
-                        // modify maxChar and minChar for all items in article table
                         /*var all = _userContext.Articles.ToList();
                         foreach (Article article in all)
                         {
-                            article.MinChar = 140;
-                            article.MaxChar = 2000;
+                            article.Comment = 0;
                         }
-                        _userContext.SaveChanges();*/
-                        result = "done";
+                        _userContext.SaveChanges();
+                        result = "done";*/
                     }
                     else
                     {

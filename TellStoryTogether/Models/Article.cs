@@ -35,6 +35,8 @@ namespace TellStoryTogether.Models
 
         public int Favorite { get; set; }
 
+        public int Comment { get; set; }
+
         public string PictureUrl { get; set; }
 
         public DateTime Time { get; set; }

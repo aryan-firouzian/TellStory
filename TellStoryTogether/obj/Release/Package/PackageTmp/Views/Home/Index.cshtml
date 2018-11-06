@@ -42,6 +42,13 @@
 
 
             var listOfGenre = [];
+            var slidesToShow = 2;
+            if ($(window).width() >= 1380) {
+                slidesToShow = 3;
+            }
+            if ($(window).width() <= 1000) {
+                slidesToShow = 1;
+            }
 
             function removeFromGenreLoadSliderWithContent(repeatParam) {
                 if (listOfGenre.length > 0) {
@@ -81,7 +88,7 @@
                         $slider.removeClass('item-hide');
                         $('#slider-' + paramGenre).slick(({
                             infinite: true,
-                            slidesToShow: offSet,
+                            slidesToShow: slidesToShow,
                             slidesToScroll: 1,
                             arrows: true,
                             prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
@@ -98,10 +105,6 @@
             }
 
 
-            var offSet = 3;
-            if ($(window).width() <= 1000) {
-                offSet = 1;
-            }
 
             var loadGenreRequest = new XMLHttpRequest();
             loadGenreRequest.onload = function() {

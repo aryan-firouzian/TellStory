@@ -137,7 +137,7 @@ z-index:3;
     margin-top: 20px;
 }
 
-.seen-heart {
+.bottom {
     vertical-align: bottom
 }
 
@@ -174,15 +174,9 @@ z-index:3;
     margin-top: 20px !important; 
 }
 
-/*.croppie-container .cr-image {
-	z-index: -1;
-	position: absolute;
-	top: 0;
-	left: 0;
-	transform-origin: 0 0;
-    max-width: none;
-    text-indent:-9999px
-}*/
+.cursor-default {
+    cursor: default !important;
+}
 
 @media (max-width: 500px) {
     .account {

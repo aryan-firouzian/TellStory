@@ -25,13 +25,13 @@ namespace TellStoryTogether.Controllers
             {
                 List<int> parallels = identifier.Split('-').Select(Int32.Parse).ToList();
                 int articleId = parallels[0];
-                Article articleTemp = _userContext.Articles.First(p => p.ArticleId == articleId);
+                Article articleTemp = _userContext.Articles.Include("Owner").First(p => p.ArticleId == articleId);
                 articles.Add(articleTemp);
                 parallels.RemoveAt(0);
                 length++;
                 foreach (int parallel in parallels)
                 {
-                    articleTemp = _userContext.Articles.First(p => p.ArticleInitId == articleId && p.Parallel ==parallel);
+                    articleTemp = _userContext.Articles.Include("Owner").First(p => p.ArticleInitId == articleId && p.Parallel == parallel);
                     articles.Add(articleTemp);
                     length++;
                     articleId = articleTemp.ArticleId;

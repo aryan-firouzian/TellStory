@@ -13,16 +13,41 @@
     <div id="slider-item">
         <div class=" ui justified container segment story-container-read">
             <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-            <p id="owner" class="title-ellipsis">username</p>
             <p id="text" class="text-ellipsis">text</p>
-            <div class="seen-heart">
-                <div id="seen" class="ui label ">
-                    seen
-                    <i class="eye icon"></i>
+            <p class="title-ellipsis">By <span id="owner">username</span></p>
+            
+            <div class="bottom">
+                <div class="ui labeled button mini cursor-default seen">
+                    <div class="ui basic button mini cursor-default">
+                        <i class="eye blue icon"></i> Seen
+                    </div>
+                    <div class="ui basic label mini cursor-default">
+                        0
+                    </div>
                 </div>
-                <div id="heart" class="ui label">
-                    points
-                    <i class="heart icon"></i>
+                <div class="ui labeled button mini star">
+                    <div class="ui basic button mini">
+                        <i class="star outline icon"></i> Favourite
+                    </div>
+                    <div class="ui basic label mini cursor-default">
+                        0
+                    </div>
+                </div>
+                <div class="ui labeled button mini heart">
+                    <div class="ui basic button mini">
+                        <i class="heart outline icon"></i> Like
+                    </div>
+                    <div class="ui basic label mini cursor-default">
+                        0
+                    </div>
+                </div>
+                <div class="ui labeled button mini comment">
+                    <div class="ui basic button mini">
+                        <i class="comment outline icon cursor-default"></i> Comment
+                    </div>
+                    <div class="ui basic label mini">
+                        0
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,10 +136,12 @@
         var $slider1 = $slider.clone().attr('id', 'slider-1');
         var $sliderItem1 = $sliderItem.clone().attr('id', 'slider-item-1');
         $sliderItem1.find('#image').attr('src', "@Model.PictureUrl").attr('id', 'image-' + "@Model.ArticleId");
-        $sliderItem1.find('#owner').attr('id', 'owner-' + "@Model.Owner").html("@Model.Owner");
         $sliderItem1.find('#text').attr('id', 'text-' + "@Model.ArticleId").html("@Model.Text");
-        $sliderItem1.find('#seen').attr('id', 'seen-' + "@Model.ArticleId").html("@Model.Seen" + ' <i class="eye icon"></i>');
-        $sliderItem1.find('#heart').attr('id', 'heart-' + "@Model.ArticleId").html("@Model.Point" + ' <i class="heart icon"></i>');
+        $sliderItem1.find('#owner').attr('id', 'owner-' + "@Model.Owner").html("@Model.Owner.UserName");
+        $sliderItem1.find('.seen').find('.label').html("@Model.Seen");
+        $sliderItem1.find('.heart').find('.label').html("@Model.Point");
+        $sliderItem1.find('.star').find('.label').html("@Model.Favorite");
+        $sliderItem1.find('.comment').find('.label').html("@Model.Comment");
         $slider1.append($sliderItem1);
         $('#slider-1').slick(({
             infinite: false,
@@ -128,7 +155,7 @@
         }));
         $show1.append($title1).append($slider1);
         $section.append($show1);
-        
+
         // Create rest of articles with slider from viewbag
         function loadRestByIdentifier(paramIdentifier) {
             // Add loader by temprory showTemp
@@ -145,7 +172,7 @@
                 $.each(listListArticle, function (index, value) {
                     var seri = value[0].Serial;
                     var $showN = $show.clone().attr('id', 'show-' + seri).attr('show-seri', seri);;
-                    var $showHeadN = $showHead.clone().attr('id','show-head-'+seri);
+                    var $showHeadN = $showHead.clone().attr('id', 'show-head-' + seri);
                     $showHeadN.find('.fork').attr('id', 'fork-' + seri).attr('fork', seri);
                     $showHeadN.find('.comment').attr('id', 'comment-' + seri).attr('comment', seri);
                     $showHeadN.find('.like').attr('id', 'like-' + seri).attr('like', seri);
@@ -161,11 +188,13 @@
                         $newSliderItem.attr('seri', seri);
                         $newSliderItem.attr('parallel', v.Parallel);
                         $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
-                        $newSliderItem.find('#owner').attr('id', 'owner-' + v.ArticleId).html(v.Parallel);
+                        $newSliderItem.find('#owner').attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
                         $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
-                        $newSliderItem.find('#seen').attr('id', 'seen-' + v.ArticleId).html(v.Seen + ' <i class="eye icon"></i>');
-                        $newSliderItem.find('#heart').attr('id', 'heart-' + v.ArticleId).html(v.Point + ' <i class="heart icon"></i>');
-                        
+                        $newSliderItem.find('.seen').find('.label').html(v.Seen);
+                        $newSliderItem.find('.heart').find('.label').html(v.Point);
+                        $newSliderItem.find('.star').find('.label').html(v.Favorite);
+                        $newSliderItem.find('.comment').find('.label').html(v.Comment);
+
                         $sliderN.append($newSliderItem);
                     });
                     $('#slider-' + seri).slick(({
@@ -238,6 +267,10 @@
             var identifier = i.join('-');
             var url = '@Url.Action("Index", "Create", new { identifier = "__param__" })';
             window.location.href = url.replace('__param__', encodeURIComponent(identifier));
+        });
+
+        $("#main-section").on("click", ".labeled", function () {
+            alert($(this).html());
         });
 
         loadRestByIdentifier("@ViewBag.Identifier");

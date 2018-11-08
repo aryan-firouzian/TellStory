@@ -66,6 +66,7 @@ namespace TellStoryTogether.Controllers
                     
                     UserProfile user = _userContext.UserProfiles.First(p => p.UserName == User.Identity.Name);
                     Genre genre = _userContext.Genres.First();
+                    
                     Article newArticle = new Article
                     {
                         ArticleInitId = articleInitId,
@@ -90,6 +91,8 @@ namespace TellStoryTogether.Controllers
                     string newIdentifier = articleInitId == -1
                         ? newArticle.ArticleId.ToString()
                         : identifier + "-" + parallel;
+                    _userContext.Articles.First(p => p.ArticleId == newArticle.ArticleId).Identifier = newIdentifier;
+                    _userContext.SaveChanges();
                     return Json(new[]
                     {
                         "added",

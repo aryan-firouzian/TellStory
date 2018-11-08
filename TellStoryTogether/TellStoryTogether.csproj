@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201811061937442_AddCommentPropertyToArticle.Designer.cs">
       <DependentUpon>201811061937442_AddCommentPropertyToArticle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811081619546_AddIdentifierToArticle.cs" />
+    <Compile Include="Migrations\201811081619546_AddIdentifierToArticle.Designer.cs">
+      <DependentUpon>201811081619546_AddIdentifierToArticle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -615,6 +619,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811061937442_AddCommentPropertyToArticle.resx">
       <DependentUpon>201811061937442_AddCommentPropertyToArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811081619546_AddIdentifierToArticle.resx">
+      <DependentUpon>201811081619546_AddIdentifierToArticle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

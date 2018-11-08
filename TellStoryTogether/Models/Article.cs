@@ -17,6 +17,8 @@ namespace TellStoryTogether.Models
         
         public int ArticleInitId { get; set; }
 
+        public string Identifier { get; set; }
+
         public string Title { get; set; }
         
         public int Serial { get; set; }

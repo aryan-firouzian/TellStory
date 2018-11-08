@@ -284,3 +284,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageMinMaxAddedToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddCommentPropertyToArticle.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddIdentifierToArticle.resources

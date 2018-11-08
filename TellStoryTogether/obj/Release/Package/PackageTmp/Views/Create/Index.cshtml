@@ -13,19 +13,11 @@
                 <div class="show ui center aligned basic segment" style="width: auto; margin-bottom: 0px; padding-bottom: 0px; margin-top: 0px; padding-top: 0px">
                     <div>
                         <div class=" ui justified container segment story-container">
-                            <img src="@Url.Content(@item.PictureUrl)" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-                            <p class="title-ellipsis">username</p>
-                            <p class="text-ellipsis">@item.Text</p>
-                            <div class="seen-heart">
-                                <div class="ui green label ">
-                                    @item.Seen
-                                    <i class="universal access icon"></i>
-                                </div>
-                                <div class="ui green label">
-                                    @item.Point
-                                    <i class="heart icon"></i>
-                                </div>
-                            </div>
+                            @if (@item.PictureUrl != null) {
+                                <img src="@Url.Content(@item.PictureUrl)" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                            }
+                            <p class="text-no-ellipsis">@item.Text</p>
+                            <p class="title-ellipsis">By @item.Owner.UserName</p>
                         </div>
                     </div>
                 </div>

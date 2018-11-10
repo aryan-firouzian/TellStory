@@ -114,8 +114,15 @@ z-index:3;
      margin: 20px !important;
  }
 
-.story-container-read {
+.story-container-read-image {
      min-height: 300px !important;
+     margin-left: 20px !important;
+     margin-right: 20px !important;
+     margin-top: 0px !important;
+     margin-bottom: 0px !important;
+ }
+
+.story-container-read {
      margin-left: 20px !important;
      margin-right: 20px !important;
      margin-top: 0px !important;

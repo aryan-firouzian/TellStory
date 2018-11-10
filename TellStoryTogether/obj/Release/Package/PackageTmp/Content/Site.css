@@ -204,6 +204,11 @@ z-index:3;
     margin: 5px !important;
 }
 
+.jssocials-share-link {
+    border-radius: 50%;
+    font-size: 8px;
+}
+
 @media (max-width: 500px) {
     .account {
         width:95% !important;

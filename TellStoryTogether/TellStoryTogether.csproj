@@ -245,9 +245,14 @@
     <Compile Include="Migrations\201811081619546_AddIdentifierToArticle.Designer.cs">
       <DependentUpon>201811081619546_AddIdentifierToArticle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811102253311_AddCommentTable.cs" />
+    <Compile Include="Migrations\201811102253311_AddCommentTable.Designer.cs">
+      <DependentUpon>201811102253311_AddCommentTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -622,6 +627,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811081619546_AddIdentifierToArticle.resx">
       <DependentUpon>201811081619546_AddIdentifierToArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811102253311_AddCommentTable.resx">
+      <DependentUpon>201811102253311_AddCommentTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

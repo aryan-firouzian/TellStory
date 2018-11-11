@@ -99,14 +99,11 @@ namespace TellStoryTogether.Controllers
                         newIdentifier
                     });
                 }
-                else
+                return Json(new[]
                 {
-                    return Json(new[]
-                    {
-                        "rejected",
-                        "The request from an unauthenticated user. Log in or Register!"
-                    });
-                }
+                    "rejected",
+                    "The request from an unauthenticated user. Log in or Register!"
+                });
             }
             catch (Exception e)
             {

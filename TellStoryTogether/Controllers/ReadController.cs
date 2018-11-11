@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TellStoryTogether.Models;
+using WebMatrix.WebData;
 
 namespace TellStoryTogether.Controllers
 {
@@ -38,6 +39,53 @@ namespace TellStoryTogether.Controllers
                 output.Add(tempArticles);
             }
             return Json(output);
+        }
+
+        public ActionResult LoadComment(string articleId)
+        {
+            int articleIdInt = Int32.Parse(articleId);
+            List<Comment> comments = _userContext.Comments.Include("User").Where(p => p.ArticleId.ArticleId == articleIdInt).ToList();
+            return Json(comments);
+        }
+
+        [HttpPost]
+        public ActionResult SaveComment(int articleId, string content)
+        {
+            /*try
+            {*/
+                if (User.Identity.IsAuthenticated)
+                {
+                    int userId = WebSecurity.GetUserId(User.Identity.Name);
+                    Comment comment = new Comment
+                    {
+                        ArticleId = _userContext.Articles.First(p => p.ArticleId == articleId),
+                        Content = content,
+                        User = _userContext.UserProfiles.First(p => p.UserId == userId)
+                    };
+
+
+                    _userContext.Comments.Add(comment);
+                    _userContext.SaveChanges();
+                    return Json(new[]
+                    {
+                        "added",
+                        "no message"
+                    });
+                }
+                return Json(new[]
+                {
+                    "rejected",
+                    "The request from an unauthenticated user. Log in or Register!"
+                });
+            /*}
+            catch (Exception e)
+            {
+                return Json(new[]
+                    {
+                        "rejected",
+                        e.Message
+                    });
+            }*/
         }
 
         private string[] Identifier(string articleIdOrIdentifier)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using TellStoryTogether.Filters;
+using TellStoryTogether.Helper;
 using TellStoryTogether.Models;
 using WebMatrix.WebData;
 
@@ -19,7 +20,12 @@ namespace TellStoryTogether.Controllers
             string[] articleIdIdentifier = Identifier(identifier);
             int firstArticleId = Int32.Parse(articleIdIdentifier[0]);
             string restArticle = articleIdIdentifier[1];
-            
+
+            /*if (User.Identity.IsAuthenticated)
+            {
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+            }*/
+
             Article firstArticle = _userContext.Articles.Include("Owner").First(p => p.ArticleId == firstArticleId);
             ViewBag.Identifier = restArticle;
             return View(firstArticle);
@@ -27,6 +33,16 @@ namespace TellStoryTogether.Controllers
 
         public ActionResult ArticleAttach(string identifierOrArticleId)
         {
+            /*if (User.Identity.IsAuthenticated)
+            {
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                List<ArticlePoint> articlePoints =
+                    _userContext.ArticlePoints.Where(p => p.User.UserId == userId).ToList();
+
+                List<ArticleFavorite> articleFavorites =
+                    _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).ToList();
+            }*/
+
             string identifier = Identifier(identifierOrArticleId)[1];
             List<List<Article>> output = new List<List<Article>>();
             List<int> parallelList = identifier.Split('-').Select(Int32.Parse).ToList();
@@ -44,11 +60,13 @@ namespace TellStoryTogether.Controllers
         public ActionResult LoadComment(string articleId)
         {
             int articleIdInt = Int32.Parse(articleId);
-            List<Comment> comments = _userContext.Comments.Include("User").Where(p => p.ArticleId.ArticleId == articleIdInt).ToList();
+            var comments = _userContext.Comments.Include("User").Where(p => p.ArticleId.ArticleId == articleIdInt).ToList().ChangeTime();
             return Json(comments);
         }
 
+
         [HttpPost]
+        [InitializeSimpleMembership]
         public ActionResult SaveComment(int articleId, string content)
         {
             /*try
@@ -60,11 +78,11 @@ namespace TellStoryTogether.Controllers
                     {
                         ArticleId = _userContext.Articles.First(p => p.ArticleId == articleId),
                         Content = content,
-                        User = _userContext.UserProfiles.First(p => p.UserId == userId)
+                        User = _userContext.UserProfiles.First(p => p.UserId == userId),
+                        Time = DateTime.Now
                     };
-
-
                     _userContext.Comments.Add(comment);
+                    _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
                     _userContext.SaveChanges();
                     return Json(new[]
                     {

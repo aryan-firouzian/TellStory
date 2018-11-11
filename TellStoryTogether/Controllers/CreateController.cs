@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TellStoryTogether.Filters;
 using TellStoryTogether.Models;
+using WebMatrix.WebData;
 
 namespace TellStoryTogether.Controllers
 {
@@ -49,6 +51,7 @@ namespace TellStoryTogether.Controllers
 
 
         [HttpPost]
+        [InitializeSimpleMembership]
         public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
         {
             try
@@ -63,8 +66,8 @@ namespace TellStoryTogether.Controllers
                     {
                         parallel = _userContext.Articles.Count(p => p.ArticleInitId == articleInitId) + 1;
                     }
-                    
-                    UserProfile user = _userContext.UserProfiles.First(p => p.UserName == User.Identity.Name);
+                    int userId = WebSecurity.GetUserId(User.Identity.Name);
+                    UserProfile user = _userContext.UserProfiles.First(p => p.UserId == userId);
                     Genre genre = _userContext.Genres.First();
                     
                     Article newArticle = new Article

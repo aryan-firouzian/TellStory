@@ -129,111 +129,111 @@
 
 @section Scripts{
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
 
-        var minChar = 140;
-        var maxChar = 4000;
-        var isImageAdded = false;
+            var minChar = 140;
+            var maxChar = 4000;
+            var isImageAdded = false;
 
-        var $message = $('#message-temp').clone();
-        $message.removeClass('hidden');
-        $('#min-char').attr('min', minChar);
-        $('#max-char').attr('max', maxChar);
+            var $message = $('#message-temp').clone();
+            $message.removeClass('hidden');
+            $('#min-char').attr('min', minChar);
+            $('#max-char').attr('max', maxChar);
 
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $("#show-create").offset().top - 60
-        }, 2000);
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#show-create").offset().top - 60
+            }, 2000);
 
-        var basic = $('#main-cropper').croppie({
-            viewport: { width: 175, height: 275 },
-            boundary: { width: 250, height: 350 },
-            showZoomer: false,
-            url: 'Images/StoryImage/testFileName.png'
+            var basic = $('#main-cropper').croppie({
+                viewport: { width: 175, height: 275 },
+                boundary: { width: 250, height: 350 },
+                showZoomer: false,
+                url: 'Images/StoryImage/testFileName.png'
 
-        });
+            });
 
-        function readFile(inputParam) {
-            if (inputParam.files && inputParam.files[0]) {
-                var reader = new FileReader();
+            function readFile(inputParam) {
+                if (inputParam.files && inputParam.files[0]) {
+                    var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    $('#main-cropper').croppie('bind', {
-                        url: e.target.result
-                    });
-                }
-                reader.readAsDataURL(inputParam.files[0]);
-                isImageAdded = true;
-            }
-        }
-
-        function showMessage(messageHeader, messageContent, isErrorType, isRedirect, redirectTo) {
-            $('#upload-button').removeClass('loading');
-            var $messageTemp = $message.clone();
-            $messageTemp.removeAttr('id');
-            $messageTemp.find('#message-temp-header').html(messageHeader + ' - <span class="second-timer">5</span> Seconds');
-            $messageTemp.find('#message-temp-content').html(messageContent);
-            $messageTemp.find('#message-temp-header').removeAttr('id');
-            $messageTemp.find('#message-temp-content').removeAttr('id');
-            if (isErrorType) {
-                $messageTemp.addClass('negative');
-            } else {
-                $messageTemp.addClass('positive');
-            }
-            $('#message-div').html($messageTemp);
-            var counter = 5;
-            var interval = setInterval(function() {
-                counter--;
-                $messageTemp.find('.second-timer').html(counter);
-                if (counter === 0) {
-                    $messageTemp.remove();
-                    if (isRedirect) {
-                        window.location.href = redirectTo;
+                    reader.onload = function(e) {
+                        $('#main-cropper').croppie('bind', {
+                            url: e.target.result
+                        });
                     }
-                    clearInterval(interval);
+                    reader.readAsDataURL(inputParam.files[0]);
+                    isImageAdded = true;
                 }
-            }, 1000);
-        }
-
-        $('#slider-range').slider({
-            range: true,
-            min: minChar,
-            max: maxChar,
-            values: [300, 2000],
-            slide: function(event, ui) {
-                $('#min-char').val(ui.values[0]);
-                $('#max-char').val(ui.values[1]);
             }
-        });
 
-        $('#text').on('keyup', function(event) {
-            var len = $(this).val().length;
-            $('#story-title').html('Story (' + len + ' chars)');
-        });
+            function showMessage(messageHeader, messageContent, isErrorType, isRedirect, redirectTo) {
+                $('#upload-button').removeClass('loading');
+                var $messageTemp = $message.clone();
+                $messageTemp.removeAttr('id');
+                $messageTemp.find('#message-temp-header').html(messageHeader + ' - <span class="second-timer">5</span> Seconds');
+                $messageTemp.find('#message-temp-content').html(messageContent);
+                $messageTemp.find('#message-temp-header').removeAttr('id');
+                $messageTemp.find('#message-temp-content').removeAttr('id');
+                if (isErrorType) {
+                    $messageTemp.addClass('negative');
+                } else {
+                    $messageTemp.addClass('positive');
+                }
+                $('#message-div').html($messageTemp);
+                var counter = 5;
+                var interval = setInterval(function() {
+                    counter--;
+                    $messageTemp.find('.second-timer').html(counter);
+                    if (counter === 0) {
+                        $messageTemp.remove();
+                        if (isRedirect) {
+                            window.location.href = redirectTo;
+                        }
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            }
 
-        $("#divUpload").on("click", function() {
-            $('#select').click();
-        });
+            $('#slider-range').slider({
+                range: true,
+                min: minChar,
+                max: maxChar,
+                values: [300, 2000],
+                slide: function(event, ui) {
+                    $('#min-char').val(ui.values[0]);
+                    $('#max-char').val(ui.values[1]);
+                }
+            });
 
-        $('#select').on('change', function() { readFile(this); });
+            $('#text').on('keyup', function(event) {
+                var len = $(this).val().length;
+                $('#story-title').html('Story (' + len + ' chars)');
+            });
 
-        $('#upload-button').on('click', function() {
-            $('#upload-button').addClass('loading');
-            basic.croppie('result', 'blob').then(function(blob) {
-                var error = "";
-                var title = "@ViewBag.title";
-                var articleInitId = @ViewBag.articleInitId;
-                var serial = @ViewBag.serial;
-                var min = @ViewBag.charMin;
-                var max = @ViewBag.charMax;
-                var text = $('#text').val();
-                if (@ViewBag.length === 0) {
+            $("#divUpload").on("click", function() {
+                $('#select').click();
+            });
+
+            $('#select').on('change', function() { readFile(this); });
+
+            $('#upload-button').on('click', function() {
+                $('#upload-button').addClass('loading');
+                basic.croppie('result', 'blob').then(function(blob) {
+                    var error = "";
+                    var title = "@ViewBag.title";
+                    var articleInitId = @ViewBag.articleInitId;
+                    var serial = @ViewBag.serial;
+                    var min = @ViewBag.charMin;
+                    var max = @ViewBag.charMax;
+                    var text = $('#text').val();
+                    if (@ViewBag.length === 0) {
                         title = $('#title').val();
                         min = $('#min-char').val();
                         max = $('#max-char').val();
                     }
-                if (@ViewBag.length === 0 && !isImageAdded) {
-                    error = 'An image should be uploaded as story cover.';
-                    showMessage("Error", error, true);
+                    if (@ViewBag.length === 0 && !isImageAdded) {
+                        error = 'An image should be uploaded as story cover.';
+                        showMessage("Error", error, true);
                     } else if (title == null || title.trim() === '') {
                         error = 'Title field cannot be empty.';
                         showMessage("Error", error, true);
@@ -255,41 +255,40 @@
                     } else {
                         var formData = new FormData();
                         formData.append('identifier', "@ViewBag.identifier");
-                    if (isImageAdded) {
-                        formData.append('blob', blob);
-                    }
-                    formData.append('title', title);
-                    formData.append('articleInitId', articleInitId);
-                    formData.append('text', text);
-                    formData.append('serial', serial);
-                    formData.append('min', min);
-                    formData.append('max', max);
-
-                    var myAppUrlSettings = {
-                        MyUsefulUrl: '@Url.Action("SaveArticle", "Create")'
-                    }
-                    var request = new XMLHttpRequest();
-                    request.onload = function() {
-                        var response = $.parseJSON(this.responseText);
-                        if (response[0] === 'added') {
-                            var identifier = response[1];
-                            var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
-                            var redirectTo = url.replace('__param__', encodeURIComponent(identifier));
-                            showMessage('Added', 'The story is added. You will be redirected to story page.', false, true, redirectTo);
-
-                        } else {
-                            error = 'Unhandled server error happened. Try after 5 minutes.';
-                            showMessage('Sever Error', error, true);
+                        if (isImageAdded) {
+                            formData.append('blob', blob);
                         }
+                        formData.append('title', title);
+                        formData.append('articleInitId', articleInitId);
+                        formData.append('text', text);
+                        formData.append('serial', serial);
+                        formData.append('min', min);
+                        formData.append('max', max);
+
+                        var myAppUrlSettings = {
+                            MyUsefulUrl: '@Url.Action("SaveArticle", "Create")'
+                        }
+                        var request = new XMLHttpRequest();
+                        request.onload = function() {
+                            var response = $.parseJSON(this.responseText);
+                            if (response[0] === 'added') {
+                                var identifier = response[1];
+                                var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
+                                var redirectTo = url.replace('__param__', encodeURIComponent(identifier));
+                                showMessage('Added', 'The story is added. You will be redirected to story page.', false, true, redirectTo);
+
+                            } else {
+                                error = 'Unhandled server error happened. Try after 5 minutes.';
+                                showMessage('Sever Error', error, true);
+                            }
+                        }
+                        request.open('POST', myAppUrlSettings.MyUsefulUrl);
+                        request.send(formData);
                     }
-                    request.open('POST', myAppUrlSettings.MyUsefulUrl);
-                    request.send(formData);
-                }
+                });
             });
+
         });
-
-
-    });
     </script>
 }
     

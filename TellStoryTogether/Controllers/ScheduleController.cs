@@ -21,17 +21,14 @@ namespace TellStoryTogether.Controllers
                 {
                     if (identifier == "1")
                     {
-                        List<Article> all = _userContext.Articles.ToList();
-                        foreach (Article article in all)
+                        /*List<Comment> all = _userContext.Comments.ToList();
+                        foreach (Comment comment in all)
                         {
-                            if (article.ArticleInitId != -1)
-                            {
-                                _userContext.Articles.Remove(article);
-                            }
+                            comment.Time = DateTime.Now;
 
                         }
                         _userContext.SaveChanges();
-                        result = "done";
+                        result = "done";*/
                     }
                     else
                     {

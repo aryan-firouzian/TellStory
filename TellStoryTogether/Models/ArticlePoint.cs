@@ -7,19 +7,15 @@ using System.Web;
 
 namespace TellStoryTogether.Models
 {
-    [Table("Comment")]
-    public class Comment
+    [Table("ArticlePoint")]
+    public class ArticlePoint
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CommentId { get; set; }
+        public int ArticlePointId { get; set; }
 
-        public Article ArticleId { get; set; }
+        public Article Article { get; set; }
 
         public UserProfile User { get; set; }
-
-        public string Content { get; set; }
-
-        public DateTime Time { get; set; }
     }
 }

@@ -193,6 +193,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LinqExtension.cs" />
+    <Compile Include="Helper\MyTimeSpan.cs" />
     <Compile Include="Migrations\201810022229260_AddBlogRating.cs" />
     <Compile Include="Migrations\201810022229260_AddBlogRating.Designer.cs">
       <DependentUpon>201810022229260_AddBlogRating.cs</DependentUpon>
@@ -249,9 +251,23 @@
     <Compile Include="Migrations\201811102253311_AddCommentTable.Designer.cs">
       <DependentUpon>201811102253311_AddCommentTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811111620334_AddTimeToComment.cs" />
+    <Compile Include="Migrations\201811111620334_AddTimeToComment.Designer.cs">
+      <DependentUpon>201811111620334_AddTimeToComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811112154027_AddArticlePointArticleFavorite.cs" />
+    <Compile Include="Migrations\201811112154027_AddArticlePointArticleFavorite.Designer.cs">
+      <DependentUpon>201811112154027_AddArticlePointArticleFavorite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811112214223_RemoveIdFromFavortiePoint.cs" />
+    <Compile Include="Migrations\201811112214223_RemoveIdFromFavortiePoint.Designer.cs">
+      <DependentUpon>201811112214223_RemoveIdFromFavortiePoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\ArticleFavorite.cs" />
+    <Compile Include="Models\ArticlePoint.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Language.cs" />
@@ -630,6 +646,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811102253311_AddCommentTable.resx">
       <DependentUpon>201811102253311_AddCommentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111620334_AddTimeToComment.resx">
+      <DependentUpon>201811111620334_AddTimeToComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811112154027_AddArticlePointArticleFavorite.resx">
+      <DependentUpon>201811112154027_AddArticlePointArticleFavorite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811112214223_RemoveIdFromFavortiePoint.resx">
+      <DependentUpon>201811112214223_RemoveIdFromFavortiePoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

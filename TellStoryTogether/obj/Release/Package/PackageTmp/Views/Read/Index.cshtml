@@ -1,72 +1,108 @@
 ﻿@model TellStoryTogether.Models.Article
 
-<section id="main-section" class="item-hide">
-    <div id="show" class="show" style="width: auto;">
+
+<div class="ui sidebar wide right vertical menu">
+    <div class="padded text container segment show-title">
+        <form class="ui reply form">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <div class="field">
+                    @System.Web.HttpContext.Current.User.Identity.Name:
+                </div>
+                <div class="field">
+                    <textarea id="comment-text" style="height: 1em"></textarea>
+                </div>
+    <div class="ui basic green button mini commenting">
+        <i class="edit icon"></i> Add Comment
     </div>
-    <div id="title" class="show-label" style="margin-top: 100px; margin-bottom: 50px">
-        <h3 class="ui horizontal divider header"></h3>
-    </div>
-    <div id="loader" class="ui basic segment" style="margin-top: 100px">
-        <div class="ui active centered loader"></div>
-    </div>
-    <div id="slider" class="slickcarousel" style="margin-bottom: 0px !important"></div>
-    <div id="slider-item">
-        <div class="ui justified container segment">
-            <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-            <p id="text" class="text-no-ellipsis">text</p>
-            <p class="title-ellipsis">By <span id="owner">username</span></p>
-            
-            <div class="bottom ui four column grid">
-                <div class="ui labeled button mini cursor-default seen">
-                    <div class="ui basic blue button mini cursor-default">
-                        <i class="eye blue icon"></i> Seen
+            }
+            else
+            {
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui basic fluid green button mini logging">
+                            Login
+                        </div>
                     </div>
-                    <div class="ui basic label blue mini cursor-default">
-                        0
+                    <div class="field">
+                        <div class="ui basic fluid green button mini registering">
+                            Register
+                        </div>
                     </div>
                 </div>
-                <div class="ui labeled button mini star">
-                    <div class="ui basic yellow button mini">
-                        <i class="star outline icon"></i> Favourite
+            }
+        </form>
+        <div class="ui comments show-title"></div>
+    </div>
+</div>
+<div class="pusher">
+    <section id="main-section" class="item-hide">
+        <div id="show" class="show" style="width: auto;">
+        </div>
+        <div id="title" class="show-label" style="margin-top: 100px; margin-bottom: 50px">
+            <h3 class="ui horizontal divider header"></h3>
+        </div>
+        <div id="loader" class="ui basic segment" style="margin-top: 100px">
+            <div class="ui active centered loader"></div>
+        </div>
+        <div id="slider" class="slickcarousel" style="margin-bottom: 0px !important"></div>
+        <div id="slider-item">
+            <div class="ui justified container segment">
+                <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                <p id="text" class="text-no-ellipsis">text</p>
+                <p class="title-ellipsis">By <span id="owner">username</span></p>
+
+                <div class="bottom ui four column grid">
+                    <div class="ui labeled button mini cursor-default seen">
+                        <div class="ui basic blue button mini cursor-default">
+                            <i class="eye blue icon"></i> Seen
+                        </div>
+                        <div class="ui basic label blue mini cursor-default">
+                            0
+                        </div>
                     </div>
-                    <div class="ui basic label yellow mini cursor-default">
-                        0
+                    <div class="ui labeled button mini star">
+                        <div class="ui basic yellow button mini">
+                            <i class="star outline icon"></i> Favourite
+                        </div>
+                        <div class="ui basic label yellow mini cursor-default">
+                            0
+                        </div>
                     </div>
-                </div>
-                <div class="ui labeled button mini heart">
-                    <div class="ui basic red button mini">
-                        <i class="heart outline icon"></i> Like
+                    <div class="ui labeled button mini heart">
+                        <div class="ui basic red button mini">
+                            <i class="heart outline icon"></i> Like
+                        </div>
+                        <a class="ui basic label red mini cursor-default">
+                            0
+                        </a>
                     </div>
-                    <a class="ui basic label red mini cursor-default">
-                        0
-                    </a>
-                </div>
-                <div class="ui labeled button mini comment">
-                    <div class="ui basic green button mini">
-                        <i class="comment outline icon cursor-default"></i> Comment
-                    </div>
-                    <div class="ui basic label green mini">
-                        0
+                    <div class="ui labeled button mini comment">
+                        <div class="ui basic green button mini">
+                            <i class="comment outline icon cursor-default"></i> Comment
+                        </div>
+                        <div class="ui basic label green mini">
+                            0
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="show-foot" class="row" style="clear: left;">
-        <div class="col-5 text-right">
-            <div class="share"></div>
-        </div>
-        <div class="col-2 text-center">
-            <div class="ui label line" style="padding-top: 30px !important; padding-bottom: 30px !important; padding-right: 2px !important; padding-left: 2px !important;"></div>
-        </div>
-        <div class="col-5 text-left" style="margin-top: 5px">
-            <div class="ui basic button mini fork">
-                <i class="vertically flipped fork icon"></i> Fork
+        <div id="show-foot" class="row" style="clear: left;">
+            <div class="col-5 text-right">
+                <div class="share"></div>
+            </div>
+            <div class="col-2 text-center">
+                <div class="ui label line" style="padding-top: 30px !important; padding-bottom: 30px !important; padding-right: 2px !important; padding-left: 2px !important;"></div>
+            </div>
+            <div class="col-5 text-left" style="margin-top: 5px">
+                <div class="ui basic button mini fork">
+                    <i class="vertically flipped fork icon"></i> Fork
+                </div>
             </div>
         </div>
-    </div>
-    <div class="ui basic modal">
-        <div class="header">Login or Register</div>
+        <div class="ui basic modal">
+            <div class="header">Login or Register</div>
             <h3 class="content">You need to log into your account, to continue further!</h3>
             <div class="content">
                 <p>Already have an account.</p>
@@ -87,20 +123,25 @@
                 <div class="ui deny button">Cancel</div>
             </div>
         </div>
-</section>
+        <div id="comment" class="comment item-hide">
+            <div class="content">
+                <a class="author"></a>
+                <div class="text">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
 
 @section Scripts{
     <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            var scrollToElement = location.hash;
+        var scrollToElement = location.hash;
 
-            function scrollTo(hash) {
-                location.hash = hash;
-            }
-
-
-            var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
+        var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
+            var username = '@System.Web.HttpContext.Current.User.Identity.Name';
 
             var shareList = ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"];
             if ($(window).width() <= 992) {
@@ -112,226 +153,296 @@
 
             // Link which needs only identifier string to attach
             var linkShare = '@Url.Action("Index", "Read", null, Request.Url.Scheme)' + '/?identifier=';
-            var textShare = "Story link to share";
+        var textShare = "Story link to share";
 
-            var $section = $('#main-section');
-            var $show = $section.find('#show').clone();
-            var $title = $section.find('#title').clone();
-            var $loader = $section.find('#loader').clone();
-            var $slider = $section.find('#slider').clone();
-            var $sliderItem = $section.find('#slider-item').clone();
-            var $showFoot = $section.find('#show-foot').clone();
-            $section.find('#show').remove();
-            $section.find('#title').remove();
-            $section.find('#loader').remove();
-            $section.find('#slider').remove();
-            $section.find('#slider-item').remove();
-            $section.find('#show-foot').remove();
-            $section.removeClass('item-hide');
+        var $section = $('#main-section');
+        var $show = $section.find('#show').clone();
+        var $title = $section.find('#title').clone();
+        var $loader = $section.find('#loader').clone();
+        var $slider = $section.find('#slider').clone();
+        var $sliderItem = $section.find('#slider-item').clone();
+        var $showFoot = $section.find('#show-foot').clone();
+        var $comment = $section.find('#comment').clone();
+        $section.find('#show').remove();
+        $section.find('#title').remove();
+        $section.find('#loader').remove();
+        $section.find('#slider').remove();
+        $section.find('#slider-item').remove();
+        $section.find('#show-foot').remove();
+        $section.find('#comment').remove();
+        $comment.removeClass('item-hide').removeAttr('id');
+        $section.removeClass('item-hide');
 
-            // Create first article from the model
-            var $show1 = $show.clone().attr('id', 'show-1').attr('show-seri', 1);
-            var $title1 = $title.clone().attr('id', 'title-1');
-            $title1.children().eq(0).html("@Model.Title");
-            var $slider1 = $slider.clone().attr('id', 'slider-1');
-            var $sliderItem1 = $sliderItem.clone().attr('id', 'slider-item-1');
-            $sliderItem1.find('#image').attr('src', "@Model.PictureUrl").attr('id', 'image-' + "@Model.ArticleId");
-            $sliderItem1.find('.segment').addClass('story-container-read-image');
-            $sliderItem1.find('#text').attr('id', 'text-' + "@Model.ArticleId").html("@Model.Text");
-            $sliderItem1.find('#owner').attr('id', 'owner-' + "@Model.Owner").html("@Model.Owner.UserName");
-            $sliderItem1.find('.seen').find('.label').html("@Model.Seen");
-            $sliderItem1.find('.heart').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Point");
-            $sliderItem1.find('.star').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Favorite");
-            $sliderItem1.find('.comment').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Comment");
-            $slider1.append($sliderItem1);
+        // Create first article from the model
+        var $show1 = $show.clone().attr('id', 'show-1').attr('show-seri', 1);
+        var $title1 = $title.clone().attr('id', 'title-1');
+        $title1.children().eq(0).html("@Model.Title");
+        var $slider1 = $slider.clone().attr('id', 'slider-1');
+        var $sliderItem1 = $sliderItem.clone().attr('id', 'slider-item-1');
+        $sliderItem1.find('#image').attr('src', "@Model.PictureUrl").attr('id', 'image-' + "@Model.ArticleId");
+        $sliderItem1.find('.segment').addClass('story-container-read-image');
+        $sliderItem1.find('#text').attr('id', 'text-' + "@Model.ArticleId").html("@Model.Text");
+        $sliderItem1.find('#owner').attr('id', 'owner-' + "@Model.Owner").html("@Model.Owner.UserName");
+        $sliderItem1.find('.seen').find('.label').html("@Model.Seen");
+        $sliderItem1.find('.heart').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Point");
+        $sliderItem1.find('.star').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Favorite");
+        $sliderItem1.find('.comment').attr('article', @Model.ArticleId).attr('identifier', @Model.Identifier).find('.label').html("@Model.Comment");
+        $slider1.append($sliderItem1);
 
-            var $showFoot1 = $showFoot.removeAttr('id').clone();
-            $showFoot1.find('.fork').attr('identifier', @Model.Identifier);
-            $showFoot1.find('.share').jsSocials({
-                shares: shareList,
-                url: linkShare + @Model.Identifier,
-                text: textShare,
-                showLabel: false,
-                showCount: false
-            });
-            $sliderItem1.append($showFoot1);
-
-            $show1.append($title1).append($slider1);
-            $section.append($show1);
-
-            $('#slider-1').slick(({
-                infinite: false,
-                touchThreshold: 3,
-                autoplay: false,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: true,
-                prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
-                nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
-            }));
-
-            // Create rest of articles with slider from viewbag
-            function loadRestByIdentifier(paramIdentifier) {
-                // Add loader by temprory showTemp
-                var $showTemp = $show.clone().attr('id', 'show-temp');
-                var $loaderTemp = $loader.clone().attr('id', 'loader-temp');
-                $showTemp.append($loaderTemp);
-                $section.append($showTemp);
-
-                var loadRest = new XMLHttpRequest();
-                loadRest.onload = function() {
-                    var listListArticle = $.parseJSON(this.responseText);
-                    // Result are ready, remove the showTemp and loader
-                    $showTemp.remove();
-
-                    //var lengthOfSeries = listListArticle.length;
-                    $.each(listListArticle, function(index, value) {
-                        var seri = value[0].Serial;
-                        var $showN = $show.clone().attr('id', 'show-' + seri).attr('show-seri', seri);;
-                        var $sliderN = $slider.clone().attr('id', 'slider-' + seri);
-                        $showN.append($sliderN);
-                        $section.append($showN);
-
-                        $.each(value, function(i, v) {
-                            var $newSliderItem = $sliderItem.clone();
-                            $newSliderItem.attr('id', v.ArticleId);
-                            $newSliderItem.attr('seri', seri);
-                            $newSliderItem.attr('parallel', v.Parallel);
-                            if (v.PictureUrl == null) {
-                                $newSliderItem.find('#image').remove();
-                                $newSliderItem.find('.segment').addClass('story-container-read');
-                            } else {
-                                $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
-                                $newSliderItem.find('.segment').addClass('story-container-read-image');
-                            }
-                            $newSliderItem.find('#owner').attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
-                            $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
-                            $newSliderItem.find('.seen').find('.label').html(v.Seen);
-                            $newSliderItem.find('.heart').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);
-                            $newSliderItem.find('.star').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Favorite);
-                            $newSliderItem.find('.comment').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Comment);
-
-                            var $showFootN = $showFoot.removeAttr('id').clone();
-                            $showFootN.find('.fork').attr('identifier', v.Identifier);
-                            $showFootN.find('.share').jsSocials({
-                                shares: shareList,
-                                url: linkShare + v.Identifier,
-                                text: textShare,
-                                showLabel: false,
-                                showCount: false
-                            });
-                            $newSliderItem.append($showFootN);
-                            $sliderN.append($newSliderItem);
-                        });
-                        $('#slider-' + seri).slick(({
-                            infinite: false,
-                            touchThreshold: 3,
-                            autoplay: false,
-                            slidesToShow: 1,
-                            slidesToScroll: 1,
-                            draggable: false,
-                            swipeToSlide: true,
-                            arrows: true,
-                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
-                            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
-                        }));
-                        $('#slider-' + seri).find('.prev').hide();
-                        var tempSlideId;
-                        $('#slider-' + seri).on('beforeChange', function(event, slick, currentSlide) {
-                            tempSlideId = $(slick.$slides.get(currentSlide)).attr('id');
-                        });
-                        $('#slider-' + seri).on('afterChange', function(event, slick, currentSlide) {
-                            if (tempSlideId !== $(slick.$slides.get(currentSlide)).attr('id')) {
-                                if (currentSlide === 0) {
-                                    $('#slider-' + seri).find('.prev').hide();
-                                } else {
-                                    $('#slider-' + seri).find('.prev').show();
-                                }
-                                if (currentSlide === value.length - 1) {
-                                    $('#slider-' + seri).find('.next').hide();
-                                } else {
-                                    $('#slider-' + seri).find('.next').show();
-                                }
-
-                                var articleId = $(slick.$slides.get(currentSlide)).attr('id');
-                                var articleSeri = Number($(slick.$slides.get(currentSlide)).attr('seri'));
-                                $('.show').filter(function() {
-                                    return $(this).attr('show-seri') > articleSeri;
-                                }).remove();
-                                // load next
-                                loadRestByIdentifier(articleId);
-                            }
-                        });
-                    });
-
-                    // change the fork button to create button and remove the verticla line
-                    var lastShowNum = $('[show-seri]').length;
-                    var $lastShow = $section.find("div[show-seri=" + lastShowNum + "]");
-                    $lastShow.find('.slick-current').find('.line').remove();
-                    $lastShow.find('.slick-current').find('.fork').html('<i class="plus icon"></i> Add');
-
-                    // Scrolling to the element if coming back by return url from login or register page
-                    if ($(scrollToElement).length) {
-                        $(scrollToElement).get(0).scrollIntoView();
-                        window.scrollBy(0, -80);
-                    }
-                }
-                loadRest.open("POST", "/Read/ArticleAttach?identifierOrArticleId=" + paramIdentifier);
-                loadRest.send();
-            }
-
-            function logInThenAction(action, articleId, identifier) {
-                if (loggedIn) {
-                    switch(action) {
-                        case 'star':
-                            break;
-                        case 'heart':
-                            break;
-                        case 'comment':
-                            break;
-                        case 'fork':
-                            var url = '@Url.Action("Index", "Create", new {identifier = "____param____"})';
-                            window.location.href = url.replace("____param____", identifier);
-                            break;
-                        default:
-                    }
-                } else {
-                    $('.basic.modal').modal({
-                        onApprove: function(action) {
-                            var showSeri = identifier.split('-').length;
-                            var myReturnUrl;
-                            var url;
-                            if (action.html() === 'Login') {
-                                myReturnUrl = "/Read?identifier=";
-                                url = '@Url.Action("Login", "Account", new {returnUrl = "____param____"})';
-                                window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
-                            } else if (action.html() === 'Register') {
-                                myReturnUrl = "/Read?identifier=";
-                                url = '@Url.Action("Register", "Account", new {returnUrl = "____param____"})';
-                                window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
-                            }
-                        }
-                    }).modal('show');
-                }
-            }
-
-            $("#main-section").on("click", ".button", function() {
-                var articleId = $(this).attr('article');
-                var identifier = $(this).attr('identifier');
-                if ($(this).hasClass("seen")) {
-                } else if ($(this).hasClass("star")) {
-                    logInThenAction('star', articleId, identifier);
-                } else if ($(this).hasClass("heart")) {
-                    logInThenAction('heart', articleId, identifier);
-                } else if ($(this).hasClass("comment")) {
-                    logInThenAction('comment', articleId, identifier);
-                } else if ($(this).hasClass("fork")) {
-                    logInThenAction('fork', articleId, identifier);
-                }
-            });
-
-            loadRestByIdentifier("@ViewBag.Identifier");
-
+        var $showFoot1 = $showFoot.removeAttr('id').clone();
+        $showFoot1.find('.fork').attr('identifier', @Model.Identifier);
+        $showFoot1.find('.share').jsSocials({
+            shares: shareList,
+            url: linkShare + @Model.Identifier,
+            text: textShare,
+            showLabel: false,
+            showCount: false
         });
+        $sliderItem1.append($showFoot1);
+
+        $show1.append($title1).append($slider1);
+        $section.append($show1);
+
+        $('#slider-1').slick(({
+            infinite: false,
+            touchThreshold: 3,
+            autoplay: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true,
+            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
+            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+        }));
+
+        // Create rest of articles with slider from viewbag
+        function loadRestByIdentifier(paramIdentifier) {
+            // Add loader by temprory showTemp
+            var $showTemp = $show.clone().attr('id', 'show-temp');
+            var $loaderTemp = $loader.clone().attr('id', 'loader-temp');
+            $showTemp.append($loaderTemp);
+            $section.append($showTemp);
+
+            var loadRest = new XMLHttpRequest();
+            loadRest.onload = function() {
+                var listListArticle = $.parseJSON(this.responseText);
+                // Result are ready, remove the showTemp and loader
+                $showTemp.remove();
+
+                //var lengthOfSeries = listListArticle.length;
+                $.each(listListArticle, function(index, value) {
+                    var seri = value[0].Serial;
+                    var $showN = $show.clone().attr('id', 'show-' + seri).attr('show-seri', seri);;
+                    var $sliderN = $slider.clone().attr('id', 'slider-' + seri);
+                    $showN.append($sliderN);
+                    $section.append($showN);
+
+                    $.each(value, function(i, v) {
+                        var $newSliderItem = $sliderItem.clone();
+                        $newSliderItem.attr('id', v.ArticleId);
+                        $newSliderItem.attr('seri', seri);
+                        $newSliderItem.attr('parallel', v.Parallel);
+                        if (v.PictureUrl == null) {
+                            $newSliderItem.find('#image').remove();
+                            $newSliderItem.find('.segment').addClass('story-container-read');
+                        } else {
+                            $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
+                            $newSliderItem.find('.segment').addClass('story-container-read-image');
+                        }
+                        $newSliderItem.find('#owner').attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
+                        $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
+                        $newSliderItem.find('.seen').find('.label').html(v.Seen);
+                        $newSliderItem.find('.heart').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);
+                        $newSliderItem.find('.star').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Favorite);
+                        $newSliderItem.find('.comment').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Comment);
+
+                        var $showFootN = $showFoot.removeAttr('id').clone();
+                        $showFootN.find('.fork').attr('identifier', v.Identifier);
+                        $showFootN.find('.share').jsSocials({
+                            shares: shareList,
+                            url: linkShare + v.Identifier,
+                            text: textShare,
+                            showLabel: false,
+                            showCount: false
+                        });
+                        $newSliderItem.append($showFootN);
+                        $sliderN.append($newSliderItem);
+                    });
+                    $('#slider-' + seri).slick(({
+                        infinite: false,
+                        touchThreshold: 3,
+                        autoplay: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        draggable: false,
+                        swipeToSlide: true,
+                        arrows: true,
+                        prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
+                        nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+                    }));
+                    $('#slider-' + seri).find('.prev').hide();
+                    var tempSlideId;
+                    $('#slider-' + seri).on('beforeChange', function(event, slick, currentSlide) {
+                        tempSlideId = $(slick.$slides.get(currentSlide)).attr('id');
+                    });
+                    $('#slider-' + seri).on('afterChange', function(event, slick, currentSlide) {
+                        if (tempSlideId !== $(slick.$slides.get(currentSlide)).attr('id')) {
+                            if (currentSlide === 0) {
+                                $('#slider-' + seri).find('.prev').hide();
+                            } else {
+                                $('#slider-' + seri).find('.prev').show();
+                            }
+                            if (currentSlide === value.length - 1) {
+                                $('#slider-' + seri).find('.next').hide();
+                            } else {
+                                $('#slider-' + seri).find('.next').show();
+                            }
+
+                            var articleId = $(slick.$slides.get(currentSlide)).attr('id');
+                            var articleSeri = Number($(slick.$slides.get(currentSlide)).attr('seri'));
+                            $('.show').filter(function() {
+                                return $(this).attr('show-seri') > articleSeri;
+                            }).remove();
+                            // load next
+                            loadRestByIdentifier(articleId);
+                        }
+                    });
+                });
+
+                // change the fork button to create button and remove the verticla line
+                var lastShowNum = $('[show-seri]').length;
+                var $lastShow = $section.find('div[show-seri=' + lastShowNum + ']');
+                $lastShow.find('.slick-current').find('.line').remove();
+                $lastShow.find('.slick-current').find('.fork').html('<i class="plus icon"></i> Add');
+
+                // Scrolling to the element if coming back by return url from login or register page
+                if ($(scrollToElement).length) {
+                    $(scrollToElement).get(0).scrollIntoView();
+                    window.scrollBy(0, -80);
+                }
+            }
+            loadRest.open("POST", "/Read/ArticleAttach?identifierOrArticleId=" + paramIdentifier);
+            loadRest.send();
+        }
+
+        function logging(identifier) {
+            var showSeri = identifier.split('-').length;
+            var myReturnUrl = "/Read?identifier=";
+            var url = '@Url.Action("Login", "Account", new {returnUrl = "____param____"})';
+            window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
+        }
+
+        function registering(identifier) {
+            var showSeri = identifier.split('-').length;
+            var myReturnUrl = "/Read?identifier=";
+            var url = '@Url.Action("Register", "Account", new {returnUrl = "____param____"})';
+            window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
+        }
+
+        function logInThenAction(action, articleId, identifier) {
+            if (loggedIn) {
+                switch (action) {
+                    case 'star':
+                        break;
+                    case 'heart':
+                        break;
+                    case 'comment':
+
+                        break;
+                    case 'fork':
+                        var url = '@Url.Action("Index", "Create", new {identifier = "____param____"})';
+                        window.location.href = url.replace("____param____", identifier);
+                        break;
+                    default:
+                }
+            } else {
+                $('.basic.modal').modal({
+                    onApprove: function(act) {
+                        if (act.html() === 'Login') {
+                            logging(identifier);
+                        } else if (act.html() === 'Register') {
+                            registering(identifier);
+                        }
+                    }
+                }).modal('show');
+            }
+        }
+
+        $('.sidebar').on('click', '.button', function() {
+            var articleId = $(this).attr('article');
+            var identifier = $(this).attr('identifier');
+            if ($(this).hasClass('logging')) {
+                logging(identifier);
+            } else if ($(this).hasClass('registering')) {
+                registering(identifier);
+            } else if ($(this).hasClass('commenting')) {
+                var myAppUrlSettings = {
+                    MyUsefulUrl: '@Url.Action("SaveComment", "Read")'
+                }
+                $(this).addClass('loading');
+                var $thisButton = $(this);
+                var formData = new FormData();
+                var content = $('#comment-text').val();
+                formData.append('articleId', articleId);
+                formData.append('content', content);
+                var saveComment = new XMLHttpRequest();
+                saveComment.onload = function() {
+                    var response = $.parseJSON(this.responseText);
+                    if (response[0] === 'added') {
+                        $thisButton.removeClass('loading');
+                        var $newComment = $comment.clone();
+                        $newComment.find('.author').html(username);
+                        $newComment.find('.text').html(content);
+                        $('.sidebar').find('.comments').append($newComment);
+                        $('#comment-text').val('');
+                    }
+                };
+                saveComment.open('POST', myAppUrlSettings.MyUsefulUrl);
+                saveComment.send(formData);
+            }
+        });
+
+        $('#main-section').on('click', '.button', function() {
+            var articleId = $(this).attr('article');
+            var identifier = $(this).attr('identifier');
+            if ($(this).hasClass('seen')) {
+            } else if ($(this).hasClass('star')) {
+                logInThenAction('star', articleId, identifier);
+            } else if ($(this).hasClass('heart')) {
+                logInThenAction('heart', articleId, identifier);
+            } else if ($(this).hasClass('comment')) {
+                $('.ui.sidebar').sidebar({
+                    onVisible: function() {
+                        if (!loggedIn) {
+                            $('.sidebar').find('.logging').attr('article', articleId).attr('identifier', identifier);
+                            $('.sidebar').find('.registering').attr('article', articleId).attr('identifier', identifier);
+                        } else {
+                            $('.sidebar').find('.commenting').attr('article', articleId).attr('identifier', identifier);
+                        }
+                        var loadComment = new XMLHttpRequest();
+                        loadComment.onload = function() {
+                            var listComments = $.parseJSON(this.responseText);
+                            $.each(listComments, function(index, value) {
+                                var $newComment = $comment.clone();
+                                $newComment.find('.author').html(value.User.UserName);
+                                $newComment.find('.text').html(value.Content);
+                                $('.sidebar').find('.comments').append($newComment);
+                            });
+                        };
+                        loadComment.open("POST", "/Read/LoadComment?articleId=" + articleId);
+                        loadComment.send();
+
+                    },
+                    onHidden: function() {
+                        $('.sidebar').find('.comments').html('');
+                    }
+                }).sidebar('toggle');
+            } else if ($(this).hasClass('fork')) {
+                logInThenAction('fork', articleId, identifier);
+            }
+        });
+
+        loadRestByIdentifier("@ViewBag.Identifier");
+
+    });
     </script>
 }

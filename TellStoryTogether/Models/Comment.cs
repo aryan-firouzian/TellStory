@@ -14,7 +14,7 @@ namespace TellStoryTogether.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CommentId { get; set; }
 
-        public Article ArticleId { get; set; }
+        public Article Article { get; set; }
 
         public UserProfile User { get; set; }
 

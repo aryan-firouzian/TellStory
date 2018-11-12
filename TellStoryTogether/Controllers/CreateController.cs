@@ -81,7 +81,6 @@ namespace TellStoryTogether.Controllers
                         Serial = serial,
                         Parallel = parallel,
                         Favorite = 0,
-                        Selected = false,
                         Owner = user,
                         Genre = genre,
                         Time = DateTime.Now,

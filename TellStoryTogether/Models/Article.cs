@@ -29,8 +29,6 @@ namespace TellStoryTogether.Models
 
         public UserProfile Owner { get; set; }
 
-        public bool Selected { get; set; }
-
         public int Point { get; set; }
 
         public int Seen { get; set; }

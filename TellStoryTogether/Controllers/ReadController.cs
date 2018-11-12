@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using TellStoryTogether.Filters;
 using TellStoryTogether.Helper;
 using TellStoryTogether.Models;
+using System.Data.Entity;
+using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
 
 namespace TellStoryTogether.Controllers
@@ -15,42 +17,54 @@ namespace TellStoryTogether.Controllers
         // GET: /Read/
         readonly UsersContext _userContext = new UsersContext();
 
+        [InitializeSimpleMembership]
         public ActionResult Index(string identifier)
         {
             string[] articleIdIdentifier = Identifier(identifier);
             int firstArticleId = Int32.Parse(articleIdIdentifier[0]);
             string restArticle = articleIdIdentifier[1];
 
-            /*if (User.Identity.IsAuthenticated)
+            int userId = -1;
+            if (User.Identity.IsAuthenticated)
             {
-                int userId = WebSecurity.GetUserId(User.Identity.Name);
-            }*/
+                userId = WebSecurity.GetUserId(User.Identity.Name);
+            }
+            List<int> userComments =
+                _userContext.Comments.Where(p => p.User.UserId == userId)
+                    .Include(q => q.Article)
+                    .Select(p => p.Article.ArticleId)
+                    .ToList();
+            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
+            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
 
-            Article firstArticle = _userContext.Articles.Include("Owner").First(p => p.ArticleId == firstArticleId);
+            ArticleUserBase firstArticle = _userContext.Articles.Include("Owner").First(p => p.ArticleId == firstArticleId).ArticleToArticleUser(userPoints,userFavorites,userComments);
             ViewBag.Identifier = restArticle;
             return View(firstArticle);
         }
 
+        [InitializeSimpleMembership]
         public ActionResult ArticleAttach(string identifierOrArticleId)
         {
-            /*if (User.Identity.IsAuthenticated)
+            int userId = -1;
+            if (User.Identity.IsAuthenticated)
             {
-                int userId = WebSecurity.GetUserId(User.Identity.Name);
-                List<ArticlePoint> articlePoints =
-                    _userContext.ArticlePoints.Where(p => p.User.UserId == userId).ToList();
-
-                List<ArticleFavorite> articleFavorites =
-                    _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).ToList();
-            }*/
+                userId = WebSecurity.GetUserId(User.Identity.Name);
+            }
+            //List<Comment> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Include(q => q.Article).ToList();
+            List<int> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p=>p.Article.ArticleId).ToList();
+            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
+            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
 
             string identifier = Identifier(identifierOrArticleId)[1];
-            List<List<Article>> output = new List<List<Article>>();
+            List<List<ArticleUserBase>> output = new List<List<ArticleUserBase>>();
             List<int> parallelList = identifier.Split('-').Select(Int32.Parse).ToList();
             int sourceId = parallelList[0];
             parallelList.RemoveAt(0);
             foreach (int i in parallelList)
             {
-                List<Article> tempArticles = _userContext.Articles.Include("Owner").Where(p => p.ArticleInitId == sourceId).OrderByDescending(p => p.Parallel == i).ThenByDescending(p => p.Point).ToList();
+
+
+                List<ArticleUserBase> tempArticles = _userContext.Articles.Include("Owner").Where(p => p.ArticleInitId == sourceId).ArticlesToArticleUsers(userPoints,userFavorites,userComments).OrderByDescending(p => p.Parallel == i).ThenByDescending(p => p.Point).ToList();
                 sourceId = tempArticles[0].ArticleId;
                 output.Add(tempArticles);
             }
@@ -60,7 +74,7 @@ namespace TellStoryTogether.Controllers
         public ActionResult LoadComment(string articleId)
         {
             int articleIdInt = Int32.Parse(articleId);
-            var comments = _userContext.Comments.Include("User").Where(p => p.ArticleId.ArticleId == articleIdInt).ToList().ChangeTime();
+            var comments = _userContext.Comments.Include("User").Where(p => p.Article.ArticleId == articleIdInt).ToList().ChangeTime();
             return Json(comments);
         }
 
@@ -76,7 +90,7 @@ namespace TellStoryTogether.Controllers
                     int userId = WebSecurity.GetUserId(User.Identity.Name);
                     Comment comment = new Comment
                     {
-                        ArticleId = _userContext.Articles.First(p => p.ArticleId == articleId),
+                        Article = _userContext.Articles.First(p => p.ArticleId == articleId),
                         Content = content,
                         User = _userContext.UserProfiles.First(p => p.UserId == userId),
                         Time = DateTime.Now

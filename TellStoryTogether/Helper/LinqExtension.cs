@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using TellStoryTogether.Models;
 
 namespace TellStoryTogether.Helper
@@ -19,8 +20,44 @@ namespace TellStoryTogether.Helper
         public string Time { get; set; }
     }
 
-    public class ArticleUserBase:Article
+    public class ArticleUserBase
     {
+        public int ArticleId { get; set; }
+
+        public int ArticleInitId { get; set; }
+
+        public string Identifier { get; set; }
+
+        public string Title { get; set; }
+
+        public int Serial { get; set; }
+
+        public int Parallel { get; set; }
+
+        public string Text { get; set; }
+
+        public UserProfile Owner { get; set; }
+
+        public int Point { get; set; }
+
+        public int Seen { get; set; }
+
+        public int Favorite { get; set; }
+
+        public int Comment { get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public DateTime Time { get; set; }
+
+        public Genre Genre { get; set; }
+
+        public Language Language { get; set; }
+
+        public int MinChar { get; set; }
+
+        public int MaxChar { get; set; }
+
         public bool Pointed { get; set; }
 
         public bool Favorited { get; set; }
@@ -38,7 +75,7 @@ namespace TellStoryTogether.Helper
             {
                 CommentTime commentTime = new CommentTime
                 {
-                    ArticleId = comment.ArticleId,
+                    ArticleId = comment.Article,
                     Content = comment.Content,
                     CommentId = comment.CommentId,
                     User = comment.User,
@@ -49,7 +86,8 @@ namespace TellStoryTogether.Helper
             return commentTimes;
         }
 
-        public static IEnumerable<ArticleUserBase> ChangeTime(this IEnumerable<Article> source, List<ArticlePoint> articlePoints, List<ArticleFavorite> articleFavorites)
+        public static IEnumerable<ArticleUserBase> ArticlesToArticleUsers(this IEnumerable<Article> source,
+            List<int> articlePoints, List<int> articleFavorites, List<int> comments)
         {
             List<ArticleUserBase> articleUserBases = new List<ArticleUserBase>();
             foreach (Article article in source)
@@ -64,7 +102,6 @@ namespace TellStoryTogether.Helper
                     Parallel = article.Parallel,
                     Text = article.Text,
                     Owner = article.Owner,
-                    Selected = article.Selected,
                     Point = article.Point,
                     Seen = article.Seen,
                     Favorite = article.Favorite,
@@ -76,17 +113,60 @@ namespace TellStoryTogether.Helper
                     MinChar = article.MinChar,
                     MaxChar = article.MaxChar
                 };
-                if (articlePoints.Any(p => p.Article.ArticleId == article.ArticleId))
+                if (articlePoints != null && articlePoints.Any(p => p == article.ArticleId))
                 {
                     articleUserBase.Pointed = true;
                 }
-                if (articleFavorites.Any(p => p.Article.ArticleId == article.ArticleId))
+                if (articleFavorites != null && articleFavorites.Any(p => p == article.ArticleId))
                 {
                     articleUserBase.Favorited = true;
+                }
+                if (comments != null && comments.Any(p => p == article.ArticleId))
+                {
+                    articleUserBase.Commented = true;
                 }
                 articleUserBases.Add(articleUserBase);
             }
             return articleUserBases;
-        }  
+        }
+
+        public static ArticleUserBase ArticleToArticleUser(this Article source, List<int> articlePoints,
+            List<int> articleFavorites, List<int> comments)
+        {
+            ArticleUserBase articleUserBase = new ArticleUserBase()
+            {
+                ArticleId = source.ArticleId,
+                ArticleInitId = source.ArticleInitId,
+                Identifier = source.Identifier,
+                Title = source.Title,
+                Serial = source.Serial,
+                Parallel = source.Parallel,
+                Text = source.Text,
+                Owner = source.Owner,
+                Point = source.Point,
+                Seen = source.Seen,
+                Favorite = source.Favorite,
+                Comment = source.Comment,
+                PictureUrl = source.PictureUrl,
+                Time = source.Time,
+                Genre = source.Genre,
+                Language = source.Language,
+                MinChar = source.MinChar,
+                MaxChar = source.MaxChar
+            };
+            if (articlePoints != null && articlePoints.Any(p => p == source.ArticleId))
+            {
+                articleUserBase.Pointed = true;
+            }
+            if (articleFavorites != null && articleFavorites.Any(p => p == source.ArticleId))
+            {
+                articleUserBase.Favorited = true;
+            }
+            if (comments != null && comments.Any(p => p == source.ArticleId))
+            {
+                articleUserBase.Commented = true;
+            }
+            return articleUserBase;
+        }
     }
 }

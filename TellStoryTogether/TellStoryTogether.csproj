@@ -263,6 +263,18 @@
     <Compile Include="Migrations\201811112214223_RemoveIdFromFavortiePoint.Designer.cs">
       <DependentUpon>201811112214223_RemoveIdFromFavortiePoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811112302562_RemoveSelectedFromArticle.cs" />
+    <Compile Include="Migrations\201811112302562_RemoveSelectedFromArticle.Designer.cs">
+      <DependentUpon>201811112302562_RemoveSelectedFromArticle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811112308519_RemoveInheritanceFromArticleTable.cs" />
+    <Compile Include="Migrations\201811112308519_RemoveInheritanceFromArticleTable.Designer.cs">
+      <DependentUpon>201811112308519_RemoveInheritanceFromArticleTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.cs" />
+    <Compile Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.Designer.cs">
+      <DependentUpon>201811121943581_CommentChangeArticleIdToArticle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -655,6 +667,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811112214223_RemoveIdFromFavortiePoint.resx">
       <DependentUpon>201811112214223_RemoveIdFromFavortiePoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811112302562_RemoveSelectedFromArticle.resx">
+      <DependentUpon>201811112302562_RemoveSelectedFromArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811112308519_RemoveInheritanceFromArticleTable.resx">
+      <DependentUpon>201811112308519_RemoveInheritanceFromArticleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.resx">
+      <DependentUpon>201811121943581_CommentChangeArticleIdToArticle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

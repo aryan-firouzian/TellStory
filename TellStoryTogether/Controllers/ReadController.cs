@@ -29,13 +29,9 @@ namespace TellStoryTogether.Controllers
             {
                 userId = WebSecurity.GetUserId(User.Identity.Name);
             }
-            List<int> userComments =
-                _userContext.Comments.Where(p => p.User.UserId == userId)
-                    .Include(q => q.Article)
-                    .Select(p => p.Article.ArticleId)
-                    .ToList();
-            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
-            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
+            List<int> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Select(p => p.Article.ArticleId).ToList();
+            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Select(p => p.Article.ArticleId).ToList();
+            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Select(p => p.Article.ArticleId).ToList();
 
             ArticleUserBase firstArticle = _userContext.Articles.Include("Owner").First(p => p.ArticleId == firstArticleId).ArticleToArticleUser(userPoints,userFavorites,userComments);
             ViewBag.Identifier = restArticle;
@@ -50,10 +46,9 @@ namespace TellStoryTogether.Controllers
             {
                 userId = WebSecurity.GetUserId(User.Identity.Name);
             }
-            //List<Comment> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Include(q => q.Article).ToList();
-            List<int> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p=>p.Article.ArticleId).ToList();
-            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
-            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Include(q => q.Article).Select(p => p.Article.ArticleId).ToList();
+            List<int> userComments = _userContext.Comments.Where(p => p.User.UserId == userId).Select(p=>p.Article.ArticleId).ToList();
+            List<int> userPoints = _userContext.ArticlePoints.Where(p => p.User.UserId == userId).Select(p => p.Article.ArticleId).ToList();
+            List<int> userFavorites = _userContext.ArticleFavorites.Where(p => p.User.UserId == userId).Select(p => p.Article.ArticleId).ToList();
 
             string identifier = Identifier(identifierOrArticleId)[1];
             List<List<ArticleUserBase>> output = new List<List<ArticleUserBase>>();
@@ -83,33 +78,31 @@ namespace TellStoryTogether.Controllers
         [InitializeSimpleMembership]
         public ActionResult SaveComment(int articleId, string content)
         {
-            /*try
-            {*/
-                if (User.Identity.IsAuthenticated)
-                {
-                    int userId = WebSecurity.GetUserId(User.Identity.Name);
-                    Comment comment = new Comment
-                    {
-                        Article = _userContext.Articles.First(p => p.ArticleId == articleId),
-                        Content = content,
-                        User = _userContext.UserProfiles.First(p => p.UserId == userId),
-                        Time = DateTime.Now
-                    };
-                    _userContext.Comments.Add(comment);
-                    _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
-                    _userContext.SaveChanges();
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
                     return Json(new[]
                     {
-                        "added",
-                        "no message"
+                        "rejected",
+                        "The request from an unauthenticated user. Log in or Register!"
                     });
-                }
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                Comment comment = new Comment
+                {
+                    Article = _userContext.Articles.First(p => p.ArticleId == articleId),
+                    Content = content,
+                    User = _userContext.UserProfiles.First(p => p.UserId == userId),
+                    Time = DateTime.Now
+                };
+                _userContext.Comments.Add(comment);
+                _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
+                _userContext.SaveChanges();
                 return Json(new[]
                 {
-                    "rejected",
-                    "The request from an unauthenticated user. Log in or Register!"
+                    "added",
+                    "no message"
                 });
-            /*}
+            }
             catch (Exception e)
             {
                 return Json(new[]
@@ -117,7 +110,149 @@ namespace TellStoryTogether.Controllers
                         "rejected",
                         e.Message
                     });
-            }*/
+            }
+        }
+
+        [HttpPost]
+        [InitializeSimpleMembership]
+        public ActionResult Like(int articleId)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                    return Json(new[]
+                    {
+                        "rejected",
+                        "The request from an unauthenticated user. Log in or Register!"
+                    });
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                ArticlePoint articlePoint = new ArticlePoint()
+                {
+                    Article = _userContext.Articles.First(p => p.ArticleId == articleId),
+                    User = _userContext.UserProfiles.First(p => p.UserId == userId)
+                };
+                _userContext.ArticlePoints.Add(articlePoint);
+                _userContext.Articles.First(p => p.ArticleId == articleId).Point++;
+                _userContext.SaveChanges();
+                return Json(new[]
+                {
+                    "added",
+                    "no message"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new[]
+                    {
+                        "rejected",
+                        e.Message
+                    });
+            }
+        }
+
+        [HttpPost]
+        [InitializeSimpleMembership]
+        public ActionResult UnLike(int articleId)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                    return Json(new[]
+                    {
+                        "rejected",
+                        "The request from an unauthenticated user. Log in or Register!"
+                    });
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                ArticlePoint articlePoint =
+                    _userContext.ArticlePoints.First(p => p.Article.ArticleId == articleId && p.User.UserId == userId);
+                _userContext.ArticlePoints.Remove(articlePoint);
+                _userContext.Articles.First(p => p.ArticleId == articleId).Point--;
+                _userContext.SaveChanges();
+                return Json(new[]
+                {
+                    "removed",
+                    "no message"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new[]
+                    {
+                        "rejected",
+                        e.Message
+                    });
+            }
+        }
+
+        [HttpPost]
+        [InitializeSimpleMembership]
+        public ActionResult Star(int articleId)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                    return Json(new[]
+                    {
+                        "rejected",
+                        "The request from an unauthenticated user. Log in or Register!"
+                    });
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                ArticleFavorite articleFavorite = new ArticleFavorite()
+                {
+                    Article = _userContext.Articles.First(p => p.ArticleId == articleId),
+                    User = _userContext.UserProfiles.First(p => p.UserId == userId)
+                };
+                _userContext.ArticleFavorites.Add(articleFavorite);
+                _userContext.Articles.First(p => p.ArticleId == articleId).Favorite++;
+                _userContext.SaveChanges();
+                return Json(new[]
+                {
+                    "added",
+                    "no message"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new[]
+                    {
+                        "rejected",
+                        e.Message
+                    });
+            }
+        }
+
+        [HttpPost]
+        [InitializeSimpleMembership]
+        public ActionResult UnStar(int articleId)
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated)
+                    return Json(new[]
+                    {
+                        "rejected",
+                        "The request from an unauthenticated user. Log in or Register!"
+                    });
+                int userId = WebSecurity.GetUserId(User.Identity.Name);
+                ArticleFavorite articleFavorite =
+                    _userContext.ArticleFavorites.First(p => p.Article.ArticleId == articleId && p.User.UserId == userId);
+                _userContext.ArticleFavorites.Remove(articleFavorite);
+                _userContext.Articles.First(p => p.ArticleId == articleId).Favorite--;
+                _userContext.SaveChanges();
+                return Json(new[]
+                {
+                    "removed",
+                    "no message"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new[]
+                    {
+                        "rejected",
+                        e.Message
+                    });
+            }
         }
 
         private string[] Identifier(string articleIdOrIdentifier)

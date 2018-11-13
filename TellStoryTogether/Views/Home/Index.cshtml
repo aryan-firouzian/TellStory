@@ -21,13 +21,21 @@
                     <p id="owner" class="title-ellipsis">username</p>
                     <p id="text" class="text-ellipsis">text</p>
                     <div class="seen-heart">
-                        <div id="seen" class="ui green label ">
-                            seen
-                            <i class="universal access icon"></i>
+                        <div class="ui labeled button mini star cursor-default">
+                            <div class="ui basic yellow button mini cursor-default">
+                                <i class="star outline icon"></i> Favourite
+                            </div>
+                            <div id="star" class="ui basic label yellow mini cursor-default">
+                                0
+                            </div>
                         </div>
-                        <div id="heart" class="ui green label">
-                            points
-                            <i class="heart icon"></i>
+                        <div class="ui labeled button mini star cursor-default">
+                            <div class="ui basic red button mini cursor-default">
+                                <i class="heart outline icon"></i> Like
+                            </div>
+                            <div id="heart" class="ui basic label red mini cursor-default">
+                                0
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,8 +88,8 @@
                             $newSliderItem.find('#title').attr('id', 'title-' + value.ArticleId).attr('href', '/Read?identifier=' + value.ArticleId).html(value.Title);
                             $newSliderItem.find('#owner').attr('id', 'owner-' + value.ArticleId).html(value.Owner.UserName);
                             $newSliderItem.find('#text').attr('id', 'text-' + value.ArticleId).html(value.Text);
-                            $newSliderItem.find('#seen').attr('id', 'seen-' + value.ArticleId).html(value.Seen + ' <i class="universal access icon"></i>');
-                            $newSliderItem.find('#heart').attr('id', 'heart-' + value.ArticleId).html(value.Point + ' <i class="heart icon"></i>');
+                            $newSliderItem.find('#star').attr('id', 'star-' + value.ArticleId).html(value.Favorite);
+                            $newSliderItem.find('#heart').attr('id', 'heart-' + value.ArticleId).html(value.Point);
                             $newSliderItem.removeClass('item-hide');
                             $slider.append($newSliderItem);
                         });

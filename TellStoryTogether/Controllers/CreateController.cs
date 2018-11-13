@@ -46,6 +46,7 @@ namespace TellStoryTogether.Controllers
             ViewBag.articleInitId = articles.Count == 0 ? -1 : articles.Last().ArticleId;
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
             ViewBag.identifier = identifier;
+            ViewBag.Genres = _userContext.Genres.ToList();
             return View(articles);
         }
 

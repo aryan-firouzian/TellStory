@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<section id="main-section" class="ui basic segment consecutive double stackable two column grid" style="margin: 0 !important; margin-bottom: 50px !important; width: auto"></section>
+<div id="loader" class="ui basic segment" style="margin-top: 100px">
+    <div class="ui active centered loader"></div>
+</div>
+
+<div class="item-hide column show">
+    <div class="ui justified container segment story-container">
+        <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+        <h3>
+            <a href="" class="title-ellipsis title">title</a>
+        </h3>
+        <p class="title-ellipsis owner">username</p>
+        <p class="text-ellipsis text">text</p>
+        <div class="seen-heart">
+            <div class="ui labeled button mini star cursor-default">
+                <div class="ui basic yellow button mini cursor-default">
+                    <i class="star outline icon"></i> Favourite
+                </div>
+                <div class="ui basic label yellow mini cursor-default">
+                    0
+                </div>
+            </div>
+            <div class="ui labeled button mini star cursor-default">
+                <div class="ui basic red button mini cursor-default">
+                    <i class="heart outline icon"></i> Like
+                </div>
+                <div class="ui basic label red mini cursor-default">
+                    0
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+            var keepLoading = true;
+            var start = 0;
+
+            var genreId = Number('@ViewBag.GenreId');
+            var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
+            var username = '@System.Web.HttpContext.Current.User.Identity.Name';
+            var myAppUrlSettings = {
+                myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")'
+            }
+
+
+            var $section = $('#main-section');
+            var $show = $('.show').clone().removeClass('item-hide');
+            $section.find('.show').remove();
+            var $loader = $('#loader');
+
+
+            function loadArticleByGenre(from, take) {
+                var loadArticle = new XMLHttpRequest();
+                var loadArticleData = new FormData();
+                loadArticleData.append('genreId', genreId);
+                loadArticleData.append('from', from);
+                loadArticleData.append('take', take);
+                loadArticle.onload = function() {
+                    var genreList = $.parseJSON(this.responseText);
+                    $loader.hide();
+                    if (genreList.length > 0) {
+                        keepLoading = true;
+                        start = start + genreList.length;
+                        $.each(genreList, function(i, v) {
+                            var $newShow = $show.clone();
+                            $newShow.find('.image').attr('src', v.PictureUrl);
+                            $newShow.find('.title').html(v.Title);
+                            //$newShow.find('.owner').html(v.Owner.UserName);
+                            $newShow.find('.text').html(v.Text);
+                            $newShow.find('.label.yellow').html(v.Favorite);
+                            $newShow.find('.label.red').html(v.Point);
+                            $section.append($newShow);
+                        });
+                    }
+                }
+                loadArticle.open('POST', myAppUrlSettings.myLoadByGenreUrl);
+                loadArticle.send(loadArticleData);
+            }
+
+            loadArticleByGenre(start, 6);
+
+            $(window).scroll(function() {
+                if (keepLoading) {
+                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                        keepLoading = false;
+                        $loader.show();
+                        loadArticleByGenre(start, 6);
+                    }
+                }
+            });
+
+        });
+    </script>
+}

@@ -110,7 +110,7 @@ z-index:3;
 }
 
 .story-container {
-     height: 300px !important;
+     min-height: 300px !important;
      margin: 20px !important;
  }
 

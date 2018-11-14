@@ -49,6 +49,13 @@
                                 {
                                     <label>Title</label>
                                     <input id="title" type="text" placeholder="Story Title">
+                                    <label style="margin-top: 20px">Genre</label>
+                                    <select class="ui fluid dropdown">
+                                        @foreach (var genre in ViewBag.Genres)
+                                        {
+                                            <option value=@genre.Name>@genre.Name</option>
+                                        }
+                                    </select>
                                     <label style="margin-top: 20px">Character Limit</label>
                                     <div class="fields">
                                         <div class="seven wide field">

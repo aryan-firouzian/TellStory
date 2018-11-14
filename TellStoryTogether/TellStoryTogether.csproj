@@ -186,6 +186,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
+    <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReadController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
@@ -608,6 +609,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Create\Index.cshtml" />
+    <Content Include="Views\Genre\Index.cshtml" />
     <None Include="Views\Schedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

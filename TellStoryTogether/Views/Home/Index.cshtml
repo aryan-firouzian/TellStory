@@ -1,55 +1,62 @@
 ﻿
 @section featured {
     <section id="main-section">
-        <div class="ui basic segment" style="height: 420px; margin: 0 !important; margin-bottom: 50px !important; width: auto">
-            <div>
-                <div class="ui active centered loader"></div>
-            </div>
-            <div class="show-label item-hide">
+        <div class="ui basic segment show item-hide" style="height: 420px; margin: 0 !important; margin-bottom: 50px !important; width: auto">
+            <div class="show-genre">
                 <h3 class="ui horizontal divider header">
-                    <a href="" class="title-ellipsis">Basic</a>
+                    <a href="" class="title-ellipsis genre-name">Genre</a>
                 </h3>
-                <p class="text-ellipsis">Some details about the tag</p>
+                <p class="text-ellipsis genre-detail">Some details about the Genre</p>
             </div>
-            <div id="slider" class="slickcarousel item-hide"></div>
-            <div class="item-hide">
-                <div class="ui justified container segment story-container">
-                    <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-                    <h3>
-                        <a href="" id="title" class="title-ellipsis">title</a>
-                    </h3>
-                    <p id="owner" class="title-ellipsis">username</p>
-                    <p id="text" class="text-ellipsis">text</p>
-                    <div class="seen-heart">
-                        <div class="ui labeled button mini star cursor-default">
-                            <div class="ui basic yellow button mini cursor-default">
-                                <i class="star outline icon"></i> Favourite
-                            </div>
-                            <div id="star" class="ui basic label yellow mini cursor-default">
-                                0
-                            </div>
+            <div id="slider" class="slickcarousel"></div>
+        </div>
+        <div class="show-slider-item item-hide">
+            <div class="ui justified container segment story-container">
+                <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                <h3>
+                    <a href="" class="title-ellipsis title">title</a>
+                </h3>
+                <a class="title-ellipsis owner">username</a>
+                <p class="text-ellipsis show-title text">text</p>
+                <div class="seen-heart">
+                    <div class="ui labeled button mini star cursor-default">
+                        <div class="ui basic yellow button mini cursor-default">
+                            <i class="star outline icon"></i> Favourite
                         </div>
-                        <div class="ui labeled button mini star cursor-default">
-                            <div class="ui basic red button mini cursor-default">
-                                <i class="heart outline icon"></i> Like
-                            </div>
-                            <div id="heart" class="ui basic label red mini cursor-default">
-                                0
-                            </div>
+                        <div class="ui basic label yellow mini cursor-default">
+                            0
+                        </div>
+                    </div>
+                    <div class="ui labeled button mini star cursor-default">
+                        <div class="ui basic red button mini cursor-default">
+                            <i class="heart outline icon"></i> Like
+                        </div>
+                        <div class="ui basic label red mini cursor-default">
+                            0
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <div id="loader" class="ui basic segment" style="margin-top: 200px">
+        <div class="ui active centered loader"></div>
+    </div>
 }
 
 @section Scripts{
     <script>
-        $(document).ready(function() {
+    $(document).ready(function () {
 
+        var myAppUrlSettings = {
+            myGenreUrl: '@Url.Action("Index", "Genre")',
+            myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',
+                myUserUrl: '@Url.Action("Index", "User")',
+                myReadUrl: '@Url.Action("Index", "Read")'
+            }
 
             var listOfGenre = [];
+
             var slidesToShow = 2;
             if ($(window).width() >= 1380) {
                 slidesToShow = 3;
@@ -58,42 +65,48 @@
                 slidesToShow = 1;
             }
 
+            var $section = $('#main-section');
+            var $loader = $('#loader');
+            var $show = $section.find('.show').clone();
+            $section.find('.show').remove();
+            $show.removeClass('item-hide');
+            var $sliderItem = $section.find('.show-slider-item').clone();
+            $section.find('.show-slider-item').remove();
+            $sliderItem.remove('item-hide');
+
+
             function removeFromGenreLoadSliderWithContent(repeatParam) {
                 if (listOfGenre.length > 0) {
                     repeatParam--;
                     var paramGenre = listOfGenre[0];
                     listOfGenre = jQuery.grep(listOfGenre, function(value) {
-                        return value != paramGenre;
+                        return value !== paramGenre;
                     });
-                    var $section = $('#main-section');
-                    var $show = $section.children().eq(0).clone();
-                    var $loader = $show.children().eq(0);
-                    var $label = $show.children().eq(1);
-                    var $slider = $show.children().eq(2);
-                    $slider.attr('id', 'slider-' + paramGenre);
-                    var $sliderItem = $show.children().eq(3);
-                    $section.append($show);
-                    $show.removeClass('item-hide');
-                    $loader.removeClass('item-hide');
-                    var loadArticleRequest = new XMLHttpRequest();
-                    loadArticleRequest.onload = function() {
-                        var resultList = $.parseJSON(this.responseText);
-                        $loader.addClass('item-hide');
-                        $label.children().eq(0).html(resultList[0].Genre.Name);
-                        $label.children().eq(1).html(resultList[0].Genre.Detail);
-                        $label.removeClass('item-hide');
-                        $.each(resultList, function(index, value) {
-                            var $newSliderItem = $sliderItem.clone();
-                            $newSliderItem.find('#image').attr('src', value.PictureUrl).attr('id', 'image-' + value.ArticleId);
-                            $newSliderItem.find('#title').attr('id', 'title-' + value.ArticleId).attr('href', '/Read?identifier=' + value.ArticleId).html(value.Title);
-                            $newSliderItem.find('#owner').attr('id', 'owner-' + value.ArticleId).html(value.Owner.UserName);
-                            $newSliderItem.find('#text').attr('id', 'text-' + value.ArticleId).html(value.Text);
-                            $newSliderItem.find('#star').attr('id', 'star-' + value.ArticleId).html(value.Favorite);
-                            $newSliderItem.find('#heart').attr('id', 'heart-' + value.ArticleId).html(value.Point);
-                            $newSliderItem.removeClass('item-hide');
-                            $slider.append($newSliderItem);
-                        });
-                        $slider.removeClass('item-hide');
+
+                    var loadArticle = new XMLHttpRequest();
+                    var loadArticleData = new FormData();
+                    loadArticleData.append('genreId', paramGenre);
+                    loadArticleData.append('from', 0);
+                    loadArticleData.append('take', 5);
+                    loadArticle.onload = function() {
+                        var articleList = $.parseJSON(this.responseText);
+                        var $newShow = $show.clone();
+                        $section.append($newShow);
+                        $newShow.find('.genre-name').attr('href', myAppUrlSettings.myGenreUrl + '?genreId=' + articleList[0].Genre.GenreId).html(articleList[0].Genre.Name);
+                        $newShow.find('.genre-detail').html(articleList[0].Genre.Detail);
+                        $newShow.find('.slickcarousel').attr('id', 'slider-' + paramGenre);
+                        if (articleList.length > 0) {
+                            $.each(articleList, function(i, v) {
+                                var $newSliderItem = $sliderItem.clone();
+                                $newSliderItem.find('.image').attr('src', v.PictureUrl);
+                                $newSliderItem.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
+                                $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + articleList[0].Owner.UserId).html(v.Owner.UserName);
+                                $newSliderItem.find('.text').html(v.Text);
+                                $newSliderItem.find('.label.yellow').html(v.Favorite);
+                                $newSliderItem.find('.label.red').html(v.Point);
+                                $newShow.find('.slickcarousel').append($newSliderItem);
+                            });
+                        }
                         $('#slider-' + paramGenre).slick(({
                             infinite: true,
                             slidesToShow: slidesToShow,
@@ -102,16 +115,18 @@
                             prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
                             nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
                         }));
+
+                        if (listOfGenre.length == 0) {
+                            $loader.hide();
+                        }
                         if (repeatParam > 0) {
                             removeFromGenreLoadSliderWithContent(repeatParam);
                         }
                     }
-                    loadArticleRequest.open("POST", "/Home/LoadArticles?genre=" + paramGenre);
-                    loadArticleRequest.send();
+                    loadArticle.open('POST', myAppUrlSettings.myLoadByGenreUrl);
+                    loadArticle.send(loadArticleData);
                 }
-
             }
-
 
 
             var loadGenreRequest = new XMLHttpRequest();

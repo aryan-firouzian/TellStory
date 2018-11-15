@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +24,7 @@ namespace TellStoryTogether.Controllers
         [HttpPost]
         public ActionResult LoadArticles(int genreId, int from, int take)
         {
-            List<Article> articles = _userContext.Articles.Where(p => p.Genre.GenreId == genreId).OrderBy(p => p.Point).Skip(from).Take(take).ToList();
+            List<Article> articles = _userContext.Articles.Where(p => p.ArticleInitId==-1 && p.Genre.GenreId == genreId).OrderBy(p => p.Point).Skip(from).Take(take).Include(p => p.Owner).Include(p => p.Genre).ToList();
             return Json(articles);
         }
 

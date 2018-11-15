@@ -30,7 +30,7 @@ namespace TellStoryTogether.Controllers
             return View();
         }
 
-        [HttpPost]
+/*        [HttpPost]
         public ActionResult LoadArticles(string genre)
         {
             try
@@ -45,7 +45,7 @@ namespace TellStoryTogether.Controllers
 
                 return Json("error");
             }
-        }
+        }*/
 
 
         [HttpPost]
@@ -55,9 +55,9 @@ namespace TellStoryTogether.Controllers
             {
                 var genreWithMoreThan3 = _userContext.Articles.GroupBy(p => p.Genre).Select(group => new
                 {
-                    GenreId = group.Key,
+                    Genre = group.Key,
                     Count = group.Count()
-                }).Where(p => p.Count > 3).Select(p => p.GenreId.Name).ToList();
+                }).Where(p => p.Count > 3).Select(p => p.Genre.GenreId).ToList();
 
                 return
                     Json(genreWithMoreThan3);

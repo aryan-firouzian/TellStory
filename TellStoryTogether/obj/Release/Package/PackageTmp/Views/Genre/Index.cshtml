@@ -1,5 +1,9 @@
-﻿<section id="main-section" class="ui basic segment consecutive double stackable two column grid" style="margin: 0 !important; margin-bottom: 50px !important; width: auto"></section>
-<div id="loader" class="ui basic segment" style="margin-top: 200px">
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<section id="main-section" class="ui basic segment consecutive double stackable two column grid" style="margin: 0 !important; margin-bottom: 50px !important; width: auto"></section>
+<div id="loader" class="ui basic segment" style="margin-top: 100px">
     <div class="ui active centered loader"></div>
 </div>
 
@@ -9,8 +13,8 @@
         <h3>
             <a href="" class="title-ellipsis title">title</a>
         </h3>
-        <a class="title-ellipsis owner">username</a>
-        <p class="text-ellipsis show-title text">text</p>
+        <p class="title-ellipsis owner">username</p>
+        <p class="text-ellipsis text">text</p>
         <div class="seen-heart">
             <div class="ui labeled button mini star cursor-default">
                 <div class="ui basic yellow button mini cursor-default">
@@ -43,9 +47,7 @@
             var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
             var username = '@System.Web.HttpContext.Current.User.Identity.Name';
             var myAppUrlSettings = {
-                myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',
-                myUserUrl: '@Url.Action("Index", "User")',
-                myReadUrl: '@Url.Action("Index", "Read")'
+                myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")'
             }
 
 
@@ -62,17 +64,16 @@
                 loadArticleData.append('from', from);
                 loadArticleData.append('take', take);
                 loadArticle.onload = function() {
-                    var articleList = $.parseJSON(this.responseText);
+                    var genreList = $.parseJSON(this.responseText);
                     $loader.hide();
-                    if (articleList.length > 0) {
+                    if (genreList.length > 0) {
                         keepLoading = true;
-                        start = start + articleList.length;
-                        $.each(articleList, function(i, v) {
+                        start = start + genreList.length;
+                        $.each(genreList, function(i, v) {
                             var $newShow = $show.clone();
                             $newShow.find('.image').attr('src', v.PictureUrl);
                             $newShow.find('.title').html(v.Title);
-                            $newShow.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
-                            $newShow.find('.owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + v.Owner.UserId).html(v.Owner.UserName);
+                            //$newShow.find('.owner').html(v.Owner.UserName);
                             $newShow.find('.text').html(v.Text);
                             $newShow.find('.label.yellow').html(v.Favorite);
                             $newShow.find('.label.red').html(v.Point);

@@ -232,4 +232,7 @@ z-index:3;
         .account {
         width:40% !important;
     }
+        #slider-range {
+            margin-top: 10px !important; 
+        }
 }

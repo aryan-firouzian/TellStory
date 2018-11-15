@@ -27,13 +27,13 @@ namespace TellStoryTogether.Controllers
             {
                 List<int> parallels = identifier.Split('-').Select(Int32.Parse).ToList();
                 int articleId = parallels[0];
-                Article articleTemp = _userContext.Articles.Include("Owner").First(p => p.ArticleId == articleId);
+                Article articleTemp = _userContext.Articles.Include("Owner").Include("Genre").First(p => p.ArticleId == articleId);
                 articles.Add(articleTemp);
                 parallels.RemoveAt(0);
                 length++;
                 foreach (int parallel in parallels)
                 {
-                    articleTemp = _userContext.Articles.Include("Owner").First(p => p.ArticleInitId == articleId && p.Parallel == parallel);
+                    articleTemp = _userContext.Articles.Include("Owner").Include("Genre").First(p => p.ArticleInitId == articleId && p.Parallel == parallel);
                     articles.Add(articleTemp);
                     length++;
                     articleId = articleTemp.ArticleId;
@@ -45,15 +45,16 @@ namespace TellStoryTogether.Controllers
             ViewBag.charMax = articles.Count == 0 ? "2000" : articles[0].MaxChar.ToString();
             ViewBag.articleInitId = articles.Count == 0 ? -1 : articles.Last().ArticleId;
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
+            ViewBag.genre = articles.Count == 0 ? -1 : articles[0].Genre.GenreId;
             ViewBag.identifier = identifier;
-            ViewBag.Genres = _userContext.Genres.ToList();
+            ViewBag.genres = _userContext.Genres.ToList();
             return View(articles);
         }
 
 
         [HttpPost]
         [InitializeSimpleMembership]
-        public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max)
+        public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max, int genreId)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace TellStoryTogether.Controllers
                     }
                     int userId = WebSecurity.GetUserId(User.Identity.Name);
                     UserProfile user = _userContext.UserProfiles.First(p => p.UserId == userId);
-                    Genre genre = _userContext.Genres.First();
+                    Genre genre = _userContext.Genres.First(p => p.GenreId == genreId);
                     
                     Article newArticle = new Article
                     {

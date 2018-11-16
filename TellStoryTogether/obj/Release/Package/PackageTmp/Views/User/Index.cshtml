@@ -39,11 +39,11 @@
             var keepLoading = true;
             var start = 0;
 
-            var genreId = Number('@ViewBag.GenreId');
+            var userId = Number('@ViewBag.UserId');
             var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
             var username = '@System.Web.HttpContext.Current.User.Identity.Name';
             var myAppUrlSettings = {
-                myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',
+                myLoadByUserUrl: '@Url.Action("LoadArticles", "User")',
                 myUserUrl: '@Url.Action("Index", "User")',
                 myReadUrl: '@Url.Action("Index", "Read")'
             }
@@ -55,10 +55,10 @@
             var $loader = $('#loader');
 
 
-            function loadArticleByGenre(from, take) {
+            function loadArticleByUser(from, take) {
                 var loadArticle = new XMLHttpRequest();
                 var loadArticleData = new FormData();
-                loadArticleData.append('genreId', genreId);
+                loadArticleData.append('userId', userId);
                 loadArticleData.append('from', from);
                 loadArticleData.append('take', take);
                 loadArticle.onload = function() {
@@ -70,7 +70,6 @@
                         $.each(articleList, function(i, v) {
                             var $newShow = $show.clone();
                             $newShow.find('.image').attr('src', v.PictureUrl);
-                            $newShow.find('.title').html(v.Title);
                             $newShow.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
                             $newShow.find('.owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + v.Owner.UserId).html(v.Owner.UserName);
                             $newShow.find('.text').html(v.Text);
@@ -80,18 +79,18 @@
                         });
                     }
                 }
-                loadArticle.open('POST', myAppUrlSettings.myLoadByGenreUrl);
+                loadArticle.open('POST', myAppUrlSettings.myLoadByUserUrl);
                 loadArticle.send(loadArticleData);
             }
 
-            loadArticleByGenre(start, 6);
+            loadArticleByUser(start, 6);
 
             $(window).scroll(function() {
                 if (keepLoading) {
                     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
                         keepLoading = false;
                         $loader.show();
-                        loadArticleByGenre(start, 6);
+                        loadArticleByUser(start, 6);
                     }
                 }
             });

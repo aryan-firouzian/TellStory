@@ -168,5 +168,11 @@ namespace TellStoryTogether.Helper
             }
             return articleUserBase;
         }
+
+        public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> source, int n)
+        {
+            IEnumerable<T> enumerable = source as T[] ?? source.ToArray();
+            return enumerable.Skip(Math.Max(0, enumerable.Count() - n));
+        }
     }
 }

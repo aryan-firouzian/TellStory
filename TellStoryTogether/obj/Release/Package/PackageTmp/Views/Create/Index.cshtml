@@ -50,10 +50,11 @@
                                     <label>Title</label>
                                     <input id="title" type="text" placeholder="Story Title">
                                     <label style="margin-top: 20px">Genre</label>
-                                    <select class="ui fluid dropdown">
-                                        @foreach (var genre in ViewBag.Genres)
+                                    <select id="genre" class="ui fluid dropdown">
+                                        <option value='-1'>Select a genre</option>
+                                        @foreach (var genre in ViewBag.genres)
                                         {
-                                            <option value=@genre.Name>@genre.Name</option>
+                                            <option value=@genre.GenreId>@genre.Name</option>
                                         }
                                     </select>
                                     <label style="margin-top: 20px">Character Limit</label>
@@ -73,6 +74,8 @@
                                 {
                                     <label>Title</label>
                                     <label class="detail" style="font-style: italic">@Model.First().Title</label>
+                                    <label style="margin-top: 20px">Genre</label>
+                                    <label class="detail" style="font-style: italic">@Model.First().Genre.Name</label>
                                     <label style="margin-top: 20px">Character Limit</label>
                                     <div class="fields">
                                         <div class="seven wide field">
@@ -150,6 +153,10 @@
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#show-create").offset().top - 60
             }, 2000);
+
+            var myAppUrlSettings = {
+                MySaveArticleUrl: '@Url.Action("SaveArticle", "Create")'
+            }
 
             var basic = $('#main-cropper').croppie({
                 viewport: { width: 175, height: 275 },
@@ -233,16 +240,21 @@
                     var min = @ViewBag.charMin;
                     var max = @ViewBag.charMax;
                     var text = $('#text').val();
+                    var genreId = @ViewBag.genre;
                     if (@ViewBag.length === 0) {
                         title = $('#title').val();
                         min = $('#min-char').val();
                         max = $('#max-char').val();
+                        genreId = $('#genre').val();
                     }
                     if (@ViewBag.length === 0 && !isImageAdded) {
                         error = 'An image should be uploaded as story cover.';
                         showMessage("Error", error, true);
                     } else if (title == null || title.trim() === '') {
                         error = 'Title field cannot be empty.';
+                        showMessage("Error", error, true);
+                    }else if (genreId == null || genreId==='-1') {
+                        error = 'Genre option should be selected.';
                         showMessage("Error", error, true);
                     } else if (text == null || text.trim() === '') {
                         error = 'Story field cannot be empty.';
@@ -271,10 +283,8 @@
                         formData.append('serial', serial);
                         formData.append('min', min);
                         formData.append('max', max);
+                        formData.append('genreId', genreId);
 
-                        var myAppUrlSettings = {
-                            MyUsefulUrl: '@Url.Action("SaveArticle", "Create")'
-                        }
                         var request = new XMLHttpRequest();
                         request.onload = function() {
                             var response = $.parseJSON(this.responseText);
@@ -289,7 +299,7 @@
                                 showMessage('Sever Error', error, true);
                             }
                         }
-                        request.open('POST', myAppUrlSettings.MyUsefulUrl);
+                        request.open('POST', myAppUrlSettings.MySaveArticleUrl);
                         request.send(formData);
                     }
                 });

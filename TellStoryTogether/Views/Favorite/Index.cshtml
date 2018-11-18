@@ -1,0 +1,15 @@
+﻿@model List<TellStoryTogether.Models.Article>
+
+<section id="main-section" class="ui basic container segment stackable centered" style="margin: 0 !important; margin-bottom: 50px !important;margin-top: 50px !important; width: auto">
+    <div class="ui relaxed divided list">
+        @foreach (var article in Model)
+        {
+            <div class="item">
+                <div class="content">
+                    <a class="header" href="@Url.Action("Index", "Read")?identifier=@article.Identifier#show-@article.Serial">@article.Title</a>
+                    <div class="description title-ellipsis-no-width">@article.Text</div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

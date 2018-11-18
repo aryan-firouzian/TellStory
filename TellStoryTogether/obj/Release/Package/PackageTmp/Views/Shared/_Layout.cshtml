@@ -14,6 +14,7 @@
             crossorigin="anonymous"></script>
 
     @*<link rel="stylesheet" type="text/css" href="~/Content/bootstrap_css/bootstrap.min.css">*@
+    
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     @*<link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/semantic.min.css">
@@ -91,9 +92,71 @@
 
 @*@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryui")*@
+
+
+    <script>
+    $(document).ready(function() {
+
+        function loadInfoNavigationMenu() {
+            if ('@User.Identity.IsAuthenticated' == 'True') {
+                var myAppUrlSettings = {
+                    getMyFavorites: '@Url.Action("LoadFavoriteArticles", "User")',
+                    getMyScripts: '@Url.Action("LoadScriptArticles", "User")',
+                    getMyReadArticle: '@Url.Action("Index", "Read")'
+                }
+
+                var $dpDivider = $('<div class="dropdown-divider"></div>');
+                var $dpItem = $('<a class="dropdown-item" href="#"><div class="dropdown-item-1"></div><div class="dropdown-item-2 title-ellipsis-width"></div></a>');
+                var $FavoriteHeader = $('#favorite-header');
+                var $ScriptHeader = $('#script-header');
+
+                var loadFavoriteArticles = new XMLHttpRequest();
+                var lfaData = new FormData();
+                lfaData.append('take', 5);
+                loadFavoriteArticles.onload = function () {
+                    var result = $.parseJSON(this.responseText);
+                    if (result.count > 0) {
+                        $FavoriteHeader.html('See all ' + result.count + ' favorites');
+                        $('#favorite-dropdown').append($dpDivider.clone());
+                        $.each(result.articles, function (i, v) {
+                            var $newItem = $dpItem.clone();
+                            $newItem.attr('href', myAppUrlSettings.getMyReadArticle + '?identifier=' + v.Identifier + "#show-" + v.Serial);
+                            $newItem.find('.dropdown-item-1').html(v.Title);
+                            $newItem.find('.dropdown-item-2').html(v.Text);
+                            $('#favorite-dropdown').append($newItem);
+                        });
+                    }
+                }
+                loadFavoriteArticles.open('POST', myAppUrlSettings.getMyFavorites);
+                loadFavoriteArticles.send(lfaData);
+
+                var loadScriptArticles = new XMLHttpRequest();
+                var lsaData = new FormData();
+                lsaData.append('take', 5);
+                loadScriptArticles.onload = function () {
+                    var result = $.parseJSON(this.responseText);
+                    if (result.count > 0) {
+                        $ScriptHeader.html('See all ' + result.count + ' scripts');
+                        $('#script-dropdown').append($dpDivider.clone());
+                        $.each(result.articles, function (i, v) {
+                            var $newItem = $dpItem.clone();
+                            $newItem.attr('href', myAppUrlSettings.getMyReadArticle + '?identifier=' + v.Identifier + '#show-' + v.Serial);
+                            $newItem.find('.dropdown-item-1').html(v.Title);
+                            $newItem.find('.dropdown-item-2').html(v.Text);
+                            $('#script-dropdown').append($newItem);
+                        });
+                    }
+                }
+                loadScriptArticles.open('POST', myAppUrlSettings.getMyScripts);
+                loadScriptArticles.send(lsaData);
+            }
+        }
+
+        loadInfoNavigationMenu();
+    })
+    </script>
+
 @RenderSection("scripts", required: false)
-
-
 
 @*<script src="~/Scripts/bootstrap_js/bootstrap.min.js"></script>*@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

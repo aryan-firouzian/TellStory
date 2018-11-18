@@ -292,3 +292,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.RemoveSelectedFromArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.RemoveInheritanceFromArticleTable.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.CommentChangeArticleIdToArticle.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.UserTableAddPoint.resources

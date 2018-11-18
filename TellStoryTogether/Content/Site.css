@@ -168,6 +168,15 @@ z-index:3;
    white-space: nowrap;
 }
 
+.title-ellipsis-no-width {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   line-height: 19px;     /* fallback */
+   max-height: 22px;      /* fallback */
+   -webkit-line-clamp: 1; /* number of lines to show */
+}
+
 .show-label {
     margin-left: 20px;
     margin-top: 20px;

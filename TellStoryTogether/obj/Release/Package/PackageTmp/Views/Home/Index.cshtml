@@ -1,44 +1,44 @@
 ﻿
 @section featured {
     <section id="main-section">
-        <div class="ui basic segment show item-hide" style="height: 420px; margin: 0 !important; margin-bottom: 50px !important; width: auto">
-            <div class="show-genre">
-                <h3 class="ui horizontal divider header">
-                    <a href="" class="title-ellipsis genre-name">Genre</a>
-                </h3>
-                <p class="text-ellipsis genre-detail">Some details about the Genre</p>
-            </div>
-            <div id="slider" class="slickcarousel"></div>
+    <div class="ui basic segment show item-hide" style="margin: 0 !important; width: auto">
+        <div class="show-genre">
+            <h3 class="ui horizontal divider header">
+                <a href="" class="title-ellipsis genre-name">Genre</a>
+            </h3>
+            <p class="text-ellipsis genre-detail">Some details about the Genre</p>
         </div>
-        <div class="show-slider-item item-hide">
-            <div class="ui justified container segment story-container">
-                <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-                <h3>
-                    <a href="" class="title-ellipsis title">title</a>
-                </h3>
-                <a class="title-ellipsis owner">username</a>
-                <p class="text-ellipsis show-title text">text</p>
-                <div class="seen-heart">
-                    <div class="ui labeled button mini star cursor-default">
-                        <div class="ui basic yellow button mini cursor-default">
-                            <i class="star outline icon"></i> Favourite
-                        </div>
-                        <div class="ui basic label yellow mini cursor-default">
-                            0
-                        </div>
+        <div id="slider" style="margin-bottom:0!important" class="slickcarousel"></div>
+    </div>
+    <div class="show-slider-item item-hide">
+        <div class="ui justified container segment story-container">
+            <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+            <h3>
+                <a href="" class="title-ellipsis title">title</a>
+            </h3>
+            <a class="title-ellipsis owner">username</a>
+            <p class="text-ellipsis show-title text">text</p>
+            <div class="seen-heart">
+                <div class="ui labeled button mini star cursor-default">
+                    <div class="ui basic yellow button mini cursor-default">
+                        <i class="star outline icon"></i> Favourite
                     </div>
-                    <div class="ui labeled button mini star cursor-default">
-                        <div class="ui basic red button mini cursor-default">
-                            <i class="heart outline icon"></i> Like
-                        </div>
-                        <div class="ui basic label red mini cursor-default">
-                            0
-                        </div>
+                    <div class="ui basic label yellow mini cursor-default">
+                        0
+                    </div>
+                </div>
+                <div class="ui labeled button mini star cursor-default">
+                    <div class="ui basic red button mini cursor-default">
+                        <i class="heart outline icon"></i> Like
+                    </div>
+                    <div class="ui basic label red mini cursor-default">
+                        0
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <div id="loader" class="ui basic segment" style="margin-top: 200px">
         <div class="ui active centered loader"></div>
     </div>
@@ -48,6 +48,7 @@
     <script>
     $(document).ready(function () {
 
+        
         var myAppUrlSettings = {
             myGenreUrl: '@Url.Action("Index", "Genre")',
             myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',

@@ -140,7 +140,7 @@
             loadGenreRequest.send();
 
             $(window).scroll(function() {
-                if ($(window).scrollTop() + window.innerHeight == $(document).height()) {
+                if ($(window).scrollTop() + window.innerHeight === $(document).height()) {
                     removeFromGenreLoadSliderWithContent(1);
                 }
             });

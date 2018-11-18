@@ -33,6 +33,7 @@ namespace TellStoryTogether.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public int UserPoint { get; set; }
     }
 
     public class RegisterExternalLoginModel

@@ -1,18 +1,20 @@
 ﻿@if (Request.IsAuthenticated)
 {
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Favorites</a>
+        <div id="favorite-dropdown" class="dropdown-menu">
+            <a id="favorite-header" class="dropdown-item" href="#">No article</a>
+        </div>
+    </li>    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Scripts</a>
+        <div id="script-dropdown" class="dropdown-menu">
+            <a id="script-header" class="dropdown-item" href="#">No article</a>
+        </div>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new { identifier = "new" })">
             Create
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Index", "Home")">
-            Favourites
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Index", "Home")">
-            Scripts
         </a>
     </li>
     <li class="nav-item">

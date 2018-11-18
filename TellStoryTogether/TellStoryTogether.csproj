@@ -186,15 +186,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
+    <Compile Include="Controllers\FavoriteController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReadController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\ScriptController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Helper\LinqExtension.cs" />
     <Compile Include="Helper\MyTimeSpan.cs" />
     <Compile Include="Migrations\201810022229260_AddBlogRating.cs" />
@@ -276,6 +279,10 @@
     <Compile Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.cs" />
     <Compile Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.Designer.cs">
       <DependentUpon>201811121943581_CommentChangeArticleIdToArticle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811172233165_UserTableAddPoint.cs" />
+    <Compile Include="Migrations\201811172233165_UserTableAddPoint.Designer.cs">
+      <DependentUpon>201811172233165_UserTableAddPoint.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -611,8 +618,10 @@
     </Content>
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Genre\Index.cshtml" />
+    <None Include="Views\Favorite\Index.cshtml" />
     <None Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <None Include="Views\Script\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -680,6 +689,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811121943581_CommentChangeArticleIdToArticle.resx">
       <DependentUpon>201811121943581_CommentChangeArticleIdToArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811172233165_UserTableAddPoint.resx">
+      <DependentUpon>201811172233165_UserTableAddPoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

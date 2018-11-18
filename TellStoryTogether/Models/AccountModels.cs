@@ -24,6 +24,7 @@ namespace TellStoryTogether.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ArticlePoint> ArticlePoints { get; set; }
         public DbSet<ArticleFavorite> ArticleFavorites { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 
     [Table("UserProfile")]

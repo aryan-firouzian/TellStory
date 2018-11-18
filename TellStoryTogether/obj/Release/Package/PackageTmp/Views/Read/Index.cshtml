@@ -50,7 +50,7 @@
             <div class="ui justified container segment">
                 <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
                 <p id="text" class="text-no-ellipsis">text</p>
-                <p class="title-ellipsis">By <span id="owner">username</span></p>
+                <p class="title-ellipsis">By <span><a id="owner">username</a></span></p>
 
                 <div class="bottom ui four column grid">
                     <div class="ui labeled button mini cursor-default seen">
@@ -151,7 +151,8 @@
                 myLikeUrl: '@Url.Action("Like", "Read")',
                 myUnlikeUrl: '@Url.Action("UnLike", "Read")',
                 myStarUrl: '@Url.Action("Star", "Read")',
-                myUnstarUrl: '@Url.Action("UnStar", "Read")'
+                myUnstarUrl: '@Url.Action("UnStar", "Read")',
+                myUserUrl: '@Url.Action("Index", "User")',
             }
 
             var shareList = ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"];
@@ -196,7 +197,7 @@
             $sliderItem1.find('#image').attr('src', model.PictureUrl).attr('id', 'image-' + model.ArticleId);
             $sliderItem1.find('.segment').addClass('story-container-read-image');
             $sliderItem1.find('#text').attr('id', 'text-' + model.ArticleId).html(model.Text);
-            $sliderItem1.find('#owner').attr('id', 'owner-' + model.Owner).html(model.Owner.UserName);
+            $sliderItem1.find('#owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + model.Owner.UserId).attr('id', 'owner-' + model.Owner).html(model.Owner.UserName);
             $sliderItem1.find('.seen.button').find('.label').html(model.Seen);
             $sliderItem1.find('.heart.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Point);
             if (model.Pointed) {
@@ -271,7 +272,7 @@
                                 $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
                                 $newSliderItem.find('.segment').addClass('story-container-read-image');
                             }
-                            $newSliderItem.find('#owner').attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
+                            $newSliderItem.find('#owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + v.Owner.UserId).attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
                             $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
                             $newSliderItem.find('.seen.button').find('.label').html(v.Seen);
                             $newSliderItem.find('.heart.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);

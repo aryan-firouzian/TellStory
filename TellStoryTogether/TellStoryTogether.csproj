@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201811172233165_UserTableAddPoint.Designer.cs">
       <DependentUpon>201811172233165_UserTableAddPoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811181831022_AddNotificationTable.cs" />
+    <Compile Include="Migrations\201811181831022_AddNotificationTable.Designer.cs">
+      <DependentUpon>201811181831022_AddNotificationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -292,6 +296,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Language.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -692,6 +697,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811172233165_UserTableAddPoint.resx">
       <DependentUpon>201811172233165_UserTableAddPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181831022_AddNotificationTable.resx">
+      <DependentUpon>201811181831022_AddNotificationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,4 @@
-﻿<section id="main-section" class="ui basic segment consecutive double stackable two column grid" style="margin: 0 !important; margin-bottom: 50px !important; width: auto"></section>
+﻿<section id="main-section" class="ui basic segment double stackable grid" style="margin: 0 !important; margin-bottom: 50px !important; width: auto"></section>
 <div id="loader" class="ui basic segment" style="margin-top: 200px">
     <div class="ui active centered loader"></div>
 </div>
@@ -36,8 +36,9 @@
     <script>
         $(document).ready(function() {
 
-            var keepLoading = true;
+            var keepLoading = false;
             var start = 0;
+            var takeArticle = 6;
 
             var userId = Number('@ViewBag.UserId');
             var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
@@ -54,8 +55,20 @@
             $section.find('.show').remove();
             var $loader = $('#loader');
 
+            var numberItemShowPerRow = 'three';
+            if ($(window).width() >= 1380) {
+                numberItemShowPerRow = 'four';
+            }
+            if ($(window).width() <= 1000) {
+                numberItemShowPerRow = 'two';
+            }
+            if ($(window).width() <= 500) {
+                numberItemShowPerRow = 'one';
+            }
+            $section.addClass(numberItemShowPerRow).addClass('column');
 
             function loadArticleByUser(from, take) {
+                keepLoading = false;
                 var loadArticle = new XMLHttpRequest();
                 var loadArticleData = new FormData();
                 loadArticleData.append('userId', userId);
@@ -83,14 +96,14 @@
                 loadArticle.send(loadArticleData);
             }
 
-            loadArticleByUser(start, 6);
+            loadArticleByUser(start, takeArticle);
 
             $(window).scroll(function() {
                 if (keepLoading) {
-                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    if ($(window).scrollTop() === $(document).height() - $(window).height()) {
                         keepLoading = false;
                         $loader.show();
-                        loadArticleByUser(start, 6);
+                        loadArticleByUser(start, takeArticle);
                     }
                 }
             });

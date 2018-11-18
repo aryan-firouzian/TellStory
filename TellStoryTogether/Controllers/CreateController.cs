@@ -96,6 +96,13 @@ namespace TellStoryTogether.Controllers
                         ? newArticle.ArticleId.ToString()
                         : identifier + "-" + parallel;
                     _userContext.Articles.First(p => p.ArticleId == newArticle.ArticleId).Identifier = newIdentifier;
+                    Notification notification = new Notification
+                    {
+                        User = user,
+                        Article = newArticle,
+
+                    };
+
                     _userContext.SaveChanges();
                     return Json(new[]
                     {

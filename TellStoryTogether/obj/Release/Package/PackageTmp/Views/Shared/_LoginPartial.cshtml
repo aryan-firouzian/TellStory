@@ -1,4 +1,5 @@
-﻿@if (Request.IsAuthenticated)
+﻿@using TellStoryTogether.Helper
+@if (Request.IsAuthenticated)
 {
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Favorites</a>
@@ -13,8 +14,18 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Index", "Create", new { identifier = "new" })">
+        <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
             Create
+        </a>
+    </li>    
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
+            <i class="bell outline icon"></i>@DbHelper.UserPoints()
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
+            <i class="trophy icon"></i>@DbHelper.UserPoints()
         </a>
     </li>
     <li class="nav-item">

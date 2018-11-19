@@ -158,7 +158,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>11/18/2018 04:04:31</publishTime>
+      <publishTime>11/19/2018 01:28:04</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -937,6 +937,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
+    <File Include="Helper/DbHelper.cs">
+      <publishTime>11/18/2018 02:15:25</publishTime>
+    </File>
+    <File Include="Helper/LinqExtension.cs">
+      <publishTime>11/16/2018 21:44:25</publishTime>
+    </File>
+    <File Include="Helper/MyTimeSpan.cs">
+      <publishTime>11/11/2018 21:17:17</publishTime>
+    </File>
     <File Include="Images/accent.png">
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
@@ -1106,7 +1115,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2018 20:25:01</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>11/16/2018 22:19:05</publishTime>
+      <publishTime>11/18/2018 02:50:05</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
       <publishTime>11/17/2018 22:00:59</publishTime>

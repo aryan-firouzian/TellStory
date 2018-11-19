@@ -207,3 +207,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogethe
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.RemoveInheritanceFromArticleTable.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.CommentChangeArticleIdToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.UserTableAddPoint.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddNotificationTable.resources

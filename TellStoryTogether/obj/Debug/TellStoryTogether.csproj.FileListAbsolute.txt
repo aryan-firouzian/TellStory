@@ -268,7 +268,6 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\bin\ko\System.Spatial.resour
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\bin\ru\System.Spatial.resources.dll
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\bin\zh-Hans\System.Spatial.resources.dll
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\bin\zh-Hant\System.Spatial.resources.dll
-D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csprojResolveAssemblyReference.cache
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddBlogRating.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.CompleteArticleClass.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.CompleteArticleClassPropertyText.resources
@@ -279,9 +278,6 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.ArticleRemoveSinPoints.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageTableAdded.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageDSetIsAdded.resources
-D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csproj.GenerateResource.Cache
-D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.dll
-D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageMinMaxAddedToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddCommentPropertyToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddIdentifierToArticle.resources
@@ -294,3 +290,7 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.CommentChangeArticleIdToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.UserTableAddPoint.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csproj.GenerateResource.Cache
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.dll
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csprojResolveAssemblyReference.cache

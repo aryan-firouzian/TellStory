@@ -87,15 +87,26 @@ namespace TellStoryTogether.Controllers
                         "The request from an unauthenticated user. Log in or Register!"
                     });
                 int userId = WebSecurity.GetUserId(User.Identity.Name);
+                UserProfile user = _userContext.UserProfiles.First(p => p.UserId == userId);
+                Article article = _userContext.Articles.First(p => p.ArticleId == articleId);
                 Comment comment = new Comment
                 {
-                    Article = _userContext.Articles.First(p => p.ArticleId == articleId),
+                    Article = article,
                     Content = content,
-                    User = _userContext.UserProfiles.First(p => p.UserId == userId),
+                    User = user,
                     Time = DateTime.Now
                 };
                 _userContext.Comments.Add(comment);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
+                Notification notification = new Notification
+                {
+                    User = user,
+                    Article = article,
+                    Seen = false,
+                    State = "Comment",
+                    Time = DateTime.Now
+                };
+                _userContext.Notifications.Add(notification);
                 _userContext.SaveChanges();
                 return Json(new[]
                 {
@@ -197,13 +208,24 @@ namespace TellStoryTogether.Controllers
                         "The request from an unauthenticated user. Log in or Register!"
                     });
                 int userId = WebSecurity.GetUserId(User.Identity.Name);
+                Article article = _userContext.Articles.First(p => p.ArticleId == articleId);
+                UserProfile user = _userContext.UserProfiles.First(p => p.UserId == userId);
                 ArticleFavorite articleFavorite = new ArticleFavorite()
                 {
-                    Article = _userContext.Articles.First(p => p.ArticleId == articleId),
-                    User = _userContext.UserProfiles.First(p => p.UserId == userId)
+                    Article = article,
+                    User = user
                 };
                 _userContext.ArticleFavorites.Add(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite++;
+                Notification notification = new Notification
+                {
+                    User = user,
+                    Article = article,
+                    Seen = false,
+                    State = "Favorite",
+                    Time = DateTime.Now
+                };
+                _userContext.Notifications.Add(notification);
                 _userContext.SaveChanges();
                 return Json(new[]
                 {
@@ -234,10 +256,13 @@ namespace TellStoryTogether.Controllers
                         "The request from an unauthenticated user. Log in or Register!"
                     });
                 int userId = WebSecurity.GetUserId(User.Identity.Name);
-                ArticleFavorite articleFavorite =
-                    _userContext.ArticleFavorites.First(p => p.Article.ArticleId == articleId && p.User.UserId == userId);
+                ArticleFavorite articleFavorite = _userContext.ArticleFavorites.First(p => p.Article.ArticleId == articleId && p.User.UserId == userId);
                 _userContext.ArticleFavorites.Remove(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite--;
+                Notification notification =
+                    _userContext.Notifications.First(
+                        p => p.User.UserId == userId && p.Article.ArticleId == articleId && p.State == "Favorite");
+                _userContext.Notifications.Remove(notification);
                 _userContext.SaveChanges();
                 return Json(new[]
                 {

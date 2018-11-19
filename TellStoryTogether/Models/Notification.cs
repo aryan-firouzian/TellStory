@@ -22,7 +22,7 @@ namespace TellStoryTogether.Models
 
         public string Content { get; set; }
 
-        // All or Comment or Script
+        // All or Comment or Favorite
         public string State { get; set; }
 
         public bool Seen { get; set; }

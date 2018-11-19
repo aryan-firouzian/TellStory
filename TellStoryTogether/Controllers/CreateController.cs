@@ -100,9 +100,11 @@ namespace TellStoryTogether.Controllers
                     {
                         User = user,
                         Article = newArticle,
-
+                        Seen = false,
+                        State = "All",
+                        Time = DateTime.Now
                     };
-
+                    _userContext.Notifications.Add(notification);
                     _userContext.SaveChanges();
                     return Json(new[]
                     {

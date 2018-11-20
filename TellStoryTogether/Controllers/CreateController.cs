@@ -98,7 +98,8 @@ namespace TellStoryTogether.Controllers
                         : identifier + "-" + parallel;
                     _userContext.Articles.First(p => p.ArticleId == newArticle.ArticleId).Identifier = newIdentifier;
                     _userContext.SaveChanges();
-                    DbHelperNoContext.AddNotificationRecord(_userContext, user, newArticle, "All");
+                    DbHelperNoContext.SubscribeForkNotification(_userContext, identifier);
+                    DbHelperNoContext.AddNotificationRecord(_userContext, ref user, ref newArticle, "All");
 
                     return Json(new[]
                     {

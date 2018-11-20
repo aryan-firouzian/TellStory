@@ -1093,6 +1093,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Create/Index.cshtml">
       <publishTime>11/15/2018 18:45:58</publishTime>
     </File>
+    <File Include="Views/Favorite/Index.cshtml">
+      <publishTime>11/17/2018 20:20:54</publishTime>
+    </File>
     <File Include="Views/Genre/Index.cshtml">
       <publishTime>11/17/2018 22:01:01</publishTime>
     </File>
@@ -1107,6 +1110,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Read/Index.cshtml">
       <publishTime>11/17/2018 22:58:20</publishTime>
+    </File>
+    <File Include="Views/Script/Index.cshtml">
+      <publishTime>11/17/2018 20:09:15</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>10/01/2018 20:24:42</publishTime>

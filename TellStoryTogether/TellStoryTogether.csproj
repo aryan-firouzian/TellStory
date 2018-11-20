@@ -289,6 +289,14 @@
     <Compile Include="Migrations\201811181831022_AddNotificationTable.Designer.cs">
       <DependentUpon>201811181831022_AddNotificationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811202130578_AddLikedPropertyToNotificationTable.cs" />
+    <Compile Include="Migrations\201811202130578_AddLikedPropertyToNotificationTable.Designer.cs">
+      <DependentUpon>201811202130578_AddLikedPropertyToNotificationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202237092_AddIdentifierPropertyToNotificationTable.cs" />
+    <Compile Include="Migrations\201811202237092_AddIdentifierPropertyToNotificationTable.Designer.cs">
+      <DependentUpon>201811202237092_AddIdentifierPropertyToNotificationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -701,6 +709,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181831022_AddNotificationTable.resx">
       <DependentUpon>201811181831022_AddNotificationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202130578_AddLikedPropertyToNotificationTable.resx">
+      <DependentUpon>201811202130578_AddLikedPropertyToNotificationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202237092_AddIdentifierPropertyToNotificationTable.resx">
+      <DependentUpon>201811202237092_AddIdentifierPropertyToNotificationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

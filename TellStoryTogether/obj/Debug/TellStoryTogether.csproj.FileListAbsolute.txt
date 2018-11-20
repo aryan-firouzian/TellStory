@@ -293,7 +293,6 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csproj.GenerateResource.Cache
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.dll
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
-D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csprojResolveAssemblyReference.cache
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\bin\TellStoryTogether.dll
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\bin\TellStoryTogether.pdb
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\bin\Antlr3.Runtime.dll
@@ -398,3 +397,6 @@ C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogeth
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogether.csproj.GenerateResource.Cache
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogether.dll
 C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddLikedPropertyToNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddIdentifierPropertyToNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csprojResolveAssemblyReference.cache

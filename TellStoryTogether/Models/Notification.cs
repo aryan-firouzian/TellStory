@@ -27,12 +27,14 @@ namespace TellStoryTogether.Models
 
         public bool Seen { get; set; }
 
-        public int Starred { get; set; }
+        public int Liked { get; set; }
 
         public int Favorited { get; set; }
 
         public int Commented { get; set; }
 
         public int Forked { get; set; }
+
+        public string Identifier { get; set; }
     }
 }

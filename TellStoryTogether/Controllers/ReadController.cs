@@ -99,7 +99,8 @@ namespace TellStoryTogether.Controllers
                 _userContext.Comments.Add(comment);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
                 _userContext.SaveChanges();
-                DbHelperNoContext.AddNotificationRecord(_userContext, user, article, "Comment");
+                DbHelperNoContext.SubscribeNotification(_userContext, articleId,"Comment");
+                DbHelperNoContext.AddNotificationRecord(_userContext, ref user, ref article, "Comment");
                 return Json(new[]
                 {
                     "added",
@@ -137,6 +138,7 @@ namespace TellStoryTogether.Controllers
                 _userContext.ArticlePoints.Add(articlePoint);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Point++;
                 _userContext.SaveChanges();
+                DbHelperNoContext.SubscribeNotification(_userContext, articleId, "Like");
                 return Json(new[]
                 {
                     "added",
@@ -171,6 +173,7 @@ namespace TellStoryTogether.Controllers
                 _userContext.ArticlePoints.Remove(articlePoint);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Point--;
                 _userContext.SaveChanges();
+                DbHelperNoContext.SubscribeNotification(_userContext, articleId, "UnLike");
                 return Json(new[]
                 {
                     "removed",
@@ -210,7 +213,8 @@ namespace TellStoryTogether.Controllers
                 _userContext.ArticleFavorites.Add(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite++;
                 _userContext.SaveChanges();
-                DbHelperNoContext.AddNotificationRecord(_userContext, user, article, "Favorite");
+                DbHelperNoContext.SubscribeNotification(_userContext, articleId, "Favorite");
+                DbHelperNoContext.AddNotificationRecord(_userContext, ref user, ref article, "Favorite");
                 return Json(new[]
                 {
                     "added",
@@ -244,6 +248,7 @@ namespace TellStoryTogether.Controllers
                 _userContext.ArticleFavorites.Remove(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite--;
                 _userContext.SaveChanges();
+                DbHelperNoContext.SubscribeNotification(_userContext, articleId, "UnFavorite");
                 DbHelperNoContext.RemoveNotificationRecord(_userContext, userId, articleId, "Favorite");
                 
                 return Json(new[]

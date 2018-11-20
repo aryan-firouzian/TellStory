@@ -20,7 +20,7 @@
     </li>    
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="bell outline icon"></i>@DbHelper.UserPoints()
+            <i class="bell outline icon"></i>@DbHelper.UserNotifications().Length
         </a>
     </li>
     <li class="nav-item">

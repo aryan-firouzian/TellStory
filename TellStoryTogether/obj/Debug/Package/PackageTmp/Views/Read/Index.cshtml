@@ -1,0 +1,545 @@
+﻿@model TellStoryTogether.Helper.ArticleUserBase
+
+
+<div class="ui sidebar wide right vertical menu">
+    <div class="padded text container segment show-title">
+        <div class="ui comments segment" style="overflow: auto;"></div>
+        <form class="ui bottom attached segment form">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <div class="field">
+                     @System.Web.HttpContext.Current.User.Identity.Name: 
+                </div>
+                <div class="field">
+                    <textarea id="comment-text" placeholder="1-300 characters" style="height: 1em"></textarea>
+                </div>
+                <div class="ui basic green button mini commenting">
+                    <i class="edit icon"></i> Add Comment
+                </div>
+            }
+            else
+            {
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui basic fluid green button mini logging">
+                            Login
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui basic fluid green button mini registering">
+                            Register
+                        </div>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+<div class="pusher">
+    <section id="main-section" class="item-hide">
+        <div id="show" class="show" style="width: auto;">
+        </div>
+        <div id="title" class="show-label" style="margin-top: 100px; margin-bottom: 50px">
+            <h3 class="ui horizontal divider header"></h3>
+        </div>
+        <div id="loader" class="ui basic segment" style="margin-top: 100px">
+            <div class="ui active centered loader"></div>
+        </div>
+        <div id="slider" class="slickcarousel" style="margin-bottom: 0px !important"></div>
+        <div id="slider-item">
+            <div class="ui justified container segment">
+                <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                <p id="text" class="text-no-ellipsis">text</p>
+                <p class="title-ellipsis">By <span><a id="owner">username</a></span></p>
+
+                <div class="bottom ui four column grid">
+                    <div class="ui labeled button mini cursor-default seen">
+                        <div class="ui basic blue button mini cursor-default">
+                            <i class="eye blue icon"></i> Seen
+                        </div>
+                        <div class="ui basic label blue mini cursor-default">
+                            0
+                        </div>
+                    </div>
+                    <div class="ui labeled button mini star">
+                        <div class="ui basic yellow button mini">
+                            <i class="star outline icon"></i> Favourite
+                        </div>
+                        <div class="ui basic label yellow mini cursor-default">
+                            0
+                        </div>
+                    </div>
+                    <div class="ui labeled button mini heart">
+                        <div class="ui basic red button mini">
+                            <i class="heart outline icon"></i> Like
+                        </div>
+                        <a class="ui basic label red mini cursor-default">
+                            0
+                        </a>
+                    </div>
+                    <div class="ui labeled button mini comment">
+                        <div class="ui basic green button mini">
+                            <i class="comment outline icon cursor-default"></i> Comment
+                        </div>
+                        <div class="ui basic label green mini">
+                            0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="show-foot" class="row" style="clear: left;">
+            <div class="col-5 text-right">
+                <div class="share"></div>
+            </div>
+            <div class="col-2 text-center">
+                <div class="ui label line" style="padding-top: 30px !important; padding-bottom: 30px !important; padding-right: 2px !important; padding-left: 2px !important;"></div>
+            </div>
+            <div class="col-5 text-left" style="margin-top: 5px">
+                <div class="ui basic button mini fork">
+                    <i class="vertically flipped fork icon"></i> Fork
+                </div>
+            </div>
+        </div>
+        <div class="ui basic modal">
+            <div class="header">Login or Register</div>
+            <h3 class="content">You need to log into your account, to continue further!</h3>
+            <div class="content">
+                <p>Already have an account.</p>
+            </div>
+            <div class="actions">
+                <div class="ui approve button">Login</div>
+            </div>
+            <div class="content">
+                <p>Need to create an account.</p>
+            </div>
+            <div class="actions">
+                <div class="ui approve button">Register</div>
+            </div>
+            <div class="content">
+                <p>Not interested!</p>
+            </div>
+            <div class="actions">
+                <div class="ui deny button">Cancel</div>
+            </div>
+        </div>
+        <div id="comment" class="comment item-hide">
+            <div class="content">
+                <a class="author"></a>
+                <div class="metadata">
+                    <span class="date"></span>
+                </div>
+                <div class="text">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+            var scrollToElement = location.hash;
+            $('.comments').height($('.sidebar').height() - $('.form').height() - 110);
+
+            var loggedIn = '@Context.User.Identity.IsAuthenticated' === 'True' ? true : false;
+            var username = '@System.Web.HttpContext.Current.User.Identity.Name';
+            var myAppUrlSettings = {
+                mySaveUrl: '@Url.Action("SaveComment", "Read")',
+                myLikeUrl: '@Url.Action("Like", "Read")',
+                myUnlikeUrl: '@Url.Action("UnLike", "Read")',
+                myStarUrl: '@Url.Action("Star", "Read")',
+                myUnstarUrl: '@Url.Action("UnStar", "Read")',
+                myUserUrl: '@Url.Action("Index", "User")',
+            }
+
+            var shareList = ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"];
+
+            if ($(window).width() <= 992) {
+                shareList = ["email", "twitter", "facebook", "googleplus", "linkedin", "whatsapp"];
+            }
+            if ($(window).width() <= 768) {
+                shareList = ["twitter", "facebook", "whatsapp"];
+                $('.sidebar').removeClass('wide');
+            }
+
+            // Link which needs only identifier string to attach
+            var linkShare = '@Url.Action("Index", "Read", null, Request.Url.Scheme)' + '/?identifier=';
+            var textShare = "Story link to share";
+
+            var $section = $('#main-section');
+            var $show = $section.find('#show').clone();
+            var $title = $section.find('#title').clone();
+            var $loader = $section.find('#loader').clone();
+            var $slider = $section.find('#slider').clone();
+            var $sliderItem = $section.find('#slider-item').clone();
+            var $showFoot = $section.find('#show-foot').clone();
+            var $comment = $section.find('#comment').clone();
+            $section.find('#show').remove();
+            $section.find('#title').remove();
+            $section.find('#loader').remove();
+            $section.find('#slider').remove();
+            $section.find('#slider-item').remove();
+            $section.find('#show-foot').remove();
+            $section.find('#comment').remove();
+            $comment.removeClass('item-hide').removeAttr('id');
+            $section.removeClass('item-hide');
+
+            // Create first article from the model
+            var model = @Html.Raw(Json.Encode(Model));
+            var $show1 = $show.clone().attr('id', 'show-1').attr('show-seri', 1);
+            var $title1 = $title.clone().attr('id', 'title-1');
+            $title1.children().eq(0).html(model.Title);
+            var $slider1 = $slider.clone().attr('id', 'slider-1');
+            var $sliderItem1 = $sliderItem.clone().attr('id', 'slider-item-1');
+            $sliderItem1.find('#image').attr('src', model.PictureUrl).attr('id', 'image-' + model.ArticleId);
+            $sliderItem1.find('.segment').addClass('story-container-read-image');
+            $sliderItem1.find('#text').attr('id', 'text-' + model.ArticleId).html(model.Text);
+            $sliderItem1.find('#owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + model.Owner.UserId).attr('id', 'owner-' + model.Owner).html(model.Owner.UserName);
+            $sliderItem1.find('.seen.button').find('.label').html(model.Seen);
+            $sliderItem1.find('.heart.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Point);
+            if (model.Pointed) {
+                $sliderItem1.find('.heart.button').find('.heart').removeClass('outline');
+            }
+            $sliderItem1.find('.star.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Favorite);
+            if (model.Favorited) {
+                $sliderItem1.find('.star.button').find('.star').removeClass('outline');
+            }
+            $sliderItem1.find('.comment.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Comment);
+            if (model.Commented) {
+                $sliderItem1.find('.comment.button').find('.comment').removeClass('outline');
+            }
+            $slider1.append($sliderItem1);
+
+            var $showFoot1 = $showFoot.removeAttr('id').clone();
+            $showFoot1.find('.fork').attr('identifier', model.Identifier);
+            $showFoot1.find('.share').jsSocials({
+                shares: shareList,
+                url: linkShare + model.Identifier,
+                text: textShare,
+                showLabel: false,
+                showCount: false
+            });
+            $sliderItem1.append($showFoot1);
+
+            $show1.append($title1).append($slider1);
+            $section.append($show1);
+
+            $('#slider-1').slick(({
+                infinite: false,
+                touchThreshold: 3,
+                autoplay: false,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
+                nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+            }));
+
+            // Create rest of articles with slider from viewbag
+            function loadRestByIdentifier(paramIdentifier) {
+                // Add loader by temprory showTemp
+                var $showTemp = $show.clone().attr('id', 'show-temp');
+                var $loaderTemp = $loader.clone().attr('id', 'loader-temp');
+                $showTemp.append($loaderTemp);
+                $section.append($showTemp);
+
+                var loadRest = new XMLHttpRequest();
+                loadRest.onload = function() {
+                    var listListArticle = $.parseJSON(this.responseText);
+                    // Result are ready, remove the showTemp and loader
+                    $showTemp.remove();
+
+                    //var lengthOfSeries = listListArticle.length;
+                    $.each(listListArticle, function(index, value) {
+                        var seri = value[0].Serial;
+                        var $showN = $show.clone().attr('id', 'show-' + seri).attr('show-seri', seri);;
+                        var $sliderN = $slider.clone().attr('id', 'slider-' + seri);
+                        $showN.append($sliderN);
+                        $section.append($showN);
+
+                        $.each(value, function(i, v) {
+                            var $newSliderItem = $sliderItem.clone();
+                            $newSliderItem.attr('id', v.ArticleId);
+                            $newSliderItem.attr('seri', seri);
+                            $newSliderItem.attr('parallel', v.Parallel);
+                            if (v.PictureUrl == null) {
+                                $newSliderItem.find('#image').remove();
+                                $newSliderItem.find('.segment').addClass('story-container-read');
+                            } else {
+                                $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
+                                $newSliderItem.find('.segment').addClass('story-container-read-image');
+                            }
+                            $newSliderItem.find('#owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + v.Owner.UserId).attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
+                            $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
+                            $newSliderItem.find('.seen.button').find('.label').html(v.Seen);
+                            $newSliderItem.find('.heart.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);
+                            if (v.Pointed) {
+                                $newSliderItem.find('.heart.button').find('.heart').removeClass('outline');
+                            }
+                            $newSliderItem.find('.star.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Favorite);
+                            if (v.Favorited) {
+                                $newSliderItem.find('.star.button').find('.star').removeClass('outline');
+                            }
+                            $newSliderItem.find('.comment.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Comment);
+                            if (v.Commented) {
+                                $newSliderItem.find('.comment.button').find('.comment').removeClass('outline');
+                            }
+                            var $showFootN = $showFoot.removeAttr('id').clone();
+                            $showFootN.find('.fork').attr('identifier', v.Identifier);
+                            $showFootN.find('.share').jsSocials({
+                                shares: shareList,
+                                url: linkShare + v.Identifier,
+                                text: textShare,
+                                showLabel: false,
+                                showCount: false
+                            });
+                            $newSliderItem.append($showFootN);
+                            $sliderN.append($newSliderItem);
+                        });
+                        $('#slider-' + seri).slick(({
+                            infinite: false,
+                            touchThreshold: 3,
+                            autoplay: false,
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            draggable: false,
+                            swipeToSlide: true,
+                            arrows: true,
+                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
+                            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+                        }));
+                        $('#slider-' + seri).find('.prev').hide();
+                        var tempSlideId;
+                        $('#slider-' + seri).on('beforeChange', function(event, slick, currentSlide) {
+                            tempSlideId = $(slick.$slides.get(currentSlide)).attr('id');
+                        });
+                        $('#slider-' + seri).on('afterChange', function(event, slick, currentSlide) {
+                            if (tempSlideId !== $(slick.$slides.get(currentSlide)).attr('id')) {
+                                if (currentSlide === 0) {
+                                    $('#slider-' + seri).find('.prev').hide();
+                                } else {
+                                    $('#slider-' + seri).find('.prev').show();
+                                }
+                                if (currentSlide === value.length - 1) {
+                                    $('#slider-' + seri).find('.next').hide();
+                                } else {
+                                    $('#slider-' + seri).find('.next').show();
+                                }
+
+                                var articleId = $(slick.$slides.get(currentSlide)).attr('id');
+                                var articleSeri = Number($(slick.$slides.get(currentSlide)).attr('seri'));
+                                $('.show').filter(function() {
+                                    return $(this).attr('show-seri') > articleSeri;
+                                }).remove();
+                                // load next
+                                loadRestByIdentifier(articleId);
+                            }
+                        });
+                    });
+
+                    // change the fork button to create button and remove the verticla line
+                    var lastShowNum = $('[show-seri]').length;
+                    var $lastShow = $section.find('div[show-seri=' + lastShowNum + ']');
+                    $lastShow.find('.slick-current').find('.line').remove();
+                    $lastShow.find('.slick-current').find('.fork').html('<i class="plus icon"></i> Add');
+
+                    // Scrolling to the element if coming back by return url from login or register page
+                    if ($(scrollToElement).length) {
+                        $(scrollToElement).get(0).scrollIntoView();
+                        window.scrollBy(0, -80);
+                    }
+                }
+                loadRest.open("POST", "/Read/ArticleAttach?identifierOrArticleId=" + paramIdentifier);
+                loadRest.send();
+            }
+
+            function logging(identifier) {
+                var showSeri = identifier.split('-').length;
+                var myReturnUrl = "/Read?identifier=";
+                var url = '@Url.Action("Login", "Account", new {returnUrl = "____param____"})';
+                window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
+            }
+
+            function registering(identifier) {
+                var showSeri = identifier.split('-').length;
+                var myReturnUrl = "/Read?identifier=";
+                var url = '@Url.Action("Register", "Account", new {returnUrl = "____param____"})';
+                window.location.href = url.replace("____param____", myReturnUrl + identifier + "%23show-" + showSeri);
+            }
+
+            function logInThenAction(action, articleId, identifier, button) {
+                if (loggedIn) {
+                    switch (action) {
+                    case 'heart':
+                        if (button.find('.heart').hasClass('outline')) {
+                            button.find('.button').addClass('loading');
+                            var likeArticle = new XMLHttpRequest();
+                            var likeData = new FormData();
+                            likeData.append('articleId', articleId);
+                            likeArticle.onload = function() {
+                                var response = $.parseJSON(this.responseText);
+                                if (response[0] === 'added') {
+                                    button.find('.label').html(Number(button.find('.label').html()) + 1);
+                                    button.find('.heart').removeClass('outline');
+                                }
+                                button.find('.button').removeClass('loading');
+                            }
+                            likeArticle.open('POST', myAppUrlSettings.myLikeUrl);
+                            likeArticle.send(likeData);
+                        } else {
+                            button.find('.button').addClass('loading');
+                            var unlikeArticle = new XMLHttpRequest();
+                            var unlikeData = new FormData();
+                            unlikeData.append('articleId', articleId);
+                            unlikeArticle.onload = function() {
+                                var response = $.parseJSON(this.responseText);
+                                if (response[0] === 'removed') {
+                                    button.find('.label').html(Number(button.find('.label').html()) - 1);
+                                    button.find('.heart').addClass('outline');
+                                }
+                                button.find('.button').removeClass('loading');
+                            }
+                            unlikeArticle.open('POST', myAppUrlSettings.myUnlikeUrl);
+                            unlikeArticle.send(unlikeData);
+                        }
+                        break;
+                    case 'star':
+                        if (button.find('.star').hasClass('outline')) {
+                            button.find('.button').addClass('loading');
+                            var starArticle = new XMLHttpRequest();
+                            var starData = new FormData();
+                            starData.append('articleId', articleId);
+                            starArticle.onload = function() {
+                                var response = $.parseJSON(this.responseText);
+                                if (response[0] === 'added') {
+                                    button.find('.label').html(Number(button.find('.label').html()) + 1);
+                                    button.find('.star').removeClass('outline');
+                                }
+                                button.find('.button').removeClass('loading');
+                            }
+                            starArticle.open('POST', myAppUrlSettings.myStarUrl);
+                            starArticle.send(starData);
+                        } else {
+                            button.find('.button').addClass('loading');
+                            var unstarArticle = new XMLHttpRequest();
+                            var unstarData = new FormData();
+                            unstarData.append('articleId', articleId);
+                            unstarArticle.onload = function() {
+                                var response = $.parseJSON(this.responseText);
+                                if (response[0] === 'removed') {
+                                    button.find('.label').html(Number(button.find('.label').html()) - 1);
+                                    button.find('.star').addClass('outline');
+                                }
+                                button.find('.button').removeClass('loading');
+                            }
+                            unstarArticle.open('POST', myAppUrlSettings.myUnstarUrl);
+                            unstarArticle.send(unstarData);
+                        }
+                        break;
+                    case 'comment':
+
+                        break;
+                    case 'fork':
+                        var url = '@Url.Action("Index", "Create", new {identifier = "____param____"})';
+                        window.location.href = url.replace("____param____", identifier);
+                        break;
+                    default:
+                    }
+                } else {
+                    $('.basic.modal').modal({
+                        onApprove: function(act) {
+                            if (act.html() === 'Login') {
+                                logging(identifier);
+                            } else if (act.html() === 'Register') {
+                                registering(identifier);
+                            }
+                        }
+                    }).modal('show');
+                }
+            }
+
+            $('.sidebar').on('click', '.button', function() {
+                var articleId = $(this).attr('article');
+                var identifier = $(this).attr('identifier');
+                if ($(this).hasClass('logging')) {
+                    logging(identifier);
+                } else if ($(this).hasClass('registering')) {
+                    registering(identifier);
+                } else if ($(this).hasClass('commenting')) {
+                    var content = $('#comment-text').val();
+                    if (content.length >= 1 && content.length <= 300) {
+                        $(this).addClass('loading');
+                        var $thisButton = $(this);
+                        var formData = new FormData();
+                        formData.append('articleId', articleId);
+                        formData.append('content', content);
+                        var saveComment = new XMLHttpRequest();
+                        saveComment.onload = function() {
+                            var response = $.parseJSON(this.responseText);
+                            if (response[0] === 'added') {
+                                $thisButton.removeClass('loading');
+                                var $newComment = $comment.clone();
+                                $newComment.find('.author').html(username);
+                                $newComment.find('.text').html(content);
+                                $newComment.find('.date').html("just now");
+                                $('.sidebar').find('.comments').append($newComment);
+                                $('#comment-text').val('');
+                            }
+                        };
+                        saveComment.open('POST', myAppUrlSettings.mySaveUrl);
+                        saveComment.send(formData);
+                    }
+                }
+            });
+
+            $('#main-section').on('click', '.button', function() {
+                var articleId = $(this).attr('article');
+                var identifier = $(this).attr('identifier');
+                if ($(this).hasClass('seen')) {
+                } else if ($(this).hasClass('star')) {
+                    logInThenAction('star', articleId, identifier, $(this));
+                } else if ($(this).hasClass('heart')) {
+                    logInThenAction('heart', articleId, identifier, $(this));
+                } else if ($(this).hasClass('comment')) {
+                    $('.ui.sidebar').sidebar({
+                        onVisible: function() {
+                            $('.sidebar').find('.comments').addClass('loading');
+                            if (!loggedIn) {
+                                $('.sidebar').find('.logging').attr('article', articleId).attr('identifier', identifier);
+                                $('.sidebar').find('.registering').attr('article', articleId).attr('identifier', identifier);
+                            } else {
+                                $('.sidebar').find('.commenting').attr('article', articleId).attr('identifier', identifier);
+                            }
+                            var loadComment = new XMLHttpRequest();
+                            loadComment.onload = function() {
+                                var listComments = $.parseJSON(this.responseText);
+                                $('.sidebar').find('.comments').removeClass('loading');
+                                $.each(listComments, function(index, value) {
+                                    var $newComment = $comment.clone();
+                                    $newComment.find('.author').html(value.User.UserName);
+                                    $newComment.find('.text').html(value.Content);
+                                    $newComment.find('.date').html(value.Time);
+                                    $('.sidebar').find('.comments').append($newComment);
+                                });
+                            };
+                            loadComment.open("POST", "/Read/LoadComment?articleId=" + articleId);
+                            loadComment.send();
+
+                        },
+                        onHidden: function() {
+                            $('.sidebar').find('.comments').html('');
+                        }
+                    }).sidebar('toggle');
+                } else if ($(this).hasClass('fork')) {
+                    logInThenAction('fork', articleId, identifier);
+                }
+            });
+
+            loadRestByIdentifier("@ViewBag.Identifier");
+
+        });
+    </script>
+}

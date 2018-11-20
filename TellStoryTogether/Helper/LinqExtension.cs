@@ -69,7 +69,7 @@ namespace TellStoryTogether.Helper
     {
         public static IEnumerable<CommentTime> ChangeTime(this IEnumerable<Comment> source)
         {
-            MyTimeSpan myTimeSpan = new MyTimeSpan();
+            ClassHelper classHelper = new ClassHelper();
             List<CommentTime> commentTimes = new List<CommentTime>();
             foreach (Comment comment in source)
             {
@@ -79,7 +79,7 @@ namespace TellStoryTogether.Helper
                     Content = comment.Content,
                     CommentId = comment.CommentId,
                     User = comment.User,
-                    Time = myTimeSpan.TillNow(comment.Time)
+                    Time = classHelper.TillNow(comment.Time)
                 };
                 commentTimes.Add(commentTime);
             }

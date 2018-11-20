@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-using TellStoryTogether.Models;
 
 namespace TellStoryTogether.Helper
 {
-    public class MyTimeSpan
+    public class ClassHelper
     {
         public string TillNow(DateTime eventDateTime)
         {
@@ -49,6 +44,5 @@ namespace TellStoryTogether.Helper
             int years = Convert.ToInt32(Math.Floor((double) ts.Days/365));
             return years <= 1 ? "one year ago" : years + " years ago";
         }
-
     }
 }

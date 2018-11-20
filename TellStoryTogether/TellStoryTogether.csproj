@@ -623,10 +623,10 @@
     </Content>
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Genre\Index.cshtml" />
-    <None Include="Views\Favorite\Index.cshtml" />
+    <Content Include="Views\Favorite\Index.cshtml" />
     <None Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <None Include="Views\Script\Index.cshtml" />
+    <Content Include="Views\Script\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Tell Story Together</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+    @*<link rel="stylesheet" type="text/css" href="~/Content/bootstrap_css/bootstrap.min.css">*@
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    @*<link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/transition.min.css">*@
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/loader.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/container.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/label.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/image.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/button.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/divider.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/components/icon.min.css" rel="stylesheet"/>*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css" rel="stylesheet" />
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    
+
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" rel="stylesheet" />
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-plain.css" />
+
+    <meta name="viewport" content="width=device-width"/>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light navbar-static-top" style="position: fixed; top: 0; width: 100%; z-index: 100;">
+        <a class="navbar-brand" href="@Url.Action("Index", "Home", null)">
+            <img class="logo" src="@Url.Content("~/Images/TellStoryTogether3.png")">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("About", "Home")">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
+                </li>
+            </ul>
+            <form class="form-inline mx-lg-auto my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-0 my-sm-0" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav ml-auto">
+                @Html.Partial("_LoginPartial")
+            </ul>
+        </div>
+    </nav>
+    <div id="body" style="margin-top: 30px;">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+    </div>
+    <footer>
+        <div id="footer" class="content-wrapper">
+        </div>
+    </footer>
+</div>
+
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")*@
+
+
+    <script>
+    $(document).ready(function() {
+
+        function loadInfoNavigationMenu() {
+            if ('@User.Identity.IsAuthenticated' === 'True') {
+                var myAppUrlSettings = {
+                    getMyFavorites: '@Url.Action("LoadFavoriteArticles", "Favorite")',
+                    getMyScripts: '@Url.Action("LoadScriptArticles", "Script")',
+                    getMyReadArticle: '@Url.Action("Index", "Read")',
+                    getAllMyFavorites: '@Url.Action("Index", "Favorite")',
+                    getAllMyScripts: '@Url.Action("Index", "Script")',
+                }
+
+                var $dpDivider = $('<div class="dropdown-divider"></div>');
+                var $dpItem = $('<a class="dropdown-item" href="#"><div class="dropdown-item-1"></div><div class="dropdown-item-2 title-ellipsis-width"></div></a>');
+                var $FavoriteHeader = $('#favorite-header');
+                var $ScriptHeader = $('#script-header');
+
+                var loadFavoriteArticles = new XMLHttpRequest();
+                var lfaData = new FormData();
+                lfaData.append('take', 5);
+                loadFavoriteArticles.onload = function () {
+                    var result = $.parseJSON(this.responseText);
+                    if (result.count > 0) {
+                        $FavoriteHeader.attr('href', myAppUrlSettings.getAllMyFavorites);
+                        $FavoriteHeader.html('See all ' + result.count + ' favorites');
+                        $('#favorite-dropdown').append($dpDivider.clone());
+                        $.each(result.articles, function (i, v) {
+                            var $newItem = $dpItem.clone();
+                            $newItem.attr('href', myAppUrlSettings.getMyReadArticle + '?identifier=' + v.Identifier + "#show-" + v.Serial);
+                            $newItem.find('.dropdown-item-1').html(v.Title);
+                            $newItem.find('.dropdown-item-2').html(v.Text);
+                            $('#favorite-dropdown').append($newItem);
+                        });
+                    }
+                }
+                loadFavoriteArticles.open('POST', myAppUrlSettings.getMyFavorites);
+                loadFavoriteArticles.send(lfaData);
+
+                var loadScriptArticles = new XMLHttpRequest();
+                var lsaData = new FormData();
+                lsaData.append('take', 5);
+                loadScriptArticles.onload = function () {
+                    var result = $.parseJSON(this.responseText);
+                    if (result.count > 0) {
+                        $ScriptHeader.attr('href', myAppUrlSettings.getAllMyScripts);
+                        $ScriptHeader.html('See all ' + result.count + ' scripts');
+                        $('#script-dropdown').append($dpDivider.clone());
+                        $.each(result.articles, function (i, v) {
+                            var $newItem = $dpItem.clone();
+                            $newItem.attr('href', myAppUrlSettings.getMyReadArticle + '?identifier=' + v.Identifier + '#show-' + v.Serial);
+                            $newItem.find('.dropdown-item-1').html(v.Title);
+                            $newItem.find('.dropdown-item-2').html(v.Text);
+                            $('#script-dropdown').append($newItem);
+                        });
+                    }
+                }
+                loadScriptArticles.open('POST', myAppUrlSettings.getMyScripts);
+                loadScriptArticles.send(lsaData);
+            }
+        }
+
+        loadInfoNavigationMenu();
+    })
+    </script>
+
+@RenderSection("scripts", required: false)
+
+@*<script src="~/Scripts/bootstrap_js/bootstrap.min.js"></script>*@
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+@*<script src="~/Content/Semantic-UI-CSS-master/semantic.min.js"></script>
+<script src="~/Content/Semantic-UI-CSS-master/transition.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
+
+@*<script src="~/Content/MyScript.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.min.js"></script>
+
+</body>
+</html>
+            

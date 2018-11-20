@@ -1,0 +1,39 @@
+﻿@model TellStoryTogether.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="ui account top-container container segment">
+
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>Create a new account.</h2>
+    </hgroup>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <fieldset class="ui form">
+            <legend>Registration Form</legend>
+            <div class="field">
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+            </div>
+            <div class="field">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+            </div>
+            <div class="field">
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword)
+            </div>
+            <input type="submit" class="ui basic button" value="Register" />
+        </fieldset>
+    }
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

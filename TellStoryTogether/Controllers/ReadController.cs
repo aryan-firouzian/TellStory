@@ -98,16 +98,8 @@ namespace TellStoryTogether.Controllers
                 };
                 _userContext.Comments.Add(comment);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Comment++;
-                Notification notification = new Notification
-                {
-                    User = user,
-                    Article = article,
-                    Seen = false,
-                    State = "Comment",
-                    Time = DateTime.Now
-                };
-                _userContext.Notifications.Add(notification);
                 _userContext.SaveChanges();
+                DbHelperNoContext.AddNotificationRecord(_userContext, user, article, "Comment");
                 return Json(new[]
                 {
                     "added",
@@ -217,16 +209,8 @@ namespace TellStoryTogether.Controllers
                 };
                 _userContext.ArticleFavorites.Add(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite++;
-                Notification notification = new Notification
-                {
-                    User = user,
-                    Article = article,
-                    Seen = false,
-                    State = "Favorite",
-                    Time = DateTime.Now
-                };
-                _userContext.Notifications.Add(notification);
                 _userContext.SaveChanges();
+                DbHelperNoContext.AddNotificationRecord(_userContext, user, article, "Favorite");
                 return Json(new[]
                 {
                     "added",
@@ -259,11 +243,9 @@ namespace TellStoryTogether.Controllers
                 ArticleFavorite articleFavorite = _userContext.ArticleFavorites.First(p => p.Article.ArticleId == articleId && p.User.UserId == userId);
                 _userContext.ArticleFavorites.Remove(articleFavorite);
                 _userContext.Articles.First(p => p.ArticleId == articleId).Favorite--;
-                Notification notification =
-                    _userContext.Notifications.First(
-                        p => p.User.UserId == userId && p.Article.ArticleId == articleId && p.State == "Favorite");
-                _userContext.Notifications.Remove(notification);
                 _userContext.SaveChanges();
+                DbHelperNoContext.RemoveNotificationRecord(_userContext, userId, articleId, "Favorite");
+                
                 return Json(new[]
                 {
                     "removed",

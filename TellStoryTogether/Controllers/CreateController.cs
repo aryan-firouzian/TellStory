@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TellStoryTogether.Filters;
+using TellStoryTogether.Helper;
 using TellStoryTogether.Models;
 using WebMatrix.WebData;
 
@@ -96,16 +97,9 @@ namespace TellStoryTogether.Controllers
                         ? newArticle.ArticleId.ToString()
                         : identifier + "-" + parallel;
                     _userContext.Articles.First(p => p.ArticleId == newArticle.ArticleId).Identifier = newIdentifier;
-                    Notification notification = new Notification
-                    {
-                        User = user,
-                        Article = newArticle,
-                        Seen = false,
-                        State = "All",
-                        Time = DateTime.Now
-                    };
-                    _userContext.Notifications.Add(notification);
                     _userContext.SaveChanges();
+                    DbHelperNoContext.AddNotificationRecord(_userContext, user, newArticle, "All");
+
                     return Json(new[]
                     {
                         "added",

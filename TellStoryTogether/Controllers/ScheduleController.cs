@@ -37,7 +37,7 @@ namespace TellStoryTogether.Controllers
                     
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = "unhandled exception";
             }

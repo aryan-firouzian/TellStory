@@ -198,8 +198,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\DbHelper.cs" />
+    <Compile Include="Helper\DbHelperNoContext.cs" />
     <Compile Include="Helper\LinqExtension.cs" />
-    <Compile Include="Helper\MyTimeSpan.cs" />
+    <Compile Include="Helper\ClassHelper.cs" />
     <Compile Include="Migrations\201810022229260_AddBlogRating.cs" />
     <Compile Include="Migrations\201810022229260_AddBlogRating.Designer.cs">
       <DependentUpon>201810022229260_AddBlogRating.cs</DependentUpon>

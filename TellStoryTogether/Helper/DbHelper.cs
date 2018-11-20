@@ -7,11 +7,11 @@ namespace TellStoryTogether.Helper
     
     public static class DbHelper
     {
-        readonly static UsersContext _userContext = new UsersContext();
+        readonly static UsersContext UserContext = new UsersContext();
 
         public static int UserPoints()
         {
-            int a = _userContext.UserProfiles.First(p => p.UserId == WebSecurity.CurrentUserId).UserPoint;
+            int a = UserContext.UserProfiles.First(p => p.UserId == WebSecurity.CurrentUserId).UserPoint;
 
             return a;
         }

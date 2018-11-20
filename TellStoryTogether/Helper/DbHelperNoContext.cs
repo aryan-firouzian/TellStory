@@ -7,26 +7,34 @@ namespace TellStoryTogether.Helper
 {
     public static class DbHelperNoContext
     {
-        public static void AddNotificationRecord(UsersContext context, UserProfile user, Article newArticle, string state)
+        public static void AddNotificationRecord(UsersContext context, UserProfile user, Article article, string state)
         {
-            Notification notification = new Notification
+            if(context.Notifications.Any(p=>p.User == user && p.Article == article && p.State=="All"))
             {
-                User = user,
-                Article = newArticle,
-                Seen = false,
-                State = "All",
-                Time = DateTime.Now
-            };
-            context.Notifications.Add(notification);
-            context.SaveChanges();
+
+            }
+            else
+            {
+                Notification notification = new Notification
+                {
+                    User = user,
+                    Article = article,
+                    Seen = false,
+                    State = state,
+                    Time = DateTime.Now
+                };
+                context.Notifications.Add(notification);
+                context.SaveChanges();
+            }
+
         }
 
-        public static void RemoveNotificationRecord(UsersContext context, int userId, int articleId, string state )
+        public static void RemoveNotificationRecord(UsersContext context, int userId, int articleId, string state)
         {
-            Notification notification =
-                    context.Notifications.First(
+            IQueryable<Notification> notification =
+                    context.Notifications.Where(
                         p => p.User.UserId == userId && p.Article.ArticleId == articleId && p.State == state);
-            context.Notifications.Remove(notification);
+            context.Notifications.RemoveRange(notification);
             context.SaveChanges();
         }
     }

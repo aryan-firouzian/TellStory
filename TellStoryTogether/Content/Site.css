@@ -164,7 +164,7 @@ z-index:3;
 .title-ellipsis-width {
    overflow: hidden;
    text-overflow: ellipsis;
-   width: 170px;
+   width: 200px;
    white-space: nowrap;
 }
 
@@ -231,6 +231,7 @@ z-index:3;
     border-radius: 50%;
     font-size: 8px;
 }
+
 
 @media (max-width: 500px) {
     .account {

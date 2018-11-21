@@ -208,3 +208,5 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogethe
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.CommentChangeArticleIdToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.UserTableAddPoint.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddLikedPropertyToNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddIdentifierPropertyToNotificationTable.resources

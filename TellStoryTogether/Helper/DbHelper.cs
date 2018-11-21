@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using TellStoryTogether.Models;
 using WebMatrix.WebData;
 
@@ -17,9 +18,22 @@ namespace TellStoryTogether.Helper
             return a;
         }
 
-        public static Notification[] UserNotifications()
+        public static Notification[] UserUnseenNotifications()
         {
-            return UserContext.Notifications.Where(p => p.User.UserId == UserId && p.Seen == false).ToArray();
+            return
+                UserContext.Notifications.Where(
+                    p =>
+                        p.User.UserId == UserId && p.Seen == false &&
+                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0)).ToArray();
+        }
+
+        public static Notification[] UserAllNotifications()
+        {
+            return
+                UserContext.Notifications.Where(
+                    p =>
+                        p.User.UserId == UserId &&
+                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0)).Include(p=>p.Article).ToArray();
         }
     }
 }

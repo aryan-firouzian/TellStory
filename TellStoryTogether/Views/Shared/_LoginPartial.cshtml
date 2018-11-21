@@ -1,14 +1,18 @@
-﻿@using TellStoryTogether.Helper
+﻿@using System.Diagnostics.Eventing.Reader
+@using TellStoryTogether.Helper
+@using TellStoryTogether.Models
+@{ Notification[] allNotifications = DbHelper.UserAllNotifications();}
+
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Favorites</a>
+        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Favorites</a>
         <div id="favorite-dropdown" class="dropdown-menu">
             <a id="favorite-header" class="dropdown-item" href="#">No article</a>
         </div>
-    </li>    
+    </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Scripts</a>
+        <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Scripts</a>
         <div id="script-dropdown" class="dropdown-menu">
             <a id="script-header" class="dropdown-item" href="#">No article</a>
         </div>
@@ -17,11 +21,52 @@
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
             Create
         </a>
-    </li>    
-    <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="bell outline icon"></i>@DbHelper.UserNotifications().Length
-        </a>
+    </li>
+    <li class="nav-item dropdown">
+        @if (allNotifications.Length > 0)
+        {
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                @if (allNotifications.Count(p => p.Seen == false) != 0)
+                {
+                    <i class="bell red icon"></i>
+                    <span style="color: darkred">
+                        @allNotifications.Count(p => p.Seen == false)
+                    </span>
+                }
+                else
+                {
+                    <i class="bell outline icon"></i>
+                }
+
+            </a>
+    <div class="dropdown-menu dropdown-menu-right">
+        @foreach (Notification notification in allNotifications)
+        {
+            if (notification.Seen == false)
+            {
+                <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
+                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
+                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
+                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                </a>
+            }
+            else
+            {
+                <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
+                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
+                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Text</div>
+                </a>
+            }
+        }
+    </div>
+        }
+        else
+        {
+            <a class="nav-link" href="#">
+                <i class="bell outline icon"></i>
+            </a>
+
+        }
     </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
@@ -29,22 +74,22 @@
         </a>
     </li>
     <li class="nav-item">
-        @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link", title = "Manage" })
+        @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new {@class = "nav-link", title = "Manage"})
     </li>
     <li class="nav-item">
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link", @style = "padding: 0" }))
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "nav-link", @style = "padding: 0"}))
         {
-        @Html.AntiForgeryToken()
-    <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log out</a>
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log out</a>
         }
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</a>
+        <a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink", @class = "nav-link"})</a>
     </li>
     <li class="nav-item">
-        <a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</a>
+        <a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink", @class = "nav-link"})</a>
     </li>
 }

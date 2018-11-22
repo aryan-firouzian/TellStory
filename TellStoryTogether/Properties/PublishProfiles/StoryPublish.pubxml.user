@@ -158,7 +158,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>11/21/2018 01:27:42</publishTime>
+      <publishTime>11/22/2018 00:37:59</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -761,7 +761,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2017 17:58:55</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/17/2018 20:10:58</publishTime>
+      <publishTime>11/21/2018 22:05:54</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
@@ -937,8 +937,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
+    <File Include="Helper/ClassHelper.cs">
+      <publishTime>11/20/2018 16:49:49</publishTime>
+    </File>
     <File Include="Helper/DbHelper.cs">
       <publishTime>11/18/2018 02:15:25</publishTime>
+    </File>
+    <File Include="Helper/DbHelperNoContext.cs">
+      <publishTime>11/21/2018 01:21:09</publishTime>
     </File>
     <File Include="Helper/LinqExtension.cs">
       <publishTime>11/16/2018 21:44:25</publishTime>
@@ -1005,6 +1011,33 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Images/TellStoryTogether3.png">
       <publishTime>11/05/2018 23:02:38</publishTime>
+    </File>
+    <File Include="Models/AccountModels.cs">
+      <publishTime>11/18/2018 20:22:49</publishTime>
+    </File>
+    <File Include="Models/Article.cs">
+      <publishTime>11/12/2018 01:01:37</publishTime>
+    </File>
+    <File Include="Models/ArticleFavorite.cs">
+      <publishTime>11/12/2018 00:13:03</publishTime>
+    </File>
+    <File Include="Models/ArticlePoint.cs">
+      <publishTime>11/12/2018 00:13:06</publishTime>
+    </File>
+    <File Include="Models/Comment.cs">
+      <publishTime>11/12/2018 21:42:03</publishTime>
+    </File>
+    <File Include="Models/Genre.cs">
+      <publishTime>10/05/2018 23:34:52</publishTime>
+    </File>
+    <File Include="Models/Language.cs">
+      <publishTime>10/06/2018 21:26:43</publishTime>
+    </File>
+    <File Include="Models/Notification.cs">
+      <publishTime>11/21/2018 00:31:47</publishTime>
+    </File>
+    <File Include="Models/Tag.cs">
+      <publishTime>10/05/2018 23:27:49</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>10/03/2018 00:54:05</publishTime>
@@ -1121,7 +1154,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2018 20:25:01</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>11/21/2018 00:55:19</publishTime>
+      <publishTime>11/22/2018 00:16:24</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
       <publishTime>11/17/2018 22:00:59</publishTime>

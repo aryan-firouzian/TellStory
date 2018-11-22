@@ -19,14 +19,17 @@ namespace TellStoryTogether
     {
         protected void Application_Start()
         {
+            if (!WebSecurity.Initialized)
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+           
             AreaRegistration.RegisterAllAreas();
 
             // added to remove filter initialization
-            if (!WebSecurity.Initialized)
-                WebSecurity.InitializeDatabaseConnection("DefaultConnection","UserProfile", "UserId", "UserName", autoCreateTables: true);
+            /*if (!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection","UserProfile", "UserId", "UserName", autoCreateTables: true);*/
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();

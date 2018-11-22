@@ -1,5 +1,4 @@
-﻿@using System.Diagnostics.Eventing.Reader
-@using TellStoryTogether.Helper
+﻿@using TellStoryTogether.Helper
 @using TellStoryTogether.Models
 @{ Notification[] allNotifications = DbHelper.UserAllNotifications();}
 
@@ -35,7 +34,8 @@
                 }
                 else
                 {
-                    <i class="bell outline icon"></i>
+                    <i class="bell outline red icon"></i><span>hello</span>
+                    @allNotifications.Count();
                 }
 
             </a>

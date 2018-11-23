@@ -232,6 +232,11 @@ z-index:3;
     font-size: 8px;
 }
 
+.scrollable-menu {
+    height: auto;
+    max-height: 450px;
+    overflow-x: hidden;
+}
 
 @media (max-width: 500px) {
     .account {

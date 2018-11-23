@@ -400,3 +400,5 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.dll
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.pdb
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.csprojResolveAssemblyReference.cache
+C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddLikedPropertyToNotificationTable.resources
+C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddIdentifierPropertyToNotificationTable.resources

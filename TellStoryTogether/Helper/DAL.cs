@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using TellStoryTogether.Models;
@@ -326,6 +327,45 @@ namespace TellStoryTogether.Helper
             _context.SaveChanges();
         }
 
-        
+
+        public List<Article> GetFavoriteArticle()
+        {
+            var queryFavoriteIds =
+                _context.ArticleFavorites.Where(p => p.User.UserId == _userId)
+                    .Include(p => p.Article)
+                    .Select(p => p.Article.ArticleId);
+            List<int> favoriteIds = queryFavoriteIds.ToList();
+            favoriteIds.Reverse();
+            return favoriteIds.Select(p => _context.Articles.First(q => q.ArticleId == p)).ToList();
+        }
+
+        public Tuple<List<Article>, int> GetFirstNFavoriteArticle(int take)
+        {
+            var queryFavoriteIds =
+                _context.ArticleFavorites.Where(p => p.User.UserId == _userId)
+                    .Include(p => p.Article)
+                    .Select(p => p.Article.ArticleId);
+            int count = queryFavoriteIds.Count();
+            List<int> favoriteIds = queryFavoriteIds.TakeLast(take).ToList();
+            favoriteIds.Reverse();
+            return new Tuple<List<Article>, int>(favoriteIds.Select(p => _context.Articles.First(q => q.ArticleId == p)).ToList(),count);
+        }
+
+        public List<Article> GetScriptArticle()
+        {
+            var queryArticles = _context.Articles.Where(p => p.Owner.UserId == _userId);
+            List<Article> articles = queryArticles.ToList();
+            articles.Reverse();
+            return articles;
+        }
+
+        public Tuple<List<Article>, int> GetFirstNScriptArticle(int take)
+        {
+            var queryArticles = _context.Articles.Where(p => p.Owner.UserId == _userId);
+            int count = queryArticles.Count();
+            List<Article> articles = queryArticles.TakeLast(take).ToList();
+            articles.Reverse();
+            return new Tuple<List<Article>, int>(articles, count);
+        }
     }
 }

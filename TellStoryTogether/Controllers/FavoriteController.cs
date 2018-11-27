@@ -13,42 +13,23 @@ namespace TellStoryTogether.Controllers
 {
     public class FavoriteController : Controller
     {
-        readonly UsersContext _userContext = new UsersContext();
-        //
         // GET: /Favorite/
-        [InitializeSimpleMembership]
         public ActionResult Index()
         {
-            int userId = WebSecurity.GetUserId(User.Identity.Name);
-            var queryFavoriteIds =
-                _userContext.ArticleFavorites.Where(p => p.User.UserId == userId)
-                    .Include(p => p.Article)
-                    .Select(p => p.Article.ArticleId);
-            List<int> favoriteIds = queryFavoriteIds.ToList();
-            favoriteIds.Reverse();
-            List<Article> articles =
-                favoriteIds.Select(p => _userContext.Articles.First(q => q.ArticleId == p)).ToList();
-            return View(articles);
+            DAL dal = new DAL(User.Identity.Name);
+            return View(dal.GetFavoriteArticle());
         }
 
         [HttpPost]
-        [InitializeSimpleMembership]
         public ActionResult LoadFavoriteArticles(int take)
         {
-            int userId = WebSecurity.GetUserId(User.Identity.Name);
-            var queryFavoriteIds =
-                _userContext.ArticleFavorites.Where(p => p.User.UserId == userId)
-                    .Include(p => p.Article)
-                    .Select(p => p.Article.ArticleId);
-            int count = queryFavoriteIds.Count();
-            List<int> favoriteIds = queryFavoriteIds.TakeLast(take).ToList();
-            favoriteIds.Reverse();
-            List<Article> articles =
-                favoriteIds.Select(p => _userContext.Articles.First(q => q.ArticleId == p)).ToList();
+            DAL dal = new DAL(User.Identity.Name);
+            Tuple<List<Article>,int> articlesTotalLenght = dal.GetFirstNFavoriteArticle(take);
+
             return Json(new
             {
-                count,
-                articles
+                articlesTotalLenght.Item2,
+                articlesTotalLenght.Item1
             });
         }
     }

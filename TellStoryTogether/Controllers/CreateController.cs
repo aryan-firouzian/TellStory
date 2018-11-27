@@ -18,6 +18,7 @@ namespace TellStoryTogether.Controllers
         {
             DAL dal = new DAL(User.Identity.Name);
             List<Article> articles = dal.GetArticlesByIdentifier(identifier);
+
             ViewBag.length = articles.Count;
             ViewBag.title = articles.Count == 0 ? "" : articles[0].Title;
             ViewBag.charMin = articles.Count == 0 ? "300" : articles[0].MinChar.ToString();
@@ -26,6 +27,7 @@ namespace TellStoryTogether.Controllers
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
             ViewBag.genre = articles.Count == 0 ? -1 : articles[0].Genre.GenreId;
             ViewBag.identifier = identifier;
+
             ViewBag.genres = dal.GetGenres();
             return View(articles);
         }

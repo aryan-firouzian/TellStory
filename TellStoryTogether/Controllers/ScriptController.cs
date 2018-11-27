@@ -14,30 +14,26 @@ namespace TellStoryTogether.Controllers
     {
         //
         // GET: /Script/
-        readonly UsersContext _userContext = new UsersContext();
 
         public ActionResult Index()
         {
-            int userId = WebSecurity.GetUserId(User.Identity.Name);
-            var queryArticles = _userContext.Articles.Where(p => p.Owner.UserId == userId);
-            List<Article> articles = queryArticles.ToList();
-            articles.Reverse();
-            return View(articles);
+            DAL dal = new DAL(User.Identity.Name);
+            return View(dal.GetScriptArticle());
+
         }
 
         [HttpPost]
         [InitializeSimpleMembership]
         public ActionResult LoadScriptArticles(int take)
         {
-            int userId = WebSecurity.GetUserId(User.Identity.Name);
-            var queryArticles = _userContext.Articles.Where(p => p.Owner.UserId == userId);
-            int count = queryArticles.Count();
-            List<Article> articles = queryArticles.TakeLast(take).ToList();
-            articles.Reverse();
+            DAL dal = new DAL(User.Identity.Name);
+            Tuple<List<Article>, int> articlesTotalLenght = dal.GetFirstNScriptArticle(take);
+
+
             return Json(new
             {
-                count,
-                articles
+                articlesTotalLenght.Item2,
+                articlesTotalLenght.Item1
             });
         }
     }

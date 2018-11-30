@@ -19,18 +19,5 @@ namespace TellStoryTogether.Controllers
             DAL dal = new DAL(User.Identity.Name);
             return View(dal.GetFavoriteArticle());
         }
-
-        [HttpPost]
-        public ActionResult LoadFavoriteArticles(int take)
-        {
-            DAL dal = new DAL(User.Identity.Name);
-            Tuple<List<Article>,int> articlesTotalLenght = dal.GetFirstNFavoriteArticle(take);
-
-            return Json(new
-            {
-                articlesTotalLenght.Item2,
-                articlesTotalLenght.Item1
-            });
-        }
     }
 }

@@ -21,20 +21,5 @@ namespace TellStoryTogether.Controllers
             return View(dal.GetScriptArticle());
 
         }
-
-        [HttpPost]
-        [InitializeSimpleMembership]
-        public ActionResult LoadScriptArticles(int take)
-        {
-            DAL dal = new DAL(User.Identity.Name);
-            Tuple<List<Article>, int> articlesTotalLenght = dal.GetFirstNScriptArticle(take);
-
-
-            return Json(new
-            {
-                articlesTotalLenght.Item2,
-                articlesTotalLenght.Item1
-            });
-        }
     }
 }

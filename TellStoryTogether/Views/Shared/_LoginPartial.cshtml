@@ -1,19 +1,53 @@
 ﻿@using TellStoryTogether.Helper
 @using TellStoryTogether.Models
-@{ Notification[] allNotifications = DbHelper.UserAllNotifications();}
+@{ NavPanel navPanel = new NavPanel(5);}
 
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Favorites</a>
         <div id="favorite-dropdown" class="dropdown-menu">
-            <a id="favorite-header" class="dropdown-item" href="#">No article</a>
+            @if (navPanel.CountFavorites() > 0)
+            {
+                <a class="dropdown-item" href="@Url.Action("Index", "Favorite")">
+                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">See all favorites (@navPanel.CountFavorites())</div>
+                </a>
+                foreach (Article article in navPanel.UserFavorites())
+                 {
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = article.Identifier})">
+                         <div class="dropdown-item-1 title-ellipsis-width">@article.Title</div>
+                         <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@article.Text</div>
+                     </a>
+                 }
+            }
+            else
+            {
+                <a id="favorite-header" class="dropdown-item" href="#">No article</a>
+            }
         </div>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Scripts</a>
         <div id="script-dropdown" class="dropdown-menu">
-            <a id="script-header" class="dropdown-item" href="#">No article</a>
+            @if (navPanel.CountScripts() > 0)
+            {
+                <a class="dropdown-item" href="@Url.Action("Index", "Script")">
+                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">See all scripts (@navPanel.CountScripts())</div>
+                </a>
+                foreach (Article article in navPanel.UserScripts())
+                {
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = article.Identifier})">
+                        <div class="dropdown-item-1 title-ellipsis-width">@article.Title</div>
+                        <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@article.Text</div>
+                    </a>
+                }
+            }
+            else
+            {
+                <a id="script-header" class="dropdown-item" href="#">No article</a>
+            }
         </div>
     </li>
     <li class="nav-item">
@@ -22,41 +56,42 @@
         </a>
     </li>
     <li class="nav-item dropdown">
-        @if (allNotifications.Length > 0)
+        @if (navPanel.CountAllNotification() > 0)
         {
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                @if (allNotifications.Count(p => p.Seen == false) != 0)
+                @if (navPanel.CountUnseenNotification() > 0)
                 {
-                    <i class="bell red icon"></i><span style="color: darkred">@allNotifications.Count(p => p.Seen == false)</span>
+                    <i class="bell red icon"></i><span style="color: darkred">@navPanel.CountUnseenNotification()</span>
                 }
                 else
                 {
-                    <i class="bell outline red icon"></i><span>hello</span>
-                    @allNotifications.Count();
+                    <i class="bell outline red icon"></i>
                 }
 
             </a>
-    <div class="dropdown-menu dropdown-menu-right scrollable-menu">
-        @foreach (Notification notification in allNotifications)
-        {
-            if (notification.Seen == false)
-            {
-                <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
-                    <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
-                </a>
-                <div class="dropdown-divider"></div>
-            }
-            else
-            {
-                <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                    <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Text</div>
-                </a>
-            }
-        }
-    </div>
+            <div class="dropdown-menu dropdown-menu-right scrollable-menu">
+                @foreach (Notification notification in navPanel.UserAllNotifications())
+                {
+                    if (notification.Seen == false)
+                    {
+                        <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    }
+                }
+            </div>
         }
         else
         {
@@ -68,7 +103,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="trophy icon"></i>@DbHelper.UserPoints()
+            <i class="trophy icon"></i>@navPanel.UserPoints()
         </a>
     </li>
     <li class="nav-item">

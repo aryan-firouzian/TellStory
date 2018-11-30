@@ -197,7 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\DbHelper.cs" />
+    <Compile Include="Helper\NavPanel.cs" />
     <Compile Include="Helper\LinqExtension.cs" />
     <Compile Include="Helper\ClassHelper.cs" />
     <Compile Include="Helper\DAL.cs" />

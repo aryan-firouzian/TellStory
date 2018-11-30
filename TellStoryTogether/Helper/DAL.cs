@@ -29,6 +29,13 @@ namespace TellStoryTogether.Helper
             _user = _context.UserProfiles.First(p => p.UserId == _userId);
         }
 
+        public DAL(int currentUserId)
+        {
+            if (!WebSecurity.IsAuthenticated) return;
+            _userId = currentUserId;
+            _user = _context.UserProfiles.First(p => p.UserId == _userId);
+        }
+
         /*public UserProfile GetUser(string name)
         {
              return _user;
@@ -330,6 +337,10 @@ namespace TellStoryTogether.Helper
 
         public List<Article> GetFavoriteArticle()
         {
+            if (_userId < 0)
+            {
+                return null;
+            }
             var queryFavoriteIds =
                 _context.ArticleFavorites.Where(p => p.User.UserId == _userId)
                     .Include(p => p.Article)
@@ -339,8 +350,12 @@ namespace TellStoryTogether.Helper
             return favoriteIds.Select(p => _context.Articles.First(q => q.ArticleId == p)).ToList();
         }
 
-        public Tuple<List<Article>, int> GetFirstNFavoriteArticle(int take)
+        public Tuple<Article[], int> GetFirstNFavoriteArticle(int take)
         {
+            if (_userId < 0)
+            {
+                return new Tuple<Article[], int>(new Article[] { }, 0);
+            }
             var queryFavoriteIds =
                 _context.ArticleFavorites.Where(p => p.User.UserId == _userId)
                     .Include(p => p.Article)
@@ -348,24 +363,63 @@ namespace TellStoryTogether.Helper
             int count = queryFavoriteIds.Count();
             List<int> favoriteIds = queryFavoriteIds.TakeLast(take).ToList();
             favoriteIds.Reverse();
-            return new Tuple<List<Article>, int>(favoriteIds.Select(p => _context.Articles.First(q => q.ArticleId == p)).ToList(),count);
+            return new Tuple<Article[], int>(favoriteIds.Select(p => _context.Articles.First(q => q.ArticleId == p)).ToArray(),count);
         }
 
         public List<Article> GetScriptArticle()
         {
+            if (_userId < 0)
+            {
+                return null;
+            }
             var queryArticles = _context.Articles.Where(p => p.Owner.UserId == _userId);
             List<Article> articles = queryArticles.ToList();
             articles.Reverse();
             return articles;
         }
 
-        public Tuple<List<Article>, int> GetFirstNScriptArticle(int take)
+        public Tuple<Article[], int> GetFirstNScriptArticle(int take)
         {
+            if (_userId < 0)
+            {
+                return new Tuple<Article[], int>(new Article[]{}, 0);
+            }
             var queryArticles = _context.Articles.Where(p => p.Owner.UserId == _userId);
             int count = queryArticles.Count();
             List<Article> articles = queryArticles.TakeLast(take).ToList();
             articles.Reverse();
-            return new Tuple<List<Article>, int>(articles, count);
+            return new Tuple<Article[], int>(articles.ToArray(), count);
+        }
+
+        public int UserPoint()
+        {
+            try
+            {
+                return _userId < 0 ? 0 : _context.UserProfiles.First(p => p.UserId == _userId).UserPoint;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            
+        }
+
+        public int CountUserUnseenNotification()
+        {
+            return _userId < 0
+                ? 0
+                : _context.Notifications.Count(p => p.User.UserId == _userId && p.Seen == false &&
+                                                    (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 ||
+                                                     p.Liked != 0));
+        }
+
+        public Notification[] UserAllNotification()
+        {
+            return _userId < 0
+                ? new Notification[]{} : _context.Notifications.Where(
+                    p =>
+                        p.User.UserId == _userId &&
+                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0)).Include(p => p.Article).ToArray();
         }
     }
 }

@@ -158,7 +158,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>11/22/2018 03:39:16</publishTime>
+      <publishTime>12/01/2018 20:13:27</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -761,7 +761,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2017 17:58:55</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>11/21/2018 22:05:54</publishTime>
+      <publishTime>12/01/2018 20:09:10</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
@@ -1151,10 +1151,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/17/2018 20:25:01</publishTime>
+      <publishTime>12/01/2018 20:09:10</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>11/22/2018 00:16:24</publishTime>
+      <publishTime>12/01/2018 20:09:10</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
       <publishTime>11/17/2018 22:00:59</publishTime>

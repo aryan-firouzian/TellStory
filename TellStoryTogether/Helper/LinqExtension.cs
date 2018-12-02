@@ -65,6 +65,21 @@ namespace TellStoryTogether.Helper
         public bool Commented { get; set; }
     }
 
+    public class NotificationShow
+    {
+        public int NotificationId { get; set; }
+
+        public string ArticleTitle { get; set; }
+
+        public string ArticleText { get; set; }
+
+        public bool Bold { get; set; }
+
+        public string Content { get; set; }
+
+        public string Identifier { get; set; }
+    }
+
     public static class LinqExtension
     {
         public static IEnumerable<CommentTime> ChangeTime(this IEnumerable<Comment> source)
@@ -173,6 +188,16 @@ namespace TellStoryTogether.Helper
         {
             IEnumerable<T> enumerable = source as T[] ?? source.ToArray();
             return enumerable.Skip(Math.Max(0, enumerable.Count() - n));
+        }
+
+        public static IEnumerable<NotificationShow> ToNotificationShows(this IEnumerable<Notification> source)
+        {
+            return source.Select(notification => new NotificationShow
+            {
+                NotificationId = notification.NotificationId,
+                ArticleTitle = notification.Article.Title,
+                ArticleText = notification.Article.Text
+            }).ToList();
         }
     }
 }

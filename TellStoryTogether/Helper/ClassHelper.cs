@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using TellStoryTogether.Models;
 
 namespace TellStoryTogether.Helper
 {
@@ -43,6 +45,58 @@ namespace TellStoryTogether.Helper
             }
             int years = Convert.ToInt32(Math.Floor((double) ts.Days/365));
             return years <= 1 ? "one year ago" : years + " years ago";
+        }
+
+        public Notification CreateContent(Notification source)
+        {
+            List<string> contents = new List<string>();
+            if (source.Forked > 0)
+            {
+                if (source.Forked == 1)
+                {
+                    contents.Add(source.Forked + " fork");
+                }
+                else
+                {
+                    contents.Add(source.Forked + " forks");
+                }
+            }
+            if (source.Commented > 0)
+            {
+                if (source.Commented == 1)
+                {
+                    contents.Add(source.Commented + " comment");
+                }
+                else
+                {
+                    contents.Add(source.Commented + " comments");
+                }
+            }
+            if (source.Liked > 0)
+            {
+                if (source.Liked == 1)
+                {
+                    contents.Add(source.Liked + " like");
+                }
+                else
+                {
+                    contents.Add(source.Liked + " likes");
+                }
+            }
+            
+            if (source.Favorited > 0)
+            {
+                if (source.Favorited == 1)
+                {
+                    contents.Add(source.Favorited + " favorite");
+                }
+                else
+                {
+                    contents.Add(source.Favorited + " favorites");
+                }
+            }
+            source.Content = string.Join(", ", contents);
+            return source;
         }
     }
 }

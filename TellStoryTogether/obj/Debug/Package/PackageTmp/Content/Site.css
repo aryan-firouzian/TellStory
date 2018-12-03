@@ -1,0 +1,267 @@
+﻿/* Import Fonts
+    ----------------------------------------------------------*/
+@font-face {
+  font-family: 'proxima nova bold';
+  src: url('fonts/Proxima Nova Bold.eot');
+  src: url('fonts/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Proxima Nova Bold.woff') format('woff'), url('fonts/Proxima Nova Bold.ttf') format('truetype'), url('fonts/Proxima Nova Bold.svg#proxima_nova_rgbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'proxima nova regular';
+  src: url('fonts/Proxima Nova Reg.eot');
+  src: url('fonts/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Proxima Nova Reg.woff') format('woff'), url('fonts/Proxima Nova Reg.ttf') format('truetype'), url('fonts/Proxima Nova Reg.svg#proxima_nova_rgregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'proxima nova light';
+  src: url('fonts/proximanova-light-webfont.woff');
+  src: url('fonts/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/proximanova-light-webfont.woff') format('woff'), url('fonts/Proxima Nova Light.ttf') format('truetype'), url('fonts/Proxima Nova Light.svg#proxima_nova_ltregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Start CSS
+    ----------------------------------------------------------*/
+
+.ui.button.my.green {
+    background-color: #bbe6bb;
+    color: white;
+    /*border: 2px solid #4CAF50; /* Green !1!*/
+}
+
+.ui.button.my.green:hover {
+    background-color: #A4CFA4; /* Green */
+    color: white;
+}
+
+.ui.label.my.green {
+    background-color: #88d388;
+    color: #88d388;
+}
+
+nav {
+    background-color: #bbe6bb;
+}
+
+.logo {
+    vertical-align: middle;
+    height: 35px;
+}
+
+.slick-prev:before, .slick-next:before { 
+    color:green !important;
+}
+
+.slick-prev {
+    margin-left: 25px;
+    z-index:3;
+  }
+
+.slick-next {
+margin-right: 25px;
+z-index:3;
+}
+
+.slick-slide {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.slick-slider {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.slick-list.draggable {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  display: block;
+  position: absolute;
+  z-index: 50;
+  top:50%;
+  transform: translateY(-50%);
+  padding:0px !important
+}
+
+.next {
+  display: block;
+  position: absolute;
+  right: 0px;
+  top:50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  padding:0px !important
+}
+
+.story-container {
+     min-height: 300px !important;
+     margin: 20px !important;
+ }
+
+.story-container-read-image {
+     min-height: 300px !important;
+     margin-left: 20px !important;
+     margin-right: 20px !important;
+     margin-top: 0px !important;
+     margin-bottom: 0px !important;
+ }
+
+.story-container-read {
+     margin-left: 20px !important;
+     margin-right: 20px !important;
+     margin-top: 0px !important;
+     margin-bottom: 0px !important;
+ }
+
+.title-ellipsis {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 19px;     /* fallback */
+   max-height: 19px;      /* fallback */
+   -webkit-line-clamp: 1; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   font-weight: bold;
+   font-family: "proxima nova bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+   color: darkgreen
+}
+
+.text-ellipsis {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 19px;     /* fallback */
+   max-height: 155px;      /* fallback */
+   -webkit-line-clamp: 8; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   font-family: "proxima nova light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.text-no-ellipsis {
+   overflow: hidden;
+   display: -webkit-box;
+   line-height: 19px;     /* fallback */
+   -webkit-box-orient: vertical;
+   font-family: "proxima nova light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.title-ellipsis-width {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   width: 200px;
+   white-space: nowrap;
+}
+
+.title-ellipsis-no-width {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   line-height: 19px;     /* fallback */
+   max-height: 22px;      /* fallback */
+   -webkit-line-clamp: 1; /* number of lines to show */
+}
+
+.show-label {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.bottom {
+    vertical-align: bottom
+}
+
+.item-hide {
+    display: none
+}
+
+.item-slickcarousel {
+    display: block
+}
+
+#body {
+    margin-top: 60px;
+}
+
+#footer {
+    min-height: 100px;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.divider{margin: 50px !important}
+
+
+.top-container {
+    margin-top: 100px !important;
+}
+
+.show-title {
+    margin-top: 20px !important; 
+}
+
+.cursor-default {
+    cursor: default !important;
+}
+
+.labeled {
+    margin: 5px !important;
+}
+
+.jssocials-share-link {
+    border-radius: 50%;
+    font-size: 8px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 450px;
+    overflow-x: hidden;
+}
+
+
+/* mobile devices */
+@media (max-width: 576px) {
+    .account {
+        width: 95% !important;
+    }
+
+    #slider-range {
+        margin-top: 10px !important;
+    }
+}
+
+/* tablet devices */
+@media (max-width: 992px) and (min-width: 576px) {
+    .account {
+        width: 65% !important;
+    }
+}
+
+/* desktop devices */
+@media screen and (min-width: 992px) {
+    .account {
+        width: 30% !important;
+    }
+    nav {
+        position: fixed !important;
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 100 !important;
+    }
+    #body {
+        margin-top: 30px !important;
+    }
+}

@@ -8,7 +8,7 @@ namespace TellStoryTogether.Helper
     {
         private readonly int _point;
         private readonly int _countUnseenNotification;
-        private readonly Notification[] _allNotifications;
+        private readonly NotificationShow[] _allNotifications;
         private readonly int _countAllNotification;
         private readonly Article[] _userScripts;
         private readonly Article[] _userFavorites;
@@ -19,8 +19,9 @@ namespace TellStoryTogether.Helper
         {
             var dal = new DAL(WebSecurity.CurrentUserId);
             _point = dal.UserPoint();
-            _countUnseenNotification = dal.CountUserUnseenNotification();
-            _allNotifications = dal.UserAllNotification();
+            Tuple<int, NotificationShow[]> notification = dal.GeteNotification();
+            _countUnseenNotification = notification.Item1;
+            _allNotifications = notification.Item2;
             _countAllNotification = _allNotifications.Length;
             Tuple<Article[], int> scripts = dal.GetFirstNScriptArticle(take);
             _userScripts = scripts.Item1;
@@ -42,7 +43,7 @@ namespace TellStoryTogether.Helper
             return _countUnseenNotification;
         }
 
-        public Notification[] UserAllNotifications()
+        public NotificationShow[] UserAllNotifications()
         {
             return _allNotifications;
         }

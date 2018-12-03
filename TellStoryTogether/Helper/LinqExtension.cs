@@ -192,12 +192,33 @@ namespace TellStoryTogether.Helper
 
         public static IEnumerable<NotificationShow> ToNotificationShows(this IEnumerable<Notification> source)
         {
-            return source.Select(notification => new NotificationShow
+            bool thereAreUnseen = source.Any(p => p.Seen == false);
+            List<NotificationShow> notificationShows = new List<NotificationShow>();
+            foreach (Notification notification in source)
             {
-                NotificationId = notification.NotificationId,
-                ArticleTitle = notification.Article.Title,
-                ArticleText = notification.Article.Text
-            }).ToList();
+                NotificationShow notificationShow = new NotificationShow();
+                notificationShow.NotificationId = notification.NotificationId;
+                notificationShow.ArticleTitle = notification.Article.Title;
+                notificationShow.ArticleText = notification.Article.Text;
+                notificationShow.Identifier = notification.Identifier;
+                notificationShow.Content = notification.Content;
+                if (thereAreUnseen)
+                {
+                    if (notification.Seen == false)
+                    {
+                        notificationShow.Bold = true;
+                    }
+                }
+                else
+                {
+                    if ((DateTime.Now - notification.Time).TotalDays < 2)
+                    {
+                        notificationShow.Bold = true;
+                    }
+                }
+                notificationShows.Add(notificationShow);
+            }
+            return notificationShows;
         }
     }
 }

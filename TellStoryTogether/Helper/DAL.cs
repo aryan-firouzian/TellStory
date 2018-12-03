@@ -36,11 +36,6 @@ namespace TellStoryTogether.Helper
             _user = _context.UserProfiles.First(p => p.UserId == _userId);
         }
 
-        /*public UserProfile GetUser(string name)
-        {
-             return _user;
-        }*/
-
         public List<Article> GetArticlesByIdentifier(string identifier)
         {
             List<Article> articles = new List<Article>();
@@ -184,6 +179,34 @@ namespace TellStoryTogether.Helper
             _context.SaveChanges();
         }
 
+        public void SubscribeNotification(string action)
+        {
+            int articleId = CurrentArticle.ArticleId;
+            switch (action)
+            {
+                case "Comment":
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false).ForEach(p => p.Commented++);
+                    _context.SaveChanges();
+                    break;
+                case "Like":
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Liked++);
+                    _context.SaveChanges();
+                    break;
+                case "UnLike":
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Liked--);
+                    _context.SaveChanges();
+                    break;
+                case "Favorite":
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Favorited++);
+                    _context.SaveChanges();
+                    break;
+                case "UnFavorite":
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Favorited--);
+                    _context.SaveChanges();
+                    break;
+            }
+        }
+
         public void AddNotificationRecord(string state)
         {
             int userId = _user.UserId;
@@ -260,34 +283,6 @@ namespace TellStoryTogether.Helper
             _context.SaveChanges();
         }
 
-        public void SubscribeNotification(string action)
-        {
-            int articleId = CurrentArticle.ArticleId;
-            switch (action)
-            {
-                case "Comment":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false).ForEach(p => p.Commented++);
-                    _context.SaveChanges();
-                    break;
-                case "Like":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Liked++);
-                    _context.SaveChanges();
-                    break;
-                case "UnLike":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Liked--);
-                    _context.SaveChanges();
-                    break;
-                case "Favorite":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Favorited++);
-                    _context.SaveChanges();
-                    break;
-                case "UnFavorite":
-                    _context.Notifications.Where(p=>p.Article.ArticleId==articleId&&p.Seen==false&&p.State=="All").ForEach(p=>p.Favorited--);
-                    _context.SaveChanges();
-                    break;
-            }
-        }
-
         public void Like(int articleId)
         {
             CurrentArticle = _context.Articles.First(p => p.ArticleId == articleId);
@@ -333,7 +328,6 @@ namespace TellStoryTogether.Helper
             CurrentArticle.Favorite--;
             _context.SaveChanges();
         }
-
 
         public List<Article> GetFavoriteArticle()
         {
@@ -404,22 +398,24 @@ namespace TellStoryTogether.Helper
             
         }
 
-        public int CountUserUnseenNotification()
+        public Tuple<int, NotificationShow[]> GeteNotification()
         {
-            return _userId < 0
-                ? 0
-                : _context.Notifications.Count(p => p.User.UserId == _userId && p.Seen == false &&
-                                                    (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 ||
-                                                     p.Liked != 0));
-        }
-
-        public Notification[] UserAllNotification()
-        {
-            return _userId < 0
-                ? new Notification[]{} : _context.Notifications.Where(
+            if (_userId < 0)
+            {
+                return new Tuple<int, NotificationShow[]>(0, new NotificationShow[] {});
+            }
+            else
+            {
+                Notification[] notifications = _context.Notifications.Where(
                     p =>
                         p.User.UserId == _userId &&
-                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0)).Include(p => p.Article).ToArray();
+                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0) &&
+                        (p.Seen==false || DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
+                notifications = notifications.OrderBy(p=>p.Time).Select(p => p.Seen?p:new ClassHelper().CreateContent(p)).ToArray();
+                int unseen = notifications.Count(p => p.Seen == false);
+                return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
+            }
+
         }
     }
 }

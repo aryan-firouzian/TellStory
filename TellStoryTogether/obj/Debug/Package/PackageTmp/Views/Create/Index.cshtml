@@ -1,0 +1,312 @@
+﻿@model IEnumerable<TellStoryTogether.Models.Article>
+
+<section id="main-section">
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        if (ViewBag.length != 0)
+        {
+            <div id="title" class="show-label" style="margin-top: 100px">
+                <h3 class="ui horizontal divider header">@Model.First().Title</h3>
+            </div>
+            foreach (var item in Model)
+            {
+                <div class="show ui center aligned basic segment" style="width: auto; margin-bottom: 0px; padding-bottom: 0px; margin-top: 0px; padding-top: 0px">
+                    <div>
+                        <div class=" ui justified container segment story-container">
+                            @if (@item.PictureUrl != null) {
+                                <img src="@Url.Content(@item.PictureUrl)" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                            }
+                            <p class="text-no-ellipsis">@item.Text</p>
+                            <p class="title-ellipsis">By @item.Owner.UserName</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div id="show-create" class="show ui aligned basic segment" style="width: auto; margin-bottom: 0px; padding-bottom: 0px; margin-top: 50px; padding-top: 10px">
+            <div class="ui container segment">
+                <form class="ui form">
+                    <h4 style="margin-top: 10px" class="ui dividing header">Create Story</h4>
+                    <div class="field">
+                        <div class="fields">
+                            <div class="six wide field">
+                                @if (ViewBag.length == 0)
+                                {
+                                    <label>Image</label>
+                                }
+                                else
+                                {
+                                    <label>Image (optional)</label>
+                                }
+                                <div class="ui icon basic button" id="divUpload">
+                                    <i class="image icon"></i> Choose File
+                                </div>
+                                <input type="file" class="ui button" style="display: none" id="select" value="Choose Image" accept="image/*">
+                                <div id="main-cropper" style="margin-top: 10px"></div>
+                            </div>
+                            <div class="ten wide field">
+                                @if (ViewBag.length == 0)
+                                {
+                                    <label>Title</label>
+                                    <input id="title" type="text" placeholder="Story Title">
+                                    <label style="margin-top: 20px">Genre</label>
+                                    <select id="genre" class="ui fluid dropdown">
+                                        <option value='-1'>Select a genre</option>
+                                        @foreach (var genre in ViewBag.genres)
+                                        {
+                                            <option value=@genre.GenreId>@genre.Name</option>
+                                        }
+                                    </select>
+                                    <label style="margin-top: 20px">Character Limit</label>
+                                    <div class="fields">
+                                        <div class="seven wide field">
+                                            <label>Min</label>
+                                            <input id="min-char" type="number" value="300">
+                                        </div>
+                                        <div class="seven wide field">
+                                            <label>Max</label>
+                                            <input id="max-char" type="number" value="2000">
+                                        </div>
+                                    </div>
+                                    <div id="slider-range"></div>
+                                }
+                                else
+                                {
+                                    <label>Title</label>
+                                    <label class="detail" style="font-style: italic">@Model.First().Title</label>
+                                    <label style="margin-top: 20px">Genre</label>
+                                    <label class="detail" style="font-style: italic">@Model.First().Genre.Name</label>
+                                    <label style="margin-top: 20px">Character Limit</label>
+                                    <div class="fields">
+                                        <div class="seven wide field">
+                                            <div class="inline fields">
+                                                <div class="three wide field">
+                                                    <label>Min</label>
+                                                </div>
+                                                <div class="seven wide field">
+                                                    <label class="detail" style="font-style: italic">@Model.First().MinChar</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="seven wide field">
+                                            <div class="inline fields">
+                                                <div class="three wide field">
+                                                    <label>Max</label>
+                                                </div>
+                                                <div class="seven wide field">
+                                                    <label class="detail" style="font-style: italic">@Model.First().MaxChar</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <label id="story-title" style="margin-top: 20px">Story</label>
+                                <textarea id="text" placeholder="Story Content" style="text-align: left; vertical-align: top; width: 100%; height: 400px; white-space: pre-line; white-space: pre-wrap;"></textarea>
+                                <div id="message-div" style="margin-top: 20px"></div>
+                                <div class="text-right">
+                                    <div class="ui icon basic button" id="upload-button" style="margin: 12px">
+                                        <i class="save icon"></i> Save
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div id="message-login" class="ui message" style="margin: 100px">
+            <div class="header" style="margin-bottom: 30px">
+                Log in or Register
+            </div>
+            <p>
+                To create new story, you need to <a>@Html.ActionLink("log in here!", "Login", "Account", routeValues: new {returnUrl = "/Create?identifier=@ViewBag.identifier "}, htmlAttributes: new {})</a>
+            </p>
+            <p>
+                Are you a new user? <a>@Html.ActionLink("Register here!", "Register", "Account", routeValues: new {returnUrl = "/Create?identifier=@ViewBag.identifier "}, htmlAttributes: new {})</a>
+            </p>
+        </div>
+    }
+    <div id="message-temp" class="ui hidden message">
+        <div id="message-temp-header" class="header">
+        </div>
+        <p id="message-temp-content">
+        </p>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+            var minChar = 140;
+            var maxChar = 4000;
+            var isImageAdded = false;
+
+            var $message = $('#message-temp').clone();
+            $message.removeClass('hidden');
+            $('#min-char').attr('min', minChar);
+            $('#max-char').attr('max', maxChar);
+
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#show-create").offset().top - 60
+            }, 2000);
+
+            var myAppUrlSettings = {
+                MySaveArticleUrl: '@Url.Action("SaveArticle", "Create")'
+            }
+
+            var basic = $('#main-cropper').croppie({
+                viewport: { width: 175, height: 275 },
+                boundary: { width: 250, height: 350 },
+                showZoomer: false,
+                url: 'Images/StoryImage/testFileName.png'
+
+            });
+
+            function readFile(inputParam) {
+                if (inputParam.files && inputParam.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#main-cropper').croppie('bind', {
+                            url: e.target.result
+                        });
+                    }
+                    reader.readAsDataURL(inputParam.files[0]);
+                    isImageAdded = true;
+                }
+            }
+
+            function showMessage(messageHeader, messageContent, isErrorType, isRedirect, redirectTo) {
+                $('#upload-button').removeClass('loading');
+                var $messageTemp = $message.clone();
+                $messageTemp.removeAttr('id');
+                $messageTemp.find('#message-temp-header').html(messageHeader + ' - <span class="second-timer">5</span> Seconds');
+                $messageTemp.find('#message-temp-content').html(messageContent);
+                $messageTemp.find('#message-temp-header').removeAttr('id');
+                $messageTemp.find('#message-temp-content').removeAttr('id');
+                if (isErrorType) {
+                    $messageTemp.addClass('negative');
+                } else {
+                    $messageTemp.addClass('positive');
+                }
+                $('#message-div').html($messageTemp);
+                var counter = 5;
+                var interval = setInterval(function() {
+                    counter--;
+                    $messageTemp.find('.second-timer').html(counter);
+                    if (counter === 0) {
+                        $messageTemp.remove();
+                        if (isRedirect) {
+                            window.location.href = redirectTo;
+                        }
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            }
+
+            $('#slider-range').slider({
+                range: true,
+                min: minChar,
+                max: maxChar,
+                values: [300, 2000],
+                slide: function(event, ui) {
+                    $('#min-char').val(ui.values[0]);
+                    $('#max-char').val(ui.values[1]);
+                }
+            });
+
+            $('#text').on('keyup', function(event) {
+                var len = $(this).val().length;
+                $('#story-title').html('Story (' + len + ' chars)');
+            });
+
+            $("#divUpload").on("click", function() {
+                $('#select').click();
+            });
+
+            $('#select').on('change', function() { readFile(this); });
+
+            $('#upload-button').on('click', function() {
+                $('#upload-button').addClass('loading');
+                basic.croppie('result', 'blob').then(function(blob) {
+                    var error = "";
+                    var title = "@ViewBag.title";
+                    var articleInitId = @ViewBag.articleInitId;
+                    var serial = @ViewBag.serial;
+                    var min = @ViewBag.charMin;
+                    var max = @ViewBag.charMax;
+                    var text = $('#text').val();
+                    var genreId = @ViewBag.genre;
+                    if (@ViewBag.length === 0) {
+                        title = $('#title').val();
+                        min = $('#min-char').val();
+                        max = $('#max-char').val();
+                        genreId = $('#genre').val();
+                    }
+                    if (@ViewBag.length === 0 && !isImageAdded) {
+                        error = 'An image should be uploaded as story cover.';
+                        showMessage("Error", error, true);
+                    } else if (title == null || title.trim() === '') {
+                        error = 'Title field cannot be empty.';
+                        showMessage("Error", error, true);
+                    }else if (genreId == null || genreId==='-1') {
+                        error = 'Genre option should be selected.';
+                        showMessage("Error", error, true);
+                    } else if (text == null || text.trim() === '') {
+                        error = 'Story field cannot be empty.';
+                        showMessage("Error", error, true);
+                    } else if (text.length <= minChar) {
+                        error = 'Story should have more than ' + minChar + ' characters.';
+                        showMessage("Error", error, true);
+                    } else if (text.length >= maxChar) {
+                        error = 'Story should have less than ' + maxChar + ' characters.';
+                        showMessage("Error", error, true);
+                    } else if (text.length <= Number(min)) {
+                        error = 'Story should have more than ' + min + ' characters.';
+                        showMessage("Error", error, true);
+                    } else if (text.length >= Number(max)) {
+                        error = 'story should have less than ' + max + ' characters';
+                        showMessage("Error", error, true);
+                    } else {
+                        var formData = new FormData();
+                        formData.append('identifier', "@ViewBag.identifier");
+                        if (isImageAdded) {
+                            formData.append('blob', blob);
+                        }
+                        formData.append('title', title);
+                        formData.append('articleInitId', articleInitId);
+                        formData.append('text', text);
+                        formData.append('serial', serial);
+                        formData.append('min', min);
+                        formData.append('max', max);
+                        formData.append('genreId', genreId);
+
+                        var request = new XMLHttpRequest();
+                        request.onload = function() {
+                            var response = $.parseJSON(this.responseText);
+                            if (response[0] === 'added') {
+                                var identifier = response[1];
+                                var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
+                                var redirectTo = url.replace('__param__', encodeURIComponent(identifier));
+                                showMessage('Added', 'The story is added. You will be redirected to story page.', false, true, redirectTo);
+
+                            } else {
+                                error = 'Unhandled server error happened. Try after 5 minutes.';
+                                showMessage('Sever Error', error, true);
+                            }
+                        }
+                        request.open('POST', myAppUrlSettings.MySaveArticleUrl);
+                        request.send(formData);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+    
+

@@ -70,23 +70,23 @@
 
             </a>
             <div class="dropdown-menu dropdown-menu-right scrollable-menu">
-                @foreach (Notification notification in navPanel.UserAllNotifications())
+                @foreach (NotificationShow notification in navPanel.UserAllNotifications())
                 {
-                    if (notification.Seen == false)
+                    if (notification.Bold)
                     {
                         <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.ArticleTitle</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
                         <div class="dropdown-divider"></div>
                     }
                     else
                     {
                         <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.ArticleTitle</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
                         <div class="dropdown-divider"></div>
                     }

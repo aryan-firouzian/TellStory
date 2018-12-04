@@ -1,6 +1,8 @@
-﻿@using TellStoryTogether.Helper
+﻿@using System.Security.Policy
+@using TellStoryTogether.Helper
 @using TellStoryTogether.Models
-@{ NavPanel navPanel = new NavPanel(5);}
+@{ NavPanel navPanel = new NavPanel(5);
+    bool notFirst = false;}
 
 @if (Request.IsAuthenticated)
 {
@@ -55,23 +57,26 @@
             Create
         </a>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown notification">
         @if (navPanel.CountAllNotification() > 0)
         {
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 @if (navPanel.CountUnseenNotification() > 0)
                 {
-                    <i class="bell red icon"></i><span style="color: darkred">@navPanel.CountUnseenNotification()</span>
+                    <i class="bell red icon"></i><span class="NotificationNumber" style="color: darkred">@navPanel.CountUnseenNotification()</span>
                 }
                 else
                 {
                     <i class="bell outline red icon"></i>
                 }
-
             </a>
             <div class="dropdown-menu dropdown-menu-right scrollable-menu">
                 @foreach (NotificationShow notification in navPanel.UserAllNotifications())
                 {
+                    if (notFirst)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
                     if (notification.Bold)
                     {
                         <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
@@ -79,7 +84,7 @@
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
-                        <div class="dropdown-divider"></div>
+
                     }
                     else
                     {
@@ -88,8 +93,9 @@
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
-                        <div class="dropdown-divider"></div>
+                        
                     }
+                    notFirst = true;
                 }
             </div>
         }
@@ -103,7 +109,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="trophy icon"></i>@navPanel.UserPoints()
+            <i class="trophy green icon"></i>@navPanel.UserPoints()
         </a>
     </li>
     <li class="nav-item">

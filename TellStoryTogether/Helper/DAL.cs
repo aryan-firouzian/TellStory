@@ -156,6 +156,49 @@ namespace TellStoryTogether.Helper
             return new[] { articleId, identifier };
         }
 
+        public void AddNotificationRecord(string state)
+        {
+            int articleId = CurrentArticle.ArticleId;
+            Notification existingNotification =
+                _context.Notifications.FirstOrDefault(p => p.User.UserId == _userId && p.Article.ArticleId == articleId);           
+            if (existingNotification != null)
+            {
+                if (!existingNotification.State.Contains(state))
+                {
+                    existingNotification.State = existingNotification.State + state;
+                }
+            }
+            else
+            {
+                Notification newNotification = new Notification
+                {
+                    User = _user,
+                    Article = CurrentArticle,
+                    Seen = false,
+                    State = state,
+                    Time = DateTime.Now,
+                    Identifier = CurrentArticle.Identifier
+                };
+                _context.Notifications.Add(newNotification);
+            }
+            _context.SaveChanges();
+        }
+
+        public void RemoveNotificationRecord(string state)
+        {
+            int articleId = CurrentArticle.ArticleId;
+            Notification notification = _context.Notifications.FirstOrDefault(
+                p => p.User.UserId == _userId && p.Article.ArticleId == articleId);
+            if (notification != null)
+            {
+                if (notification.State.Contains(state))
+                {
+                    notification.State = notification.State.Replace(state,"");
+                }
+            }
+            _context.SaveChanges();
+        }
+
         public void SubscribeForkNotificationForEarlierArticles(string identifier)
         {
             if (identifier == "new") return;
@@ -193,7 +236,7 @@ namespace TellStoryTogether.Helper
                     _context.SaveChanges();
                     break;
                 case "UnLike":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p => p.Liked--);
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.Seen == false && p.State == "All").ForEach(p =>  p.Liked--);
                     _context.SaveChanges();
                     break;
                 case "Favorite":
@@ -207,39 +250,36 @@ namespace TellStoryTogether.Helper
             }
         }
 
-        public void AddNotificationRecord(string state)
+        public Tuple<int, NotificationShow[]> GeteNotification()
         {
-            int userId = _user.UserId;
-            int articleId = CurrentArticle.ArticleId;
-            if (_context.Notifications.Any(p => p.User.UserId == userId && p.Article.ArticleId == articleId && p.State == "All"))
+            if (_userId < 0)
             {
-
+                return new Tuple<int, NotificationShow[]>(0, new NotificationShow[] { });
             }
             else
             {
-                Notification notification = new Notification
-                {
-                    User = _user,
-                    Article = CurrentArticle,
-                    Seen = false,
-                    State = state,
-                    Time = DateTime.Now,
-                    Identifier = CurrentArticle.Identifier
-                };
-                _context.Notifications.Add(notification);
-                _context.SaveChanges();
+                Notification[] notifications = _context.Notifications.Where(
+                    p =>
+                        p.User.UserId == _userId &&
+                        (p.Commented > 0 || p.Favorited > 0 || p.Forked > 0 || p.Liked > 0) &&
+                        (p.Seen == false || DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
+                notifications = notifications.OrderBy(p => p.Time).Select(p => p.Seen ? p : new ClassHelper().CreateContent(p)).ToArray();
+                int unseen = notifications.Count(p => p.Seen == false);
+                return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
             }
 
         }
 
-        public void RemoveNotificationRecord(string state)
+        public bool SeeNotification()
         {
-            int articleId = CurrentArticle.ArticleId;
-            IQueryable<Notification> notification =
-        _context.Notifications.Where(
-            p => p.User.UserId == _userId && p.Article.ArticleId == articleId && p.State == state);
-            _context.Notifications.RemoveRange(notification);
+            var unseenNotification = _context.Notifications.Where(p => p.User.UserId == _userId && p.Seen == false);
+            foreach (Notification notification in unseenNotification)
+            {
+                notification.Seen = true;
+                notification.Time = DateTime.Now;
+            }
             _context.SaveChanges();
+            return true;
         }
 
         public List<List<ArticleUserBase>> GetTailArticleUserBaseByIdentifier(string identifier)
@@ -398,24 +438,5 @@ namespace TellStoryTogether.Helper
             
         }
 
-        public Tuple<int, NotificationShow[]> GeteNotification()
-        {
-            if (_userId < 0)
-            {
-                return new Tuple<int, NotificationShow[]>(0, new NotificationShow[] {});
-            }
-            else
-            {
-                Notification[] notifications = _context.Notifications.Where(
-                    p =>
-                        p.User.UserId == _userId &&
-                        (p.Commented != 0 || p.Favorited != 0 || p.Forked != 0 || p.Liked != 0) &&
-                        (p.Seen==false || DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
-                notifications = notifications.OrderBy(p=>p.Time).Select(p => p.Seen?p:new ClassHelper().CreateContent(p)).ToArray();
-                int unseen = notifications.Count(p => p.Seen == false);
-                return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
-            }
-
-        }
     }
 }

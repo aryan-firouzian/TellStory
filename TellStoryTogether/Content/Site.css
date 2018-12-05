@@ -187,10 +187,6 @@ z-index:3;
     display: block
 }
 
-#body {
-    margin-top: 60px;
-}
-
 #footer {
     min-height: 100px;
 }
@@ -241,12 +237,19 @@ z-index:3;
     #slider-range {
         margin-top: 10px !important;
     }
+
+    #body {
+        margin-top: 2px !important;
+    }
 }
 
 /* tablet devices */
 @media (max-width: 992px) and (min-width: 576px) {
     .account {
         width: 65% !important;
+    }
+    #body {
+        margin-top: 2px !important;
     }
 }
 

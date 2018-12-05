@@ -55,10 +55,10 @@ namespace TellStoryTogether.Migrations
                 "Fantasy"
             };
 
-            foreach (string s in languageList)
+/*            foreach (string s in languageList)
             {
-                context.Languages.AddOrUpdate(x=>x.LanguageId, new Language(){LanguageInEnglish = s});
-            }
+                context.Languages.AddOrUpdate(x=>x.LanguageInEnglish, new Language(){LanguageInEnglish = s});
+            }*/
 
             foreach (string s in genreList)
             {

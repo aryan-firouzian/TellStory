@@ -84,7 +84,6 @@
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
                             <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
-
                     }
                     else
                     {
@@ -109,7 +108,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="trophy green icon"></i>@navPanel.UserPoints()
+            <i class="trophy green icon"></i><span style="color: darkslategrey">@navPanel.UserPoints()</span>
         </a>
     </li>
     <li class="nav-item">

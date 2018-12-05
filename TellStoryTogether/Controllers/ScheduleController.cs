@@ -21,7 +21,9 @@ namespace TellStoryTogether.Controllers
                 {
                     if (identifier == "1")
                     {
-                        /*List<Comment> all = _userContext.Comments.ToList();
+                        /*List<Language> all = _userContext.Languages.Where(p=>p.LanguageId>4).ToList();
+                        _userContext.Languages.RemoveRange(all);
+                        _userContext.SaveChanges();
                         foreach (Comment comment in all)
                         {
                             comment.Time = DateTime.Now;

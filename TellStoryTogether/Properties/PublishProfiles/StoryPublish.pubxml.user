@@ -6,8 +6,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA7ROWn6yXpkqC20QBlrbDOQAAAAACAAAAAAAQZgAAAAEAACAAAAAHdFT2iZIgOBAUHZw3r1RFStC1YcAPx+9CzJBzxyvYXQAAAAAOgAAAAAIAACAAAAAXqXc2fUSHURCmLkchFv8cf2jByD3k1jhWNZxgyMUf1CAAAACc0mGYcHz2hzU8cokXM3QOdOodW38s+fnM/pKxRnT3H0AAAADqAiSM2Y+qK2MZsaf8JEMJhcDqDUAp9m6FFUEgepHXLE1VbB2EMnN9MfDtbwp0/KFQ1shQY5tVDkrpuqCZLgks</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA41GRAwA1H0m3Wdx85yHO0gAAAAACAAAAAAADZgAAwAAAABAAAADZgOVD9iH8LuvDFirKXIZRAAAAAASAAACgAAAAEAAAAHlEiuZeVuRUWsoNyYEdx2wgAAAAKSYBQEl65yNxkTHY4ocnoC0MxmN8CtADjy61DYtFhgEUAAAAgkAEa1bt5cusDYHL7EPaXY2KdJc=</EncryptedPassword>
     <_PublishTargetUrl>ftp://FTP.SMARTERASP.NET/Story</_PublishTargetUrl>
+    <LastUsedBuildConfiguration />
+    <LastUsedPlatform />
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/aspnet-TellStoryTogether-20181001202441.mdf">

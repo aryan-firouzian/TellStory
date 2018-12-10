@@ -39,6 +39,19 @@ namespace TellStoryTogether.Helper
             _userId = currentUserId;
             _user = _context.UserProfiles.First(p => p.UserId == _userId);
         }
+       
+        public int UserPoint()
+        {
+            try
+            {
+                return _userId < 0 ? 0 : _context.UserProfiles.First(p => p.UserId == _userId).UserPoint;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            
+        }
 
         public List<Article> GetArticlesByIdentifier(string identifier)
         {
@@ -498,18 +511,25 @@ namespace TellStoryTogether.Helper
             return new Tuple<Article[], int>(articles.ToArray(), count);
         }
 
-        public int UserPoint()
+        public List<int> GetGenreIdsWithMoreThan3()
         {
-            try
+            return _context.Articles.GroupBy(p => p.Genre).Select(group => new
             {
-                return _userId < 0 ? 0 : _context.UserProfiles.First(p => p.UserId == _userId).UserPoint;
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-            
+                Genre = group.Key,
+                Count = group.Count()
+            }).Where(p => p.Count > 3).Select(p => p.Genre.GenreId).ToList();
         }
 
+        public List<Article> GetArticles(string property, int propertyId, bool increasing, int from, int take)
+        {
+            List<Article> articles = new List<Article>();
+            switch (property)
+            {
+                case "Genre":
+                    articles = _context.Articles.Where(p => p.ArticleInitId == -1 && p.Genre.GenreId == propertyId).OrderBy(p => p.Point).Skip(from).Take(take).Include(p => p.Owner).Include(p => p.Genre).ToList();
+                    break;
+            }
+            return articles;
+        }
     }
 }

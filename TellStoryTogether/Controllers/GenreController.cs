@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using TellStoryTogether.Helper;
 using TellStoryTogether.Models;
 
 namespace TellStoryTogether.Controllers
@@ -10,9 +11,6 @@ namespace TellStoryTogether.Controllers
     {
         //
         // GET: /Genre/
-
-        readonly UsersContext _userContext = new UsersContext();
-
         public ActionResult Index(int genreId)
         {
             ViewBag.GenreId = genreId;
@@ -22,7 +20,8 @@ namespace TellStoryTogether.Controllers
         [HttpPost]
         public ActionResult LoadArticles(int genreId, int from, int take)
         {
-            List<Article> articles = _userContext.Articles.Where(p => p.ArticleInitId==-1 && p.Genre.GenreId == genreId).OrderBy(p => p.Point).Skip(from).Take(take).Include(p => p.Owner).Include(p => p.Genre).ToList();
+            DAL dal = new DAL();
+            List<Article> articles = dal.GetArticles("Genre", genreId, true, from, take);
             return Json(articles);
         }
 

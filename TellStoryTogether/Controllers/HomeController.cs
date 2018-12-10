@@ -9,9 +9,7 @@ using TellStoryTogether.Models;
 namespace TellStoryTogether.Controllers
 {
     public class HomeController : Controller
-    {
-        readonly UsersContext _userContext= new UsersContext();
-        
+    {   
         public ActionResult Index()
         {
             return View();
@@ -31,41 +29,17 @@ namespace TellStoryTogether.Controllers
             return View();
         }
 
-/*        [HttpPost]
-        public ActionResult LoadArticles(string genre)
-        {
-            try
-            {
-                var allArticles = _userContext.Articles.Include("Genre").Include("Owner").Where(p => p.Genre.Name == genre).Take(5).ToList();
-                
-                return
-                    Json(allArticles);
-            }
-            catch (Exception)
-            {
-
-                return Json("error");
-            }
-        }*/
-
-
         [HttpPost]
-        public ActionResult LoadGenre()
+        public ActionResult LoadGenreIdsWithMoreThan3()
         {
             try
             {
-                var genreWithMoreThan3 = _userContext.Articles.GroupBy(p => p.Genre).Select(group => new
-                {
-                    Genre = group.Key,
-                    Count = group.Count()
-                }).Where(p => p.Count > 3).Select(p => p.Genre.GenreId).ToList();
-
-                return
-                    Json(genreWithMoreThan3);
+                DAL dal = new DAL();
+                var genreWithMoreThan3 = dal.GetGenreIdsWithMoreThan3();
+                return Json(genreWithMoreThan3);
             }
             catch (Exception)
             {
-
                 return Json("error");
             }
         }

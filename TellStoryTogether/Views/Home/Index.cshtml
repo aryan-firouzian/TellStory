@@ -113,8 +113,8 @@
                             slidesToShow: slidesToShow,
                             slidesToScroll: 1,
                             arrows: true,
-                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
-                            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
+                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon" aria-hidden="true"></i></span>',
+                            nextArrow: '<span class="next"><i class="fitted huge angle right icon" aria-hidden="true"></i></span>'
                         }));
 
                         if (listOfGenre.length == 0) {
@@ -136,7 +136,7 @@
                 $('#main-section').children().eq(0).addClass('item-hide');
                 removeFromGenreLoadSliderWithContent(3);
             }
-            loadGenreRequest.open("POST", "/Home/LoadGenre");
+            loadGenreRequest.open("POST", "/Home/LoadGenreIdsWithMoreThan3");
             loadGenreRequest.send();
 
             $(window).scroll(function() {

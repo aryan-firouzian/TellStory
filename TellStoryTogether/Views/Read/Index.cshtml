@@ -39,7 +39,7 @@
     <section id="main-section" class="item-hide">
         <div id="show" class="show" style="width: auto;">
         </div>
-        <div id="title" class="show-label" style="margin-top: 100px; margin-bottom: 50px">
+        <div id="title" class="show-label" style="margin-bottom: 50px">
             <h3 class="ui horizontal divider header"></h3>
         </div>
         <div id="loader" class="ui basic segment" style="margin-top: 100px">
@@ -272,7 +272,7 @@
                                 $newSliderItem.find('#image').attr('src', v.PictureUrl).attr('id', 'image-' + v.ArticleId);
                                 $newSliderItem.find('.segment').addClass('story-container-read-image');
                             }
-                            $newSliderItem.find('#owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + v.Owner.UserId).attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
+                            $newSliderItem.find('#owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + v.Owner.UserId).attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
                             $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
                             $newSliderItem.find('.seen.button').find('.label').html(v.Seen);
                             $newSliderItem.find('.heart.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);

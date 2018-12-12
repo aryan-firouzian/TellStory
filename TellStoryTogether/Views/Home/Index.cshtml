@@ -46,13 +46,12 @@
 
 @section Scripts{
     <script>
-    $(document).ready(function () {
+        $(document).ready(function() {
 
-        
-        var myAppUrlSettings = {
-            myGenreUrl: '@Url.Action("Index", "Genre")',
-            myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',
-                myUserUrl: '@Url.Action("Index", "User")',
+
+            var myAppUrlSettings = {
+                myLoadArticleUrl: '@Url.Action("LoadArticles", "Article")',
+                myArticleUrl: '@Url.Action("Index", "Article")',
                 myReadUrl: '@Url.Action("Index", "Read")'
             }
 
@@ -86,14 +85,15 @@
 
                     var loadArticle = new XMLHttpRequest();
                     var loadArticleData = new FormData();
-                    loadArticleData.append('genreId', paramGenre);
+                    loadArticleData.append('key', 'Genre');
+                    loadArticleData.append('value', paramGenre);
                     loadArticleData.append('from', 0);
                     loadArticleData.append('take', 5);
                     loadArticle.onload = function() {
                         var articleList = $.parseJSON(this.responseText);
                         var $newShow = $show.clone();
                         $section.append($newShow);
-                        $newShow.find('.genre-name').attr('href', myAppUrlSettings.myGenreUrl + '?genreId=' + articleList[0].Genre.GenreId).html(articleList[0].Genre.Name);
+                        $newShow.find('.genre-name').attr('href', myAppUrlSettings.myArticleUrl + '?key=Genre&value=' + articleList[0].Genre.GenreId).html(articleList[0].Genre.Name);
                         $newShow.find('.genre-detail').html(articleList[0].Genre.Detail);
                         $newShow.find('.slickcarousel').attr('id', 'slider-' + paramGenre);
                         if (articleList.length > 0) {
@@ -101,7 +101,7 @@
                                 var $newSliderItem = $sliderItem.clone();
                                 $newSliderItem.find('.image').attr('src', v.PictureUrl);
                                 $newSliderItem.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
-                                $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + articleList[0].Owner.UserId).html(v.Owner.UserName);
+                                $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + v.Owner.UserId).html(v.Owner.UserName);
                                 $newSliderItem.find('.text').html(v.Text);
                                 $newSliderItem.find('.label.yellow').html(v.Favorite);
                                 $newSliderItem.find('.label.red').html(v.Point);
@@ -117,14 +117,14 @@
                             nextArrow: '<span class="next"><i class="fitted huge angle right icon" aria-hidden="true"></i></span>'
                         }));
 
-                        if (listOfGenre.length == 0) {
+                        if (listOfGenre.length === 0) {
                             $loader.hide();
                         }
                         if (repeatParam > 0) {
                             removeFromGenreLoadSliderWithContent(repeatParam);
                         }
                     }
-                    loadArticle.open('POST', myAppUrlSettings.myLoadByGenreUrl);
+                    loadArticle.open('POST', myAppUrlSettings.myLoadArticleUrl);
                     loadArticle.send(loadArticleData);
                 }
             }

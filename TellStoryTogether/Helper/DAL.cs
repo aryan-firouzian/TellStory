@@ -520,13 +520,43 @@ namespace TellStoryTogether.Helper
             }).Where(p => p.Count > 3).Select(p => p.Genre.GenreId).ToList();
         }
 
-        public List<Article> GetArticles(string property, int propertyId, bool increasing, int from, int take)
+        public List<Article> GetArticles(string key, string value, bool increasing, int from, int take)
         {
+            int valueId = 0;
             List<Article> articles = new List<Article>();
-            switch (property)
+            switch (key)
             {
                 case "Genre":
-                    articles = _context.Articles.Where(p => p.ArticleInitId == -1 && p.Genre.GenreId == propertyId).OrderBy(p => p.Point).Skip(from).Take(take).Include(p => p.Owner).Include(p => p.Genre).ToList();
+                    valueId = Int32.Parse(value);
+                    articles =
+                        _context.Articles.Where(p => p.ArticleInitId == -1 && p.Genre.GenreId == valueId)
+                            .OrderByDescending(p => p.Point)
+                            .Skip(from)
+                            .Take(take)
+                            .Include(p => p.Owner)
+                            .Include(p => p.Genre)
+                            .ToList();
+                    break;
+                case "User":
+                    valueId = Int32.Parse(value);
+                    articles =
+                        _context.Articles.Where(p => p.ArticleInitId == -1 && p.Owner.UserId == valueId)
+                            .OrderByDescending(p => p.Point)
+                            .Skip(from)
+                            .Take(take)
+                            .Include(p => p.Owner)
+                            .Include(p => p.Genre)
+                            .ToList();
+                    break;
+                case "Search":
+                    articles =
+                        _context.Articles.Where(p => p.ArticleInitId == -1 && (p.Title.ToLower().Contains(value.ToLower()) || p.Text.ToLower().Contains(value.ToLower())))
+                            .OrderByDescending(p => p.Point)
+                            .Skip(from)
+                            .Take(take)
+                            .Include(p => p.Owner)
+                            .Include(p => p.Genre)
+                            .ToList();
                     break;
             }
             return articles;

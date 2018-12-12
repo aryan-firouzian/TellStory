@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Activities.Statements
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -69,7 +70,7 @@
                     <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
                 </li>
             </ul>
-            <form class="form-inline mx-lg-auto my-2 my-lg-0">
+            <form onkeypress="return event.keyCode != 13;" class="form-inline mx-lg-auto my-2 my-lg-0">
                 <div class="ui icon input">
                     <input type="text" placeholder="Search" aria-label="Search">
                     <i class="circular search link icon"></i>
@@ -93,29 +94,38 @@
 					<ul class="list-unstyled quick-links">
 						<li><a href="@Url.Action("Index", "Home")">&#9679; Home</a></li>
 						<li><a href="@Url.Action("About", "Home")">&#9679; About</a></li>
-						<li><a href="@Url.Action("Contact", "Home")">&#9679; Contact</a></li>
-						<li><a href="@Url.Action("Start", "Home")">&#9679; Get Started</a></li>
-						<li><a href="@Url.Action("FAQ", "Home")">&#9679; FAQ</a></li>
+						<li><a href="@Url.Action("About", "Home")">&#9679; Get Started</a></li>
+					    <li><a href="@Url.Action("About", "Home")">&#9679; FAQ</a></li>
+                        
 					</ul>
 				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4">
+			    <div class="col-xs-12 col-sm-4 col-md-4">
+			        <ul class="list-unstyled quick-links">
+			            <li><a href="https://github.com/aryan-firouzian/TellStory">&#9679; Contribute</a></li>
+			            <li><a href="@Url.Action("Contact", "Home")">&#9679; Contact</a></li>
+			            <li><a href="https://github.com/aryan-firouzian/TellStory" title="Design and developed by">&#9679; Github Project</a></li>
+			        </ul>
+			    </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+    				<div class="col-xs-12 col-sm-4 col-md-4">
 					<ul class="list-unstyled quick-links">
-						<li><a href="javascript:void();">&#9679; Home</a></li>
-						<li><a href="javascript:void();">&#9679; About</a></li>
-						<li><a href="javascript:void();">&#9679; FAQ</a></li>
-						<li><a href="javascript:void();">&#9679; Get Started</a></li>
-						<li><a href="javascript:void();">&#9679; Videos</a></li>
+					    <li><a href="">&#9679; My Stories</a></li>
+					    <li><a href="">&#9679; My Favorites</a></li>
+                        <li><a href="">&#9679; Best Stories</a></li>
 					</ul>
 				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4">
+                }
+                else
+                {
+  				<div class="col-xs-12 col-sm-4 col-md-4">
 					<ul class="list-unstyled quick-links">
-						<li><a href="javascript:void();">&#9679; Home</a></li>
-						<li><a href="javascript:void();">&#9679; About</a></li>
-						<li><a href="javascript:void();">&#9679; FAQ</a></li>
-						<li><a href="javascript:void();">&#9679; Get Started</a></li>
-						<li><a href="https://wwwe.sunlimetech.com" title="Design and developed by">&#9679; Imprint</a></li>
+					    <li><a href="">&#9679; Login</a></li>
+					    <li><a href="">&#9679; Register</a></li>
+					    <li><a href="">&#9679; Best Stories</a></li>
 					</ul>
 				</div>
+                }
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
@@ -130,8 +140,7 @@
 			</div>	
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-					<p><a href="https://www.nationaltransaction.com/">National Transaction Corporation</a> is a Registered MSP/ISO of Elavon, Inc. Georgia [a wholly owned subsidiary of U.S. Bancorp, Minneapolis, MN]</p>
-					<p class="h6">&copy All right Reversed.<a class="text-green ml-2" href="https://www.sunlimetech.com" target="_blank">Sunlimetech</a></p>
+					<p><a href="https://github.com/aryan-firouzian/TellStory">Tell Story Together</a> is an open source project under MIT License.</p>
 				</div>
 			</div>	
 		</div>
@@ -156,6 +165,19 @@
             }
             seenNotificationRequest.open("POST", "/Home/SeeNotifications");
             seenNotificationRequest.send();
+        });
+
+        $('.navbar').find('form').find('input').keyup(function (event) {
+            if (event.keyCode === 13) {
+                $('.navbar').find('.search').click();
+            }
+        });
+
+        $('.navbar').on('click', '.search', function () {
+            var searchString = $('.navbar').find('form').find('input').val();
+            var url = '@Html.Raw(Url.Action("Index", "Article", new {key = "Search",value="__value__"}))';
+            var redirectTo = url.replace('__value__', encodeURIComponent(searchString));
+            window.location.href = redirectTo;
         });
 
     });

@@ -203,6 +203,9 @@
                         if (isRedirect) {
                             window.location.href = redirectTo;
                         }
+                        else {
+                            $('#upload-button').removeClass('disabled');
+                        }
                         clearInterval(interval);
                     }
                 }, 1000);
@@ -232,6 +235,7 @@
 
             $('#upload-button').on('click', function() {
                 $('#upload-button').addClass('loading');
+                $('#upload-button').addClass('disabled');
                 basic.croppie('result', 'blob').then(function(blob) {
                     var error = "";
                     var title = "@ViewBag.title";
@@ -253,7 +257,7 @@
                     } else if (title == null || title.trim() === '') {
                         error = 'Title field cannot be empty.';
                         showMessage("Error", error, true);
-                    }else if (genreId == null || genreId==='-1') {
+                    } else if (genreId == null || genreId === '-1') {
                         error = 'Genre option should be selected.';
                         showMessage("Error", error, true);
                     } else if (text == null || text.trim() === '') {

@@ -80,6 +80,18 @@ namespace TellStoryTogether.Helper
         public string Identifier { get; set; }
     }
 
+    public class HomeFeed
+    {
+        public string PropKey { get; set; }
+        public string PropValue { get; set; }
+        public string PropTitle { get; set; }
+        public string PropDescription { get; set; }
+        public string PropDescription2 { get; set; }
+        public string PropDescription3 { get; set; }
+        public int Take { get; set; }
+        public int From { get; set; }
+    }
+
     public static class LinqExtension
     {
         public static IEnumerable<CommentTime> ChangeTime(this IEnumerable<Comment> source)

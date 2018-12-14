@@ -39,7 +39,12 @@ namespace TellStoryTogether.Helper
             _userId = currentUserId;
             _user = _context.UserProfiles.First(p => p.UserId == _userId);
         }
-       
+
+        public int UserId()
+        {
+            return _userId;
+        }
+
         public int UserPoint()
         {
             try
@@ -342,11 +347,12 @@ namespace TellStoryTogether.Helper
             {
                 Notification[] notifications = _context.Notifications.Where(
                     p =>
-                        p.User.UserId == _userId &&
-                        (p.Commented > 0 || p.Favorited > 0 || p.Forked > 0 || p.Liked > 0) &&
-                        (p.Seen == false || DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
+                        p.User.UserId == _userId && (
+                            (p.Commented > 0 || p.Favorited > 0 || p.Forked > 0 || p.Liked > 0) ||
+                            DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
                 notifications = notifications.OrderByDescending(p => p.Time).Select(p => p.Seen ? p : new ClassHelper().CreateContent(p)).ToArray();
                 int unseen = notifications.Count(p => p.Seen == false);
+                _context.SaveChanges();
                 return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
             }
 
@@ -511,15 +517,16 @@ namespace TellStoryTogether.Helper
             return new Tuple<Article[], int>(articles.ToArray(), count);
         }
 
-        public List<int> GetGenreIdsWithMoreThan3()
+        public List<Genre> GetGenreIdsWithMoreThan3()
         {
             return _context.Articles.GroupBy(p => p.Genre).Select(group => new
             {
                 Genre = group.Key,
                 Count = group.Count()
-            }).Where(p => p.Count > 3).Select(p => p.Genre.GenreId).ToList();
+            }).Where(p => p.Count > 3).Select(p => p.Genre).ToList();
         }
 
+        // key:{Genre, User, Search, Best}
         public List<Article> GetArticles(string key, string value, bool increasing, int from, int take)
         {
             int valueId = 0;
@@ -558,8 +565,58 @@ namespace TellStoryTogether.Helper
                             .Include(p => p.Genre)
                             .ToList();
                     break;
+                case "Best":
+                    articles = _context.Articles.Where(p=>p.ArticleInitId == -1)
+                            .OrderByDescending(p => p.Point)
+                            .Skip(from)
+                            .Take(take)
+                            .Include(p => p.Owner)
+                            .Include(p => p.Genre)
+                            .ToList();
+                    break;
             }
             return articles;
+        }
+
+        // key:{Genre, User, Me}
+        public int NumberOfArticles(string key, string value)
+        {
+            int valueId = 0;
+            int articleNumber = 0;
+            switch (key)
+            {
+                case "Genre":
+                    valueId = Int32.Parse(value);
+                    articleNumber =
+                        _context.Articles.Count(p => p.ArticleInitId == -1 && p.Genre.GenreId == valueId);
+                    break;
+                case "User":
+                    valueId = Int32.Parse(value);
+                    articleNumber =
+                        _context.Articles.Count(p => p.ArticleInitId == -1 && p.Owner.UserId == valueId);
+                    break;
+                case "Me":
+                    articleNumber = _context.Articles.Count(p => p.ArticleInitId == -1 && p.Owner.UserId == _userId);
+                    break;
+            }
+            return articleNumber;
+        }
+
+        public bool IsInformedUser()
+        {
+            if (_context.Articles.Count(p => p.Owner.UserId == _userId) > 2)
+            {
+                return true;
+            }
+            if (_context.ArticleFavorites.Count(p => p.User.UserId == _userId) > 2)
+            {
+                return true;
+            }
+            if (_context.ArticlePoints.Count(p => p.User.UserId == _userId) > 2)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

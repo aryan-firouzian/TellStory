@@ -12,7 +12,82 @@ namespace TellStoryTogether.Controllers
     {   
         public ActionResult Index()
         {
-            return View();
+            DAL dal;
+            List<HomeFeed> homeFeeds = new List<HomeFeed>();
+            bool informedUser = false;
+            int numUserArticle = 0;
+            int userId = -1;
+            if (User.Identity.IsAuthenticated)
+            {
+                dal = new DAL(User.Identity.Name);
+                informedUser = dal.IsInformedUser();
+                numUserArticle = dal.NumberOfArticles("Me", "Me");
+                userId = dal.UserId();
+            }
+            else
+            {
+                dal = new DAL();
+            }
+
+            if (numUserArticle >= 3 && userId>0)
+            {
+                HomeFeed homeFeedMyStories = new HomeFeed
+                {
+                    PropKey = "User",
+                    PropValue = userId.ToString(),
+                    PropTitle = "My Stories",
+                    PropDescription = "Best of my stories",
+                    From = 0,
+                    Take = 7
+                };
+                homeFeeds.Add(homeFeedMyStories);
+            }
+            else
+            {
+                if (!informedUser)
+                {
+                    HomeFeed homeFeedJumbo1 = new HomeFeed
+                    {
+                        PropKey = "Jumbo",
+                        PropValue = "Get started!",
+                        PropTitle = "How it works ...",
+                        PropDescription =
+                            "It is a crowdsourcing story telling service. People create stories together, which go to different directions.",
+                        PropDescription2 = "Home/About",
+                        From = 0,
+                        Take = 0
+                    };
+                    homeFeeds.Add(homeFeedJumbo1);
+                }
+            }
+
+            HomeFeed homeFeedBest = new HomeFeed
+            {
+                PropKey = "Best",
+                PropValue = "Best",
+                PropTitle = "Best Stories",
+                PropDescription = "Best stories in all genres",
+                From = 0,
+                Take = 7
+            };
+            homeFeeds.Add(homeFeedBest);
+
+            List<Genre> genreWithMoreThan3 = dal.GetGenreIdsWithMoreThan3();
+            foreach (Genre genre in genreWithMoreThan3)
+            {
+                HomeFeed homeFeedGenre = new HomeFeed
+                {
+                    PropKey = "Genre",
+                    PropValue = genre.GenreId.ToString(),
+                    PropTitle = genre.Name,
+                    PropDescription = genre.Detail,
+                    From = 0,
+                    Take = 5
+                };
+                homeFeeds.Add(homeFeedGenre);
+            }
+
+            return View(homeFeeds);
         }
 
         public ActionResult About()
@@ -27,21 +102,6 @@ namespace TellStoryTogether.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-
-        [HttpPost]
-        public ActionResult LoadGenreIdsWithMoreThan3()
-        {
-            try
-            {
-                DAL dal = new DAL();
-                var genreWithMoreThan3 = dal.GetGenreIdsWithMoreThan3();
-                return Json(genreWithMoreThan3);
-            }
-            catch (Exception)
-            {
-                return Json("error");
-            }
         }
 
         [HttpPost]

@@ -155,8 +155,9 @@
 
             removeFromFeedLoadContent(3);
 
+            var nearToBottom = 500;
             $(window).scroll(function() {
-                if ($(window).scrollTop() + window.innerHeight === $(document).height()) {
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - nearToBottom) {
                     removeFromFeedLoadContent(1);
                 }
             });

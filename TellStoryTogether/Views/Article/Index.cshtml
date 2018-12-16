@@ -1,6 +1,6 @@
 ﻿
 <section id="main-section" class="ui basic segment double stackable grid" style="margin-bottom: 50px !important; width: auto"></section>
-<div id="loader" class="ui basic segment" style="margin-top: 200px">
+<div id="loader" class="ui basic segment" style="margin: 200px">
     <div class="ui active centered loader"></div>
 </div>
 
@@ -101,9 +101,10 @@
 
             loadArticles(start, takeArticle);
 
+            var nearToBottom = 500;
             $(window).scroll(function() {
                 if (keepLoading) {
-                    if ($(window).scrollTop() === $(document).height() - $(window).height()) {
+                    if ($(window).scrollTop() + $(window).height() > $(document).height() - nearToBottom) {
                         keepLoading = false;
                         $loader.show();
                         loadArticles(start, takeArticle);

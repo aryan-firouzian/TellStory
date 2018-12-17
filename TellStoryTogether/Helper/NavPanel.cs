@@ -14,6 +14,8 @@ namespace TellStoryTogether.Helper
         private readonly Article[] _userFavorites;
         private readonly int _countScripts;
         private readonly int _countFavorites;
+        private readonly Genre[] _genres;
+        private readonly Language[] _languages;
 
         public NavPanel(int take)
         {
@@ -29,8 +31,8 @@ namespace TellStoryTogether.Helper
             Tuple<Article[], int> favorites = dal.GetFirstNFavoriteArticle(take);
             _userFavorites = favorites.Item1;
             _countFavorites = favorites.Item2;
-
-
+            _genres = dal.GetGenres().ToArray();
+            _languages = dal.GetLanguages();
         }
 
         public int UserPoints()
@@ -71,6 +73,16 @@ namespace TellStoryTogether.Helper
         public int CountFavorites()
         {
             return _countFavorites;
+        }
+
+        public Genre[] AllGenres()
+        {
+            return _genres;
+        }
+
+        public Language[] AllLanguages()
+        {
+            return _languages;
         }
     }
 }

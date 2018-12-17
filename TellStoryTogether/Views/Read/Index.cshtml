@@ -49,7 +49,7 @@
         <div id="slider-item">
             <div class="ui justified container segment">
                 <img id="image" src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-                <p id="text" class="text-no-ellipsis">text</p>
+                <p id="text" class="text-no-ellipsis" style="white-space: pre-line; white-space: pre-wrap;">text</p>
                 <p class="title-ellipsis">By <span><a id="owner">username</a></span></p>
 
                 <div class="bottom ui four column grid">
@@ -207,6 +207,10 @@
             if (model.Favorited) {
                 $sliderItem1.find('.star.button').find('.star').removeClass('outline');
             }
+            if (model.MyArticle) {
+                $sliderItem1.find('.heart.button').addClass('mine');
+                $sliderItem1.find('.star.button').addClass('mine');
+            }
             $sliderItem1.find('.comment.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Comment);
             if (model.Commented) {
                 $sliderItem1.find('.comment.button').find('.comment').removeClass('outline');
@@ -282,6 +286,10 @@
                             $newSliderItem.find('.star.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Favorite);
                             if (v.Favorited) {
                                 $newSliderItem.find('.star.button').find('.star').removeClass('outline');
+                            }
+                            if (v.MyArticle) {
+                                $newSliderItem.find('.heart.button').addClass('mine');
+                                $newSliderItem.find('.star.button').addClass('mine');
                             }
                             $newSliderItem.find('.comment.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Comment);
                             if (v.Commented) {
@@ -498,12 +506,19 @@
             $('#main-section').on('click', '.button', function() {
                 var articleId = $(this).attr('article');
                 var identifier = $(this).attr('identifier');
-                if ($(this).hasClass('seen')) {
-                } else if ($(this).hasClass('star')) {
+                if ($(this).hasClass('seen') || $(this).hasClass('mine')) {
+
+                }
+                else if ($(this).hasClass('star')) 
+                {
                     logInThenAction('star', articleId, identifier, $(this));
-                } else if ($(this).hasClass('heart')) {
+                }
+                else if ($(this).hasClass('heart')) 
+                {
                     logInThenAction('heart', articleId, identifier, $(this));
-                } else if ($(this).hasClass('comment')) {
+                } 
+                else if ($(this).hasClass('comment')) 
+                {
                     $('.ui.sidebar').sidebar({
                         onVisible: function() {
                             $('.sidebar').find('.comments').addClass('loading');

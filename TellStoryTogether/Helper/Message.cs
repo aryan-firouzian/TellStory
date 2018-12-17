@@ -41,6 +41,17 @@ namespace TellStoryTogether.Helper
             }
         }
 
+        public static string[] ServerRejected()
+        {
+            //store e.Message somewhere.
+            return new[]
+            {
+                "rejected",
+                "no message"
+            };
+
+        }
+
         public static string[] ServerRejected(Exception e)
         {
             //store e.Message somewhere.

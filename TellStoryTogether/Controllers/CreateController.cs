@@ -26,15 +26,17 @@ namespace TellStoryTogether.Controllers
             ViewBag.articleInitId = articles.Count == 0 ? -1 : articles.Last().ArticleId;
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
             ViewBag.genre = articles.Count == 0 ? -1 : articles[0].Genre.GenreId;
+            ViewBag.language = articles.Count == 0 ? -1 : articles[0].Language.LanguageId;
             ViewBag.identifier = identifier;
 
             ViewBag.genres = dal.GetGenres();
+            ViewBag.languages = dal.GetLanguages();
             return View(articles);
         }
 
 
         [HttpPost]
-        public ActionResult SaveArticle(string identifier,HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max, int genreId)
+        public ActionResult SaveArticle(string identifier, HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max, int languageId, int genreId)
         {
             try
             {
@@ -43,7 +45,7 @@ namespace TellStoryTogether.Controllers
                 DAL dal = new DAL(User.Identity.Name);
 
                 // save article in database
-                dal.SaveArticle(ref blob, title, articleInitId, text, serial, min, max, genreId, identifier);
+                dal.SaveArticle(ref blob, title, articleInitId, text, serial, min, max, languageId, genreId, identifier);
                 // save image in the server
                 if (blob != null) blob.SaveAs(Server.MapPath("~" + dal.CurrentArticle.PictureUrl));
                 // get the new identifier

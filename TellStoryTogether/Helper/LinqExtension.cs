@@ -63,6 +63,8 @@ namespace TellStoryTogether.Helper
         public bool Favorited { get; set; }
 
         public bool Commented { get; set; }
+
+        public bool MyArticle { get; set; }
     }
 
     public class NotificationShow
@@ -114,7 +116,7 @@ namespace TellStoryTogether.Helper
         }
 
         public static IEnumerable<ArticleUserBase> ArticlesToArticleUsers(this IEnumerable<Article> source,
-            List<int> articlePoints, List<int> articleFavorites, List<int> comments)
+            List<int> articlePoints, List<int> articleFavorites, List<int> comments, int userId)
         {
             List<ArticleUserBase> articleUserBases = new List<ArticleUserBase>();
             foreach (Article article in source)
@@ -140,6 +142,7 @@ namespace TellStoryTogether.Helper
                     MinChar = article.MinChar,
                     MaxChar = article.MaxChar
                 };
+                articleUserBase.MyArticle = article.Owner.UserId == userId;
                 if (articlePoints != null && articlePoints.Any(p => p == article.ArticleId))
                 {
                     articleUserBase.Pointed = true;
@@ -158,7 +161,7 @@ namespace TellStoryTogether.Helper
         }
 
         public static ArticleUserBase ArticleToArticleUser(this Article source, List<int> articlePoints,
-            List<int> articleFavorites, List<int> comments)
+            List<int> articleFavorites, List<int> comments, int userId)
         {
             ArticleUserBase articleUserBase = new ArticleUserBase()
             {
@@ -181,6 +184,8 @@ namespace TellStoryTogether.Helper
                 MinChar = source.MinChar,
                 MaxChar = source.MaxChar
             };
+            articleUserBase.MyArticle = source.Owner.UserId == userId;
+
             if (articlePoints != null && articlePoints.Any(p => p == source.ArticleId))
             {
                 articleUserBase.Pointed = true;

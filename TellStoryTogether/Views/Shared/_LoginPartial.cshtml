@@ -2,8 +2,41 @@
 @using TellStoryTogether.Helper
 @using TellStoryTogether.Models
 @{ NavPanel navPanel = new NavPanel(5);
-    bool notFirst = false;}
+    bool notFirstNotification = false;
+    bool notFirstGenre = false;
+    bool notFirstLanguage = false;}
 
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Language</a>
+    <div id="language-dropdown" class="dropdown-menu dropdown-menu-right">
+        @foreach (Language language in navPanel.AllLanguages())
+        {
+            if (notFirstLanguage)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
+            <a class="dropdown-item" href="@Url.Action("Index", "Article", new {key = "Language", value = language.LanguageId})">
+                <div class="dropdown-item-1 title-ellipsis-width">@language.LanguageInEnglish</div>
+            </a>
+            notFirstLanguage = true;
+        }
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genre</a>
+    <div id="genre-dropdown" class="dropdown-menu dropdown-menu-right">
+        @foreach (Genre genre in navPanel.AllGenres())
+        {if (notFirstGenre)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
+            <a class="dropdown-item" href="@Url.Action("Index", "Article", new {key = "Genre", value = genre.GenreId})">
+                <div class="dropdown-item-1 title-ellipsis-width">@genre.Name</div>
+            </a>
+            notFirstGenre = true;
+        }
+    </div>
+</li>
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item dropdown">
@@ -73,7 +106,7 @@
             <div class="dropdown-menu dropdown-menu-right scrollable-menu">
                 @foreach (NotificationShow notification in navPanel.UserAllNotifications())
                 {
-                    if (notFirst)
+                    if (notFirstNotification)
                     {
                         <div class="dropdown-divider"></div>
                     }
@@ -94,7 +127,7 @@
                         </a>
                         
                     }
-                    notFirst = true;
+                    notFirstNotification = true;
                 }
             </div>
         }

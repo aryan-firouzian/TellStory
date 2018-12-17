@@ -70,9 +70,12 @@ namespace TellStoryTogether.Controllers
                     return Json(Message.UnAuthenticated);
 
                 DAL dal = new DAL(User.Identity.Name);
-                dal.Like(articleId);              
-                dal.SubscribeNotification("Like");
-                return Json(Message.Added);
+                if (dal.Like(articleId))
+                {
+                    dal.SubscribeNotification("Like");
+                    return Json(Message.Added);
+                }
+                return Json(Message.ServerRejected());
             }
             catch (Exception e)
             {
@@ -89,9 +92,12 @@ namespace TellStoryTogether.Controllers
                     return Json(Message.UnAuthenticated);
 
                 DAL dal = new DAL(User.Identity.Name);
-                dal.UnLike(articleId);
-                dal.SubscribeNotification("UnLike");
-                return Json(Message.Removed);
+                if(dal.UnLike(articleId))
+                {
+                    dal.SubscribeNotification("UnLike");
+                    return Json(Message.Removed);
+                }
+                return Json(Message.ServerRejected());
             }
             catch (Exception e)
             {
@@ -108,10 +114,13 @@ namespace TellStoryTogether.Controllers
                     return Json(Message.UnAuthenticated);
 
                 DAL dal = new DAL(User.Identity.Name);
-                dal.Star(articleId);
-                dal.SubscribeNotification("Favorite");
-                dal.AddNotificationRecord("Favorite");
-                return Json(Message.Added);
+                if(dal.Star(articleId))
+                {
+                    dal.SubscribeNotification("Favorite");
+                    dal.AddNotificationRecord("Favorite");
+                    return Json(Message.Added);
+                }
+                return Json(Message.ServerRejected());
             }
             catch (Exception e)
             {
@@ -128,12 +137,13 @@ namespace TellStoryTogether.Controllers
                     return Json(Message.UnAuthenticated);
 
                 DAL dal = new DAL(User.Identity.Name);
-                dal.UnStar(articleId);
-
-                dal.SubscribeNotification("UnFavorite");
-                dal.RemoveNotificationRecord("Favorite");
-
-                return Json(Message.Removed);
+                if (dal.UnStar(articleId))
+                {
+                    dal.SubscribeNotification("UnFavorite");
+                    dal.RemoveNotificationRecord("Favorite");
+                    return Json(Message.Removed);
+                }
+                return Json(Message.ServerRejected());
             }
             catch (Exception e)
             {

@@ -48,6 +48,8 @@ namespace TellStoryTogether.Models
         public int MinChar { get; set; }
 
         public int MaxChar { get; set; }
+
+        public bool IsLast { get; set; }
     }
 
 }

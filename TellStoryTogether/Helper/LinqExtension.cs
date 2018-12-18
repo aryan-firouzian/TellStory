@@ -65,6 +65,8 @@ namespace TellStoryTogether.Helper
         public bool Commented { get; set; }
 
         public bool MyArticle { get; set; }
+
+        public bool LastArticle { get; set; }
     }
 
     public class NotificationShow
@@ -140,7 +142,8 @@ namespace TellStoryTogether.Helper
                     Genre = article.Genre,
                     Language = article.Language,
                     MinChar = article.MinChar,
-                    MaxChar = article.MaxChar
+                    MaxChar = article.MaxChar,
+                    LastArticle = article.IsLast
                 };
                 articleUserBase.MyArticle = article.Owner.UserId == userId;
                 if (articlePoints != null && articlePoints.Any(p => p == article.ArticleId))
@@ -182,7 +185,8 @@ namespace TellStoryTogether.Helper
                 Genre = source.Genre,
                 Language = source.Language,
                 MinChar = source.MinChar,
-                MaxChar = source.MaxChar
+                MaxChar = source.MaxChar,
+                LastArticle = source.IsLast
             };
             articleUserBase.MyArticle = source.Owner.UserId == userId;
 

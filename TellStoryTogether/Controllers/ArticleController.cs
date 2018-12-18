@@ -26,5 +26,13 @@ namespace TellStoryTogether.Controllers
             List<Article> articles = dal.GetArticles(key, value, true, from, take);
             return Json(articles);
         }
+
+        [HttpPost]
+        public ActionResult Remove(int articleId)
+        {
+            DAL dal = new DAL(User.Identity.Name);
+            bool articleIsRemoved = dal.RemoveArticle(articleId);
+            return Json(articleIsRemoved ? Message.Removed : Message.ServerRejected());
+        }
     }
 }

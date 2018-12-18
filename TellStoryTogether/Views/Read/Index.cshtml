@@ -85,6 +85,22 @@
                             0
                         </div>
                     </div>
+                    <div class="ui labeled button mini trash">
+                        <div class="ui basic black button mini">
+                            <i class="trash icon cursor-default"></i> Remove
+                        </div>
+                        <div class="ui basic label black mini">
+                            -
+                        </div>
+                    </div>
+                    <div class="ui labeled button mini edit">
+                        <div class="ui basic grey button mini">
+                            <i class="edit outline icon cursor-default"></i> Edit
+                        </div>
+                        <div class="ui basic label grey mini">
+                            -
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui basic modal">
+        <div class="ui basic modal loginRegister">
             <div class="header">Login or Register</div>
             <h3 class="content">You need to log into your account, to continue further!</h3>
             <div class="content">
@@ -121,6 +137,25 @@
             </div>
             <div class="actions">
                 <div class="ui deny button">Cancel</div>
+            </div>
+        </div>
+        <div class="ui basic modal confirmTrash">
+            <div class="ui icon header">
+                <i class="archive icon"></i>
+                Remove
+            </div>
+            <div class="content">
+                <p>Are you sure to trash your script?</p>
+            </div>
+            <div class="actions">
+                <div class="ui red basic cancel inverted button">
+                    <i class="remove icon"></i>
+                    No
+                </div>
+                <div class="ui green ok inverted button">
+                    <i class="checkmark icon"></i>
+                    Yes
+                </div>
             </div>
         </div>
         <div id="comment" class="comment item-hide">
@@ -152,6 +187,7 @@
                 myUnlikeUrl: '@Url.Action("UnLike", "Read")',
                 myStarUrl: '@Url.Action("Star", "Read")',
                 myUnstarUrl: '@Url.Action("UnStar", "Read")',
+                myTrashUrl: '@Url.Action("Remove", "Article")',
                 myArticleUrl: '@Url.Action("Index", "Article")'
             }
 
@@ -210,6 +246,15 @@
             if (model.MyArticle) {
                 $sliderItem1.find('.heart.button').addClass('mine');
                 $sliderItem1.find('.star.button').addClass('mine');
+                $sliderItem1.find('.edit.button').attr('article', model.ArticleId).attr('identifier', model.Identifier);
+                if (model.LastArticle) {
+                    $sliderItem1.find('.trash.button').attr('article', model.ArticleId).attr('identifier', model.Identifier);
+                } else {
+                    $sliderItem1.find('.trash.button').remove();
+                }
+            } else {
+                $sliderItem1.find('.edit.button').remove();
+                $sliderItem1.find('.trash.button').remove();
             }
             $sliderItem1.find('.comment.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Comment);
             if (model.Commented) {
@@ -290,6 +335,15 @@
                             if (v.MyArticle) {
                                 $newSliderItem.find('.heart.button').addClass('mine');
                                 $newSliderItem.find('.star.button').addClass('mine');
+                                $newSliderItem.find('.edit.button').removeClass('item-hide').attr('article', v.ArticleId).attr('identifier', v.Identifier);
+                                if (v.LastArticle) {
+                                    $newSliderItem.find('.trash.button').removeClass('item-hide').attr('article', v.ArticleId).attr('identifier', v.Identifier);
+                                } else {
+                                    $newSliderItem.find('.trash.button').remove();
+                                }
+                            } else {
+                                $newSliderItem.find('.edit.button').remove();
+                                $newSliderItem.find('.trash.button').remove();
                             }
                             $newSliderItem.find('.comment.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Comment);
                             if (v.Commented) {
@@ -454,10 +508,43 @@
                         var url = '@Url.Action("Index", "Create", new {identifier = "____param____"})';
                         window.location.href = url.replace("____param____", identifier);
                         break;
+                    case 'edit':
+                        var editUrl = '@Url.Action("Index", "Edit", new {id = "____param____"})';
+                        window.location.href = editUrl.replace("____param____", articleId);
+                        break;
+                    case 'trash':
+                        $('.ui.basic.modal.confirmTrash').modal({
+                            onApprove: function(act) {
+                                button.find('.button').addClass('loading');
+                                var trashArticle = new XMLHttpRequest();
+                                var trashData = new FormData();
+                                trashData.append('articleId', articleId);
+                                trashArticle.onload = function() {
+                                    var response = $.parseJSON(this.responseText);
+                                    if (response[0] === 'removed') {
+                                        var res = identifier.split('-');
+                                        if (res.length > 1) {
+                                            res.pop();
+                                            var newIdentifier = res.join('-');
+                                            var afterRemoveUrl2 = '@Url.Action("Index", "Read", new {identifier = "____param____"})';
+                                            window.location.href = afterRemoveUrl2.replace("____param____", newIdentifier);
+                                        } else {
+                                            var afterRemoveUrl1 = '@Url.Action("Index", "Home")';
+                                            window.location.href = afterRemoveUrl1;
+                                            
+                                        }
+                                    }
+                                    button.find('.button').removeClass('loading');
+                                }
+                                trashArticle.open('POST', myAppUrlSettings.myTrashUrl);
+                                trashArticle.send(trashData);
+                            }
+                        }).modal('show');
+                        break;
                     default:
                     }
                 } else {
-                    $('.basic.modal').modal({
+                    $('.basic.modal.loginRegister').modal({
                         onApprove: function(act) {
                             if (act.html() === 'Login') {
                                 logging(identifier);
@@ -508,17 +595,11 @@
                 var identifier = $(this).attr('identifier');
                 if ($(this).hasClass('seen') || $(this).hasClass('mine')) {
 
-                }
-                else if ($(this).hasClass('star')) 
-                {
+                } else if ($(this).hasClass('star')) {
                     logInThenAction('star', articleId, identifier, $(this));
-                }
-                else if ($(this).hasClass('heart')) 
-                {
+                } else if ($(this).hasClass('heart')) {
                     logInThenAction('heart', articleId, identifier, $(this));
-                } 
-                else if ($(this).hasClass('comment')) 
-                {
+                } else if ($(this).hasClass('comment')) {
                     $('.ui.sidebar').sidebar({
                         onVisible: function() {
                             $('.sidebar').find('.comments').addClass('loading');
@@ -550,6 +631,10 @@
                     }).sidebar('toggle');
                 } else if ($(this).hasClass('fork')) {
                     logInThenAction('fork', articleId, identifier);
+                } else if ($(this).hasClass('edit')) {
+                    logInThenAction('edit', articleId, identifier, $(this));
+                } else if ($(this).hasClass('trash')) {
+                    logInThenAction('trash', articleId, identifier, $(this));
                 }
             });
 

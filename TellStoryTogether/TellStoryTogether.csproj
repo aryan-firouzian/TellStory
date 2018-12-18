@@ -297,6 +297,10 @@
     <Compile Include="Migrations\201811202237092_AddIdentifierPropertyToNotificationTable.Designer.cs">
       <DependentUpon>201811202237092_AddIdentifierPropertyToNotificationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812181217432_AddIsLastPropertyToArticle.cs" />
+    <Compile Include="Migrations\201812181217432_AddIsLastPropertyToArticle.Designer.cs">
+      <DependentUpon>201812181217432_AddIsLastPropertyToArticle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -713,6 +717,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811202237092_AddIdentifierPropertyToNotificationTable.resx">
       <DependentUpon>201811202237092_AddIdentifierPropertyToNotificationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181217432_AddIsLastPropertyToArticle.resx">
+      <DependentUpon>201812181217432_AddIsLastPropertyToArticle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

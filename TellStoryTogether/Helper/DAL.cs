@@ -88,8 +88,6 @@ namespace TellStoryTogether.Helper
             return _context.Genres.ToList();
         }
 
-
-
         public void SaveArticle(ref HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max,int languageId, int genreId, string identifier)
         {
             Guid guid = Guid.NewGuid();
@@ -99,6 +97,7 @@ namespace TellStoryTogether.Helper
             if (articleInitId != -1)
             {
                 parallel = _context.Articles.Count(p => p.ArticleInitId == articleInitId) + 1;
+                _context.Articles.First(p => p.ArticleId == articleInitId).IsLast = false;
             }
 
             Language language = _context.Languages.First(p => p.LanguageId == languageId);
@@ -120,7 +119,8 @@ namespace TellStoryTogether.Helper
                 Genre = genre,
                 Time = DateTime.Now,
                 MinChar = min,
-                MaxChar = max
+                MaxChar = max,
+                IsLast = true
             };
             _context.Articles.Add(newArticle);
             _user.UserPoint = _user.UserPoint + CreatePoint;
@@ -374,8 +374,8 @@ namespace TellStoryTogether.Helper
             List<int> userComments = _context.Comments.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
             List<int> userPoints = _context.ArticlePoints.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
             List<int> userFavorites = _context.ArticleFavorites.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
-
-            return _context.Articles.Include("Owner").First(p => p.ArticleId == articleId).ArticleToArticleUser(userPoints, userFavorites, userComments, _userId);
+            ArticleUserBase output = _context.Articles.Include("Owner").First(p => p.ArticleId == articleId).ArticleToArticleUser(userPoints, userFavorites, userComments, _userId);
+            return output;
         }
 
         public List<List<ArticleUserBase>> GetTailArticleUserBaseByIdentifier(string identifier)
@@ -682,6 +682,39 @@ namespace TellStoryTogether.Helper
         public Language[] GetLanguages()
         {
             return _context.Languages.ToArray();
+        }
+
+        public bool RemoveArticle(int articleId)
+        {
+            Article article = _context.Articles.Include("Owner").First(p => p.ArticleId == articleId);
+            if (!article.IsLast || article.Owner.UserId != _userId) return false;
+            
+            //take care of parallel issue
+            List <Article> sameLevelArticles = _context.Articles.Where(p => p.ArticleInitId == article.ArticleInitId).ToList();
+
+            if (sameLevelArticles.Count == 1)
+            {
+                _context.Articles.First(p => p.ArticleId == article.ArticleInitId).IsLast = true;
+            }
+            else
+            {
+                foreach (Article sameLevelArticle in sameLevelArticles)
+                {
+                    if (sameLevelArticle.Parallel > article.Parallel)
+                    {
+                        sameLevelArticle.Parallel--;
+                    }
+                }
+            }
+            _context.Notifications.RemoveRange(_context.Notifications.Where(p => p.Article.ArticleId == articleId));
+            _context.ArticleFavorites.RemoveRange(_context.ArticleFavorites.Where(p => p.Article.ArticleId == articleId));
+            _context.ArticlePoints.RemoveRange(_context.ArticlePoints.Where(p => p.Article.ArticleId == articleId));
+            _context.Comments.RemoveRange(_context.Comments.Where(p => p.Article.ArticleId == articleId));
+
+            _context.SaveChanges();
+            _context.Articles.Remove(article);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

@@ -509,7 +509,7 @@
                         window.location.href = url.replace("____param____", identifier);
                         break;
                     case 'edit':
-                        var editUrl = '@Url.Action("Index", "Edit", new {id = "____param____"})';
+                        var editUrl = '@Url.Action("Index", "Edit", new { aricleId = "____param____" })';
                         window.location.href = editUrl.replace("____param____", articleId);
                         break;
                     case 'trash':

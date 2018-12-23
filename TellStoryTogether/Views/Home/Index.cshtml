@@ -56,37 +56,51 @@
 @section Scripts{
     <script>
         $(document).ready(function() {
+            var json;
+            var homeFeeds;
+            var myAppUrlSettings;
+            var slidesToShow;
+            var $section;
+            var $loader;
+            var $show;
+            var $sliderItem;
+            var $jumbotron;
+            var sliderId;
+            var nearToBottom;
 
-            var json = '@Html.Raw(Json.Encode(@Model))';
-            var homeFeeds = JSON.parse(json);
+            function init() {
+                json = '@Html.Raw(Json.Encode(@Model))';
+                homeFeeds = JSON.parse(json);
 
-            var myAppUrlSettings = {
-                myLoadArticleUrl: '@Url.Action("LoadArticles", "Article")',
-                myArticleUrl: '@Url.Action("Index", "Article")',
-                myReadUrl: '@Url.Action("Index", "Read")'
+                myAppUrlSettings = {
+                    myLoadArticleUrl: '@Url.Action("LoadArticles", "Article")',
+                    myArticleUrl: '@Url.Action("Index", "Article")',
+                    myReadUrl: '@Url.Action("Index", "Read")'
+                }
+
+                slidesToShow = 2;
+                if ($(window).width() >= 1380) {
+                    slidesToShow = 3;
+                }
+                if ($(window).width() <= 1000) {
+                    slidesToShow = 1;
+                }
+
+                $section = $('#main-section');
+                $loader = $('#loader');
+                $show = $section.find('.show').clone();
+                $section.find('.show').remove();
+                $show.removeClass('item-hide');
+                $sliderItem = $section.find('.show-slider-item').clone();
+                $section.find('.show-slider-item').remove();
+                $sliderItem.removeClass('item-hide');
+                $jumbotron = $section.find('.jumbotron').clone();
+                $section.find('.jumbotron').remove();
+                $jumbotron.removeClass('item-hide');
+
+                sliderId = 0;
+                nearToBottom = 500;
             }
-
-            var slidesToShow = 2;
-            if ($(window).width() >= 1380) {
-                slidesToShow = 3;
-            }
-            if ($(window).width() <= 1000) {
-                slidesToShow = 1;
-            }
-
-            var $section = $('#main-section');
-            var $loader = $('#loader');
-            var $show = $section.find('.show').clone();
-            $section.find('.show').remove();
-            $show.removeClass('item-hide');
-            var $sliderItem = $section.find('.show-slider-item').clone();
-            $section.find('.show-slider-item').remove();
-            $sliderItem.removeClass('item-hide');
-            var $jumbotron = $section.find('.jumbotron').clone();
-            $section.find('.jumbotron').remove();
-            $jumbotron.removeClass('item-hide');
-
-            var sliderId = 0;
 
             function removeFromFeedLoadContent(repeatParam) {
                 if (homeFeeds.length > 0) {
@@ -95,17 +109,15 @@
                     homeFeeds = jQuery.grep(homeFeeds, function(value) {
                         return value !== paramFeed;
                     });
-
                     if (paramFeed.PropKey === 'Jumbo') {
                         var $newJumbotron = $jumbotron.clone();
                         $newJumbotron.find('h1').html(paramFeed.PropValue);
                         $newJumbotron.find('.lead').html(paramFeed.PropTitle);
                         $newJumbotron.find('.lead-2').html(paramFeed.PropDescription);
-                        $newJumbotron.find('.btn').attr('href',paramFeed.PropDescription2);
+                        $newJumbotron.find('.btn').attr('href', paramFeed.PropDescription2);
                         $section.append($newJumbotron);
-                    }
-                    else
-                    {
+                    } else {
+                        $loader.show();
                         var loadArticle = new XMLHttpRequest();
                         var loadArticleData = new FormData();
                         loadArticleData.append('key', paramFeed.PropKey);
@@ -113,6 +125,7 @@
                         loadArticleData.append('from', paramFeed.From);
                         loadArticleData.append('take', paramFeed.Take);
                         loadArticle.onload = function() {
+                            $loader.hide();
                             var articleList = $.parseJSON(this.responseText);
                             var $newShow = $show.clone();
                             $section.append($newShow);
@@ -144,18 +157,16 @@
                         loadArticle.open('POST', myAppUrlSettings.myLoadArticleUrl);
                         loadArticle.send(loadArticleData);
                     }
-                    if (homeFeeds.length === 0) {
-                        $loader.hide();
-                    }
                     if (repeatParam > 0) {
                         removeFromFeedLoadContent(repeatParam);
                     }
                 }
             }
 
+            init();
+
             removeFromFeedLoadContent(3);
 
-            var nearToBottom = 500;
             $(window).scroll(function() {
                 if ($(window).scrollTop() + $(window).height() > $(document).height() - nearToBottom) {
                     removeFromFeedLoadContent(1);

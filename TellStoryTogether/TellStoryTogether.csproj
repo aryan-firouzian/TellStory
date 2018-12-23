@@ -187,6 +187,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
+    <Compile Include="Controllers\EditController.cs" />
     <Compile Include="Controllers\FavoriteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReadController.cs" />
@@ -636,6 +637,7 @@
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Favorite\Index.cshtml" />
     <None Include="Views\Article\Index.cshtml" />
+    <None Include="Views\Edit\Index.cshtml" />
     <None Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Script\Index.cshtml" />
   </ItemGroup>

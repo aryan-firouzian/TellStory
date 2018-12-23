@@ -133,6 +133,27 @@ namespace TellStoryTogether.Helper
             CurrentArticle = newArticle;
         }
 
+        public void EditArticle(int articleId, ref HttpPostedFileBase blob, string title, string text, int min, int max, int languageId, int genreId)
+        {
+            Article article = _context.Articles.First(p => p.ArticleId == articleId);
+            Guid guid = Guid.NewGuid();
+            string uniqueString = guid.ToString();
+            var fullPath = blob == null ? article.PictureUrl : "/Images/StoryImage/" + uniqueString + ".png";
+            
+            Language language = _context.Languages.First(p => p.LanguageId == languageId);
+            Genre genre = _context.Genres.First(p => p.GenreId == genreId);
+
+            article.Title = title;
+            article.Text = text;
+            article.PictureUrl = fullPath;
+            article.Language = language;
+            article.Genre = genre;
+            article.MinChar = min;
+            article.MaxChar = max;
+            _context.SaveChanges();
+            CurrentArticle = article;
+        }
+
         public string[] SplitFirstId_PopulateNewIdentifier(string articleIdOrIdentifier)
         {
             string articleId;
@@ -632,6 +653,15 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .ToList();
+                    break;
+                case "ArticleId":
+                    valueId = Int32.Parse(value);
+                    articles =
+                        _context.Articles.Where(p => p.ArticleId == valueId)
+                            .Include(p => p.Owner)
+                            .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
             }

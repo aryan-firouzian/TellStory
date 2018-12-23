@@ -14,7 +14,9 @@ namespace TellStoryTogether.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ArticleId { get; set; }
-        
+
+        public int TopArticleInitId { get; set; }
+
         public int ArticleInitId { get; set; }
 
         public string Identifier { get; set; }

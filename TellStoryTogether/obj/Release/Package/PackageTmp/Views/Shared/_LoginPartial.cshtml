@@ -1,7 +1,42 @@
-﻿@using TellStoryTogether.Helper
+﻿@using System.Security.Policy
+@using TellStoryTogether.Helper
 @using TellStoryTogether.Models
-@{ NavPanel navPanel = new NavPanel(5);}
+@{ NavPanel navPanel = new NavPanel(5);
+    bool notFirstNotification = false;
+    bool notFirstGenre = false;
+    bool notFirstLanguage = false;}
 
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Language</a>
+    <div id="language-dropdown" class="dropdown-menu dropdown-menu-right">
+        @foreach (Language language in navPanel.AllLanguages())
+        {
+            if (notFirstLanguage)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
+            <a class="dropdown-item" href="@Url.Action("Index", "Article", new {key = "Language", value = language.LanguageId})">
+                <div class="dropdown-item-1 title-ellipsis-width">@language.LanguageInEnglish</div>
+            </a>
+            notFirstLanguage = true;
+        }
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genre</a>
+    <div id="genre-dropdown" class="dropdown-menu dropdown-menu-right">
+        @foreach (Genre genre in navPanel.AllGenres())
+        {if (notFirstGenre)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
+            <a class="dropdown-item" href="@Url.Action("Index", "Article", new {key = "Genre", value = genre.GenreId})">
+                <div class="dropdown-item-1 title-ellipsis-width">@genre.Name</div>
+            </a>
+            notFirstGenre = true;
+        }
+    </div>
+</li>
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item dropdown">
@@ -55,41 +90,44 @@
             Create
         </a>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown notification">
         @if (navPanel.CountAllNotification() > 0)
         {
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 @if (navPanel.CountUnseenNotification() > 0)
                 {
-                    <i class="bell red icon"></i><span style="color: darkred">@navPanel.CountUnseenNotification()</span>
+                    <i class="bell red icon"></i><span class="NotificationNumber" style="color: darkred">@navPanel.CountUnseenNotification()</span>
                 }
                 else
                 {
                     <i class="bell outline red icon"></i>
                 }
-
             </a>
             <div class="dropdown-menu dropdown-menu-right scrollable-menu">
-                @foreach (Notification notification in navPanel.UserAllNotifications())
+                @foreach (NotificationShow notification in navPanel.UserAllNotifications())
                 {
-                    if (notification.Seen == false)
+                    if (notFirstNotification)
+                    {
+                        <div class="dropdown-divider"></div>
+                    }
+                    if (notification.Bold)
                     {
                         <a class="dropdown-item" style="font-weight: bold" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.ArticleTitle</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
-                        <div class="dropdown-divider"></div>
                     }
                     else
                     {
                         <a class="dropdown-item" href="@Url.Action("Index", "Read", new {identifier = notification.Identifier})">
-                            <div class="dropdown-item-1 title-ellipsis-width">@notification.Article.Title</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.Article.Text</div>
-                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Article.Text</div>
+                            <div class="dropdown-item-1 title-ellipsis-width">@notification.ArticleTitle</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: x-small">@notification.ArticleText</div>
+                            <div class="dropdown-item-1 title-ellipsis-width" style="font-size: small">@notification.Content</div>
                         </a>
-                        <div class="dropdown-divider"></div>
+                        
                     }
+                    notFirstNotification = true;
                 }
             </div>
         }
@@ -103,7 +141,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="@Url.Action("Index", "Create", new {identifier = "new"})">
-            <i class="trophy icon"></i>@navPanel.UserPoints()
+            <i class="trophy olive icon"></i><span class="ui olive text">@navPanel.UserPoints()</span>
         </a>
     </li>
     <li class="nav-item">

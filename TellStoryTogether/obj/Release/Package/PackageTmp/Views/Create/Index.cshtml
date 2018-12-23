@@ -13,10 +13,11 @@
                 <div class="show ui center aligned basic segment" style="width: auto; margin-bottom: 0px; padding-bottom: 0px; margin-top: 0px; padding-top: 0px">
                     <div>
                         <div class=" ui justified container segment story-container">
-                            @if (@item.PictureUrl != null) {
+                            @if (@item.PictureUrl != null)
+                            {
                                 <img src="@Url.Content(@item.PictureUrl)" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
                             }
-                            <p class="text-no-ellipsis">@item.Text</p>
+                            <p  style="white-space: pre-line; white-space: pre-wrap;" class="text-no-ellipsis">@item.Text</p>
                             <p class="title-ellipsis">By @item.Owner.UserName</p>
                         </div>
                     </div>
@@ -49,6 +50,14 @@
                                 {
                                     <label>Title</label>
                                     <input id="title" type="text" placeholder="Story Title">
+                                    <label style="margin-top: 20px">Language</label>
+                                    <select id="language" class="ui fluid dropdown">
+                                        <option value='-1'>Select a language</option>
+                                        @foreach (var language in ViewBag.languages)
+                                        {
+                                            <option value=@language.LanguageId>@language.LanguageInEnglish</option>
+                                        }
+                                    </select>
                                     <label style="margin-top: 20px">Genre</label>
                                     <select id="genre" class="ui fluid dropdown">
                                         <option value='-1'>Select a genre</option>
@@ -74,6 +83,8 @@
                                 {
                                     <label>Title</label>
                                     <label class="detail" style="font-style: italic">@Model.First().Title</label>
+                                    <label style="margin-top: 20px">Language</label>
+                                    <label class="detail" style="font-style: italic">@Model.First().Language.LanguageInEnglish</label>
                                     <label style="margin-top: 20px">Genre</label>
                                     <label class="detail" style="font-style: italic">@Model.First().Genre.Name</label>
                                     <label style="margin-top: 20px">Character Limit</label>
@@ -122,10 +133,10 @@
                 Log in or Register
             </div>
             <p>
-                To create new story, you need to <a>@Html.ActionLink("log in here!", "Login", "Account", routeValues: new {returnUrl = "/Create?identifier=@ViewBag.identifier "}, htmlAttributes: new {})</a>
+                To create new story, you need to <a>@Html.ActionLink("log in here!", "Login", "Account", routeValues: new { returnUrl = "/Create?identifier=@ViewBag.identifier " }, htmlAttributes: new { })</a>
             </p>
             <p>
-                Are you a new user? <a>@Html.ActionLink("Register here!", "Register", "Account", routeValues: new {returnUrl = "/Create?identifier=@ViewBag.identifier "}, htmlAttributes: new {})</a>
+                Are you a new user? <a>@Html.ActionLink("Register here!", "Register", "Account", routeValues: new { returnUrl = "/Create?identifier=@ViewBag.identifier " }, htmlAttributes: new { })</a>
             </p>
         </div>
     }
@@ -203,6 +214,9 @@
                         if (isRedirect) {
                             window.location.href = redirectTo;
                         }
+                        else {
+                            $('#upload-button').removeClass('disabled');
+                        }
                         clearInterval(interval);
                     }
                 }, 1000);
@@ -232,6 +246,7 @@
 
             $('#upload-button').on('click', function() {
                 $('#upload-button').addClass('loading');
+                $('#upload-button').addClass('disabled');
                 basic.croppie('result', 'blob').then(function(blob) {
                     var error = "";
                     var title = "@ViewBag.title";
@@ -240,11 +255,13 @@
                     var min = @ViewBag.charMin;
                     var max = @ViewBag.charMax;
                     var text = $('#text').val();
+                    var languageId = @ViewBag.language;
                     var genreId = @ViewBag.genre;
                     if (@ViewBag.length === 0) {
                         title = $('#title').val();
                         min = $('#min-char').val();
                         max = $('#max-char').val();
+                        languageId = $('#language').val();
                         genreId = $('#genre').val();
                     }
                     if (@ViewBag.length === 0 && !isImageAdded) {
@@ -253,7 +270,10 @@
                     } else if (title == null || title.trim() === '') {
                         error = 'Title field cannot be empty.';
                         showMessage("Error", error, true);
-                    }else if (genreId == null || genreId==='-1') {
+                    } else if (languageId == null || languageId === '-1') {
+                        error = 'Language option should be selected.';
+                        showMessage("Error", error, true);
+                    } else if (genreId == null || genreId === '-1') {
                         error = 'Genre option should be selected.';
                         showMessage("Error", error, true);
                     } else if (text == null || text.trim() === '') {
@@ -283,6 +303,7 @@
                         formData.append('serial', serial);
                         formData.append('min', min);
                         formData.append('max', max);
+                        formData.append('languageId', languageId);
                         formData.append('genreId', genreId);
 
                         var request = new XMLHttpRequest();
@@ -290,7 +311,7 @@
                             var response = $.parseJSON(this.responseText);
                             if (response[0] === 'added') {
                                 var identifier = response[1];
-                                var url = '@Url.Action("Index", "Read", new {identifier = "__param__"})';
+                                var url = '@Url.Action("Index", "Read", new { identifier = "__param__" })';
                                 var redirectTo = url.replace('__param__', encodeURIComponent(identifier));
                                 showMessage('Added', 'The story is added. You will be redirected to story page.', false, true, redirectTo);
 

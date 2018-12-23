@@ -144,6 +144,7 @@
 
 
 @section Scripts{
+    @* ReSharper disable once ConditionIsAlwaysConst *@
     <script>
         $(document).ready(function() {
 
@@ -160,7 +161,7 @@
                 MySaveArticleUrl: '@Url.Action("EditArticle", "Edit")'
             }
 
-            var pictureUrl = '@Model.PictureUrl' === 'null'?'Images/StoryImage/testFileName.png':'@Model.PictureUrl';
+            var pictureUrl = '@Model.PictureUrl' == ''?'Images/StoryImage/testFileName.png':'@Model.PictureUrl';
 
             var basic = $('#main-cropper').croppie({
                 viewport: { width: 175, height: 275 },

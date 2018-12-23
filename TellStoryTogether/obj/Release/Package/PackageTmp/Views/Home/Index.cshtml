@@ -1,147 +1,175 @@
-﻿
+﻿@model IEnumerable<TellStoryTogether.Helper.HomeFeed>
+
+
 @section featured {
     <section id="main-section">
-    <div class="ui basic segment show item-hide" style="margin: 0 !important; width: auto">
-        <div class="show-genre">
-            <h3 class="ui horizontal divider header">
-                <a href="" class="title-ellipsis genre-name">Genre</a>
-            </h3>
-            <p class="text-ellipsis genre-detail">Some details about the Genre</p>
+        <div class="ui basic segment show item-hide" style="margin: 0 !important; width: auto">
+            <div class="show-genre">
+                <h3 class="ui horizontal divider header">
+                    <a href="" class="title-ellipsis genre-name">Genre</a>
+                </h3>
+                <p class="text-ellipsis genre-detail">Some details about the Genre</p>
+            </div>
+            <div id="slider" style="margin-bottom: 0 !important" class="slickcarousel"></div>
         </div>
-        <div id="slider" style="margin-bottom:0!important" class="slickcarousel"></div>
-    </div>
-    <div class="show-slider-item item-hide">
-        <div class="ui justified container segment story-container">
-            <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
-            <h3>
-                <a href="" class="title-ellipsis title">title</a>
-            </h3>
-            <a class="title-ellipsis owner">username</a>
-            <p class="text-ellipsis show-title text">text</p>
-            <div class="seen-heart">
-                <div class="ui labeled button mini star cursor-default">
-                    <div class="ui basic yellow button mini cursor-default">
-                        <i class="star outline icon"></i> Favourite
+        <div class="show-slider-item item-hide">
+            <div class="ui justified container segment story-container">
+                <img src="" class="img-fluid ui rounded left floated image" style="max-width: 37%; height: auto;">
+                <h3>
+                    <a href="" class="title-ellipsis title">title</a>
+                </h3>
+                <a class="title-ellipsis owner">username</a>
+                <p class="text-ellipsis show-title text">text</p>
+                <div class="seen-heart">
+                    <div class="ui labeled button mini star cursor-default">
+                        <div class="ui basic yellow button mini cursor-default">
+                            <i class="star outline icon"></i> Favourite
+                        </div>
+                        <div class="ui basic label yellow mini cursor-default">
+                            0
+                        </div>
                     </div>
-                    <div class="ui basic label yellow mini cursor-default">
-                        0
-                    </div>
-                </div>
-                <div class="ui labeled button mini star cursor-default">
-                    <div class="ui basic red button mini cursor-default">
-                        <i class="heart outline icon"></i> Like
-                    </div>
-                    <div class="ui basic label red mini cursor-default">
-                        0
+                    <div class="ui labeled button mini star cursor-default">
+                        <div class="ui basic red button mini cursor-default">
+                            <i class="heart outline icon"></i> Like
+                        </div>
+                        <div class="ui basic label red mini cursor-default">
+                            0
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-    <div id="loader" class="ui basic segment" style="margin-top: 200px">
+        <div class="jumbotron item-hide">
+            <h1 class="display-4">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p class="lead-2">It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+    </section>
+    <div id="loader" class="ui basic segment" style="margin: 200px">
         <div class="ui active centered loader"></div>
     </div>
 }
 
 @section Scripts{
     <script>
-    $(document).ready(function () {
+        $(document).ready(function() {
+            var json;
+            var homeFeeds;
+            var myAppUrlSettings;
+            var slidesToShow;
+            var $section;
+            var $loader;
+            var $show;
+            var $sliderItem;
+            var $jumbotron;
+            var sliderId;
+            var nearToBottom;
 
-        
-        var myAppUrlSettings = {
-            myGenreUrl: '@Url.Action("Index", "Genre")',
-            myLoadByGenreUrl: '@Url.Action("LoadArticles", "Genre")',
-                myUserUrl: '@Url.Action("Index", "User")',
-                myReadUrl: '@Url.Action("Index", "Read")'
+            function init() {
+                json = '@Html.Raw(Json.Encode(@Model))';
+                homeFeeds = JSON.parse(json);
+
+                myAppUrlSettings = {
+                    myLoadArticleUrl: '@Url.Action("LoadArticles", "Article")',
+                    myArticleUrl: '@Url.Action("Index", "Article")',
+                    myReadUrl: '@Url.Action("Index", "Read")'
+                }
+
+                slidesToShow = 2;
+                if ($(window).width() >= 1380) {
+                    slidesToShow = 3;
+                }
+                if ($(window).width() <= 1000) {
+                    slidesToShow = 1;
+                }
+
+                $section = $('#main-section');
+                $loader = $('#loader');
+                $show = $section.find('.show').clone();
+                $section.find('.show').remove();
+                $show.removeClass('item-hide');
+                $sliderItem = $section.find('.show-slider-item').clone();
+                $section.find('.show-slider-item').remove();
+                $sliderItem.removeClass('item-hide');
+                $jumbotron = $section.find('.jumbotron').clone();
+                $section.find('.jumbotron').remove();
+                $jumbotron.removeClass('item-hide');
+
+                sliderId = 0;
+                nearToBottom = 500;
             }
 
-            var listOfGenre = [];
-
-            var slidesToShow = 2;
-            if ($(window).width() >= 1380) {
-                slidesToShow = 3;
-            }
-            if ($(window).width() <= 1000) {
-                slidesToShow = 1;
-            }
-
-            var $section = $('#main-section');
-            var $loader = $('#loader');
-            var $show = $section.find('.show').clone();
-            $section.find('.show').remove();
-            $show.removeClass('item-hide');
-            var $sliderItem = $section.find('.show-slider-item').clone();
-            $section.find('.show-slider-item').remove();
-            $sliderItem.remove('item-hide');
-
-
-            function removeFromGenreLoadSliderWithContent(repeatParam) {
-                if (listOfGenre.length > 0) {
+            function removeFromFeedLoadContent(repeatParam) {
+                if (homeFeeds.length > 0) {
                     repeatParam--;
-                    var paramGenre = listOfGenre[0];
-                    listOfGenre = jQuery.grep(listOfGenre, function(value) {
-                        return value !== paramGenre;
+                    var paramFeed = homeFeeds[0];
+                    homeFeeds = jQuery.grep(homeFeeds, function(value) {
+                        return value !== paramFeed;
                     });
-
-                    var loadArticle = new XMLHttpRequest();
-                    var loadArticleData = new FormData();
-                    loadArticleData.append('genreId', paramGenre);
-                    loadArticleData.append('from', 0);
-                    loadArticleData.append('take', 5);
-                    loadArticle.onload = function() {
-                        var articleList = $.parseJSON(this.responseText);
-                        var $newShow = $show.clone();
-                        $section.append($newShow);
-                        $newShow.find('.genre-name').attr('href', myAppUrlSettings.myGenreUrl + '?genreId=' + articleList[0].Genre.GenreId).html(articleList[0].Genre.Name);
-                        $newShow.find('.genre-detail').html(articleList[0].Genre.Detail);
-                        $newShow.find('.slickcarousel').attr('id', 'slider-' + paramGenre);
-                        if (articleList.length > 0) {
-                            $.each(articleList, function(i, v) {
-                                var $newSliderItem = $sliderItem.clone();
-                                $newSliderItem.find('.image').attr('src', v.PictureUrl);
-                                $newSliderItem.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
-                                $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myUserUrl + '?userId=' + articleList[0].Owner.UserId).html(v.Owner.UserName);
-                                $newSliderItem.find('.text').html(v.Text);
-                                $newSliderItem.find('.label.yellow').html(v.Favorite);
-                                $newSliderItem.find('.label.red').html(v.Point);
-                                $newShow.find('.slickcarousel').append($newSliderItem);
-                            });
-                        }
-                        $('#slider-' + paramGenre).slick(({
-                            infinite: true,
-                            slidesToShow: slidesToShow,
-                            slidesToScroll: 1,
-                            arrows: true,
-                            prevArrow: '<span class="prev"><i class="fitted huge angle left icon green" aria-hidden="true"></i></span>',
-                            nextArrow: '<span class="next"><i class="fitted huge angle right icon green" aria-hidden="true"></i></span>'
-                        }));
-
-                        if (listOfGenre.length == 0) {
+                    if (paramFeed.PropKey === 'Jumbo') {
+                        var $newJumbotron = $jumbotron.clone();
+                        $newJumbotron.find('h1').html(paramFeed.PropValue);
+                        $newJumbotron.find('.lead').html(paramFeed.PropTitle);
+                        $newJumbotron.find('.lead-2').html(paramFeed.PropDescription);
+                        $newJumbotron.find('.btn').attr('href', paramFeed.PropDescription2);
+                        $section.append($newJumbotron);
+                    } else {
+                        $loader.show();
+                        var loadArticle = new XMLHttpRequest();
+                        var loadArticleData = new FormData();
+                        loadArticleData.append('key', paramFeed.PropKey);
+                        loadArticleData.append('value', paramFeed.PropValue);
+                        loadArticleData.append('from', paramFeed.From);
+                        loadArticleData.append('take', paramFeed.Take);
+                        loadArticle.onload = function() {
                             $loader.hide();
+                            var articleList = $.parseJSON(this.responseText);
+                            var $newShow = $show.clone();
+                            $section.append($newShow);
+                            $newShow.find('.genre-name').attr('href', myAppUrlSettings.myArticleUrl + '?key=' + paramFeed.PropKey + '&value=' + paramFeed.PropValue).html(paramFeed.PropTitle);
+                            $newShow.find('.genre-detail').html(paramFeed.PropDescription);
+                            sliderId ++;
+                            $newShow.find('.slickcarousel').attr('id', 'slider-' + sliderId);
+                            if (articleList.length > 0) {
+                                $.each(articleList, function(i, v) {
+                                    var $newSliderItem = $sliderItem.clone();
+                                    $newSliderItem.find('.image').attr('src', v.PictureUrl);
+                                    $newSliderItem.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
+                                    $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + v.Owner.UserId).html(v.Owner.UserName);
+                                    $newSliderItem.find('.text').html(v.Text);
+                                    $newSliderItem.find('.label.yellow').html(v.Favorite);
+                                    $newSliderItem.find('.label.red').html(v.Point);
+                                    $newShow.find('.slickcarousel').append($newSliderItem);
+                                });
+                            }
+                            $('#slider-' + sliderId).slick(({
+                                infinite: true,
+                                slidesToShow: slidesToShow,
+                                slidesToScroll: 1,
+                                arrows: true,
+                                prevArrow: '<span class="prev"><i class="fitted huge angle left icon" aria-hidden="true"></i></span>',
+                                nextArrow: '<span class="next"><i class="fitted huge angle right icon" aria-hidden="true"></i></span>'
+                            }));
                         }
-                        if (repeatParam > 0) {
-                            removeFromGenreLoadSliderWithContent(repeatParam);
-                        }
+                        loadArticle.open('POST', myAppUrlSettings.myLoadArticleUrl);
+                        loadArticle.send(loadArticleData);
                     }
-                    loadArticle.open('POST', myAppUrlSettings.myLoadByGenreUrl);
-                    loadArticle.send(loadArticleData);
+                    if (repeatParam > 0) {
+                        removeFromFeedLoadContent(repeatParam);
+                    }
                 }
             }
 
+            init();
 
-            var loadGenreRequest = new XMLHttpRequest();
-            loadGenreRequest.onload = function() {
-                listOfGenre = $.parseJSON(this.responseText);
-                $('#main-section').children().eq(0).addClass('item-hide');
-                removeFromGenreLoadSliderWithContent(3);
-            }
-            loadGenreRequest.open("POST", "/Home/LoadGenre");
-            loadGenreRequest.send();
+            removeFromFeedLoadContent(3);
 
             $(window).scroll(function() {
-                if ($(window).scrollTop() + window.innerHeight === $(document).height()) {
-                    removeFromGenreLoadSliderWithContent(1);
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - nearToBottom) {
+                    removeFromFeedLoadContent(1);
                 }
             });
 

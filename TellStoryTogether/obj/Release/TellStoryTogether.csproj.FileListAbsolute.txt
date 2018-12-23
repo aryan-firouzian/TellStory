@@ -210,3 +210,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogethe
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddNotificationTable.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddLikedPropertyToNotificationTable.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddIdentifierPropertyToNotificationTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.AddIsLastPropertyToArticle.resources

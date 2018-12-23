@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Activities.Statements
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -51,7 +52,7 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light navbar-static-top" >
         <a class="navbar-brand" href="@Url.Action("Index", "Home", null)">
-            <img class="logo" src="@Url.Content("~/Images/TellStoryTogether3.png")">
+            <img class="logo" src="@Url.Content("~/Images/TellStoryTogether4.png")">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -69,9 +70,11 @@
                     <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a>
                 </li>
             </ul>
-            <form class="form-inline mx-lg-auto my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-0 my-sm-0" type="submit">Search</button>
+            <form onkeypress="return event.keyCode != 13;" class="form-inline mx-lg-auto my-2 my-lg-0">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search" aria-label="Search">
+                    <i class="circular search link icon"></i>
+                </div>
             </form>
             <ul class="navbar-nav ml-auto">
                 @Html.Partial("_LoginPartial")
@@ -80,20 +83,105 @@
     </nav>
     <div id="body">
         @RenderSection("featured", required: false)
-        <section class="content-wrapper main-content clear-fix">
+        <section id="body-main-section" class="content-wrapper main-content clear-fix">
             @RenderBody()
         </section>
     </div>
-    <footer>
-        <div id="footer" class="content-wrapper">
-        </div>
-    </footer>
+    <section id="footer">
+		<div class="container">
+			<div class="row text-center text-xs-center text-sm-left text-md-left">
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<ul class="list-unstyled quick-links">
+						<li><a href="@Url.Action("Index", "Home")"><i class="fa fa-caret-right"></i> Home</a></li>
+						<li><a href="@Url.Action("About", "Home")"><i class="fa fa-caret-right"></i> About</a></li>
+						<li><a href="@Url.Action("About", "Home")"><i class="fa fa-caret-right"></i> Get Started</a></li>
+					    <li><a href="@Url.Action("About", "Home")"><i class="fa fa-caret-right"></i> FAQ</a></li>
+                        
+					</ul>
+				</div>
+			    <div class="col-xs-12 col-sm-4 col-md-4">
+			        <ul class="list-unstyled quick-links">
+			            <li><a href="https://github.com/aryan-firouzian/TellStory"><i class="fa fa-caret-right"></i> Contribute</a></li>
+			            <li><a href="@Url.Action("Contact", "Home")"><i class="fa fa-caret-right"></i> Contact</a></li>
+			            <li><a href="https://github.com/aryan-firouzian/TellStory" title="Design and developed by"><i class="fa fa-caret-right"></i> Github Project</a></li>
+			        </ul>
+			    </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+    				<div class="col-xs-12 col-sm-4 col-md-4">
+					<ul class="list-unstyled quick-links">
+					    <li><a href=""><i class="fa fa-caret-right"></i> My Stories</a></li>
+					    <li><a href=""><i class="fa fa-caret-right"></i> My Favorites</a></li>
+                        <li><a href=""><i class="fa fa-caret-right"></i> Best Stories</a></li>
+					</ul>
+				</div>
+                }
+                else
+                {
+  				<div class="col-xs-12 col-sm-4 col-md-4">
+					<ul class="list-unstyled quick-links">
+					    <li><a href=""><i class="fa fa-caret-right"></i> Login</a></li>
+					    <li><a href=""><i class="fa fa-caret-right"></i> Register</a></li>
+					    <li><a href=""><i class="fa fa-caret-right"></i> Best Stories</a></li>
+					</ul>
+				</div>
+                }
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+					<ul class="list-unstyled list-inline social text-center">
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+					<p><a href="https://github.com/aryan-firouzian/TellStory">Tell Story Together</a> is an open source project under MIT License.</p>
+				</div>
+			</div>	
+		</div>
+	</section>
 </div>
 
 @*@Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryui")*@
 
+<script>
+    $(document).ready(function () {
 
+        // notification dropdown is clicked, and notifications are seen
+        $('.dropdown.notification').on('shown.bs.dropdown', function () {
+            var seenNotificationRequest = new XMLHttpRequest();
+            seenNotificationRequest.onload = function () {
+                var result = $.parseJSON(this.responseText);
+                if (result === "done") {
+                    $('.NotificationNumber').html('');
+                    $('.bell.red.icon').addClass('outline');
+                }
+            }
+            seenNotificationRequest.open("POST", "/Home/SeeNotifications");
+            seenNotificationRequest.send();
+        });
+
+        $('.navbar').find('form').find('input').keyup(function (event) {
+            if (event.keyCode === 13) {
+                $('.navbar').find('.search').click();
+            }
+        });
+
+        $('.navbar').on('click', '.search', function () {
+            var searchString = $('.navbar').find('form').find('input').val();
+            var url = '@Html.Raw(Url.Action("Index", "Article", new {key = "Search",value="__value__"}))';
+            var redirectTo = url.replace('__value__', encodeURIComponent(searchString));
+            window.location.href = redirectTo;
+        });
+
+    });
+</script>
 
 
 @RenderSection("scripts", required: false)
@@ -106,7 +194,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
 
-@*<script src="~/Content/MyScript.js"></script>*@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.min.js"></script>

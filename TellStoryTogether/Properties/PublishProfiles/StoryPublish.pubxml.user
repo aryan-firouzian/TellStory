@@ -160,7 +160,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>12/01/2018 20:13:27</publishTime>
+      <publishTime>12/23/2018 11:58:47</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -763,7 +763,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2017 17:58:55</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>12/01/2018 20:09:10</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
@@ -1126,7 +1126,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/05/2018 23:51:06</publishTime>
     </File>
     <File Include="Views/Create/Index.cshtml">
-      <publishTime>11/15/2018 18:45:58</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
+    </File>
+    <File Include="Views/Edit/Index.cshtml">
+      <publishTime>12/23/2018 11:50:01</publishTime>
     </File>
     <File Include="Views/Favorite/Index.cshtml">
       <publishTime>11/17/2018 20:20:54</publishTime>
@@ -1135,16 +1138,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/17/2018 22:01:01</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
-      <publishTime>10/31/2018 19:59:11</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>10/01/2018 20:24:42</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>11/17/2018 20:31:53</publishTime>
     </File>
     <File Include="Views/Read/Index.cshtml">
-      <publishTime>11/17/2018 22:58:20</publishTime>
+      <publishTime>12/23/2018 11:38:54</publishTime>
     </File>
     <File Include="Views/Script/Index.cshtml">
       <publishTime>11/17/2018 20:09:15</publishTime>
@@ -1153,10 +1156,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:24:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/01/2018 20:09:10</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>12/01/2018 20:09:10</publishTime>
+      <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
       <publishTime>11/17/2018 22:00:59</publishTime>

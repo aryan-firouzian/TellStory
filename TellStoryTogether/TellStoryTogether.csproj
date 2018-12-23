@@ -302,6 +302,14 @@
     <Compile Include="Migrations\201812181217432_AddIsLastPropertyToArticle.Designer.cs">
       <DependentUpon>201812181217432_AddIsLastPropertyToArticle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812231027065_TopArticleInitId_inArticleModel.cs" />
+    <Compile Include="Migrations\201812231027065_TopArticleInitId_inArticleModel.Designer.cs">
+      <DependentUpon>201812231027065_TopArticleInitId_inArticleModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231029592_RightToLeft_toLanguageTable.cs" />
+    <Compile Include="Migrations\201812231029592_RightToLeft_toLanguageTable.Designer.cs">
+      <DependentUpon>201812231029592_RightToLeft_toLanguageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -722,6 +730,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812181217432_AddIsLastPropertyToArticle.resx">
       <DependentUpon>201812181217432_AddIsLastPropertyToArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231027065_TopArticleInitId_inArticleModel.resx">
+      <DependentUpon>201812231027065_TopArticleInitId_inArticleModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231029592_RightToLeft_toLanguageTable.resx">
+      <DependentUpon>201812231029592_RightToLeft_toLanguageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

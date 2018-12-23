@@ -88,7 +88,7 @@ namespace TellStoryTogether.Helper
             return _context.Genres.ToList();
         }
 
-        public void SaveArticle(ref HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max,int languageId, int genreId, string identifier)
+        public void SaveArticle(ref HttpPostedFileBase blob, string title, int articleInitId, string text, int serial, int min, int max, int languageId, int genreId, string identifier)
         {
             Guid guid = Guid.NewGuid();
             string uniqueString = guid.ToString();
@@ -129,6 +129,7 @@ namespace TellStoryTogether.Helper
                 ? newArticle.ArticleId.ToString()
                 : identifier + "-" + newArticle.Parallel;
             newArticle.Identifier = newIdentifier;
+            newArticle.TopArticleInitId = Int32.Parse(newArticle.Identifier.Split('-')[0]);
             _context.SaveChanges();
             CurrentArticle = newArticle;
         }
@@ -150,6 +151,19 @@ namespace TellStoryTogether.Helper
             article.Genre = genre;
             article.MinChar = min;
             article.MaxChar = max;
+
+            if (article.ArticleInitId == -1)
+            {
+                var childArticles = _context.Articles.Where(p => p.TopArticleInitId == articleId);
+                foreach (Article childArticle in childArticles)
+                {
+                    childArticle.Title = title;
+                    childArticle.Language = language;
+                    childArticle.Genre = genre;
+                    childArticle.MinChar = min;
+                    childArticle.MaxChar = max;
+                }
+            }
             _context.SaveChanges();
             CurrentArticle = article;
         }

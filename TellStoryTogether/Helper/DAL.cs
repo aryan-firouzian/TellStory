@@ -409,7 +409,7 @@ namespace TellStoryTogether.Helper
             List<int> userComments = _context.Comments.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
             List<int> userPoints = _context.ArticlePoints.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
             List<int> userFavorites = _context.ArticleFavorites.Where(p => p.User.UserId == _userId).Select(p => p.Article.ArticleId).ToList();
-            ArticleUserBase output = _context.Articles.Include("Owner").First(p => p.ArticleId == articleId).ArticleToArticleUser(userPoints, userFavorites, userComments, _userId);
+            ArticleUserBase output = _context.Articles.Include("Owner").Include("Language").First(p => p.ArticleId == articleId).ArticleToArticleUser(userPoints, userFavorites, userComments, _userId);
             return output;
         }
 
@@ -626,6 +626,7 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
                 case "User":
@@ -637,6 +638,7 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
                 case "Search":
@@ -647,6 +649,7 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
                 case "Best":
@@ -656,6 +659,7 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
                 case "Language":
@@ -667,6 +671,7 @@ namespace TellStoryTogether.Helper
                             .Take(take)
                             .Include(p => p.Owner)
                             .Include(p => p.Genre)
+                            .Include(p => p.Language)
                             .ToList();
                     break;
                 case "ArticleId":

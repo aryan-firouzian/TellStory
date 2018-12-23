@@ -176,6 +176,7 @@
     <script>
         $(document).ready(function() {
 
+            var textDirection = '@ViewBag.TextDirection';
             var scrollToElement = location.hash;
             $('.comments').height($('.sidebar').height() - $('.form').height() - 110);
 
@@ -232,7 +233,7 @@
             var $sliderItem1 = $sliderItem.clone().attr('id', 'slider-item-1');
             $sliderItem1.find('#image').attr('src', model.PictureUrl).attr('id', 'image-' + model.ArticleId);
             $sliderItem1.find('.segment').addClass('story-container-read-image');
-            $sliderItem1.find('#text').attr('id', 'text-' + model.ArticleId).html(model.Text);
+            $sliderItem1.find('#text').attr('id', 'text-' + model.ArticleId).attr('dir', textDirection).html(model.Text);
             $sliderItem1.find('#owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + model.Owner.UserId).attr('id', 'owner-' + model.Owner).html(model.Owner.UserName);
             $sliderItem1.find('.seen.button').find('.label').html(model.Seen);
             $sliderItem1.find('.heart.button').attr('article', model.ArticleId).attr('identifier', model.Identifier).find('.label').html(model.Point);
@@ -322,7 +323,7 @@
                                 $newSliderItem.find('.segment').addClass('story-container-read-image');
                             }
                             $newSliderItem.find('#owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + v.Owner.UserId).attr('id', 'owner-' + v.ArticleId).html(v.Owner.UserName);
-                            $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).html(v.Text);
+                            $newSliderItem.find('#text').attr('id', 'text-' + v.ArticleId).attr('dir', textDirection).html(v.Text);
                             $newSliderItem.find('.seen.button').find('.label').html(v.Seen);
                             $newSliderItem.find('.heart.button').attr('article', v.ArticleId).attr('identifier', v.Identifier).find('.label').html(v.Point);
                             if (v.Pointed) {
@@ -509,7 +510,7 @@
                         window.location.href = url.replace("____param____", identifier);
                         break;
                     case 'edit':
-                        var editUrl = '@Url.Action("Index", "Edit", new { aricleId = "____param____" })';
+                        var editUrl = '@Url.Action("Index", "Edit", new {aricleId = "____param____"})';
                         window.location.href = editUrl.replace("____param____", articleId);
                         break;
                     case 'trash':
@@ -531,7 +532,7 @@
                                         } else {
                                             var afterRemoveUrl1 = '@Url.Action("Index", "Home")';
                                             window.location.href = afterRemoveUrl1;
-                                            
+
                                         }
                                     }
                                     button.find('.button').removeClass('loading');

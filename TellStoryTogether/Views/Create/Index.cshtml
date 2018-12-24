@@ -55,7 +55,7 @@
                                         <option value='-1'>Select a language</option>
                                         @foreach (var language in ViewBag.languages)
                                         {
-                                            <option value=@language.LanguageId>@language.LanguageInEnglish</option>
+                                            <option textDirection="@language.TextDirection" value=@language.LanguageId>@language.LanguageInEnglish</option>
                                         }
                                     </select>
                                     <label style="margin-top: 20px">Genre</label>
@@ -244,6 +244,11 @@
             });
 
             $('#select').on('change', function() { readFile(this); });
+
+            $("#language").change(function(){
+                var texDirection = $('option:selected', this).attr('textDirection');
+                $('#text').attr('dir', texDirection);
+            });
 
             $('#upload-button').on('click', function() {
                 $('#upload-button').addClass('loading');

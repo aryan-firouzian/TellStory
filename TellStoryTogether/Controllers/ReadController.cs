@@ -19,7 +19,7 @@ namespace TellStoryTogether.Controllers
 
             ArticleUserBase firstArticle = dal.GetArticleUserBaseById(firstArticleId);
 
-            ViewBag.TextDirection = firstArticle.Language.RightToLeft ? "rtl" : "ltr";
+            ViewBag.TextDirection = firstArticle.Language.TextDirection;
             ViewBag.Identifier = newIdentifier;
             return View(firstArticle);
         }

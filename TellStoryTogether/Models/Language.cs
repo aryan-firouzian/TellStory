@@ -18,7 +18,7 @@ namespace TellStoryTogether.Models
 
         public string LanguageInNative { get; set; }
 
-        public bool RightToLeft { get; set; }
+        public string TextDirection { get; set; }
 
     }
 }

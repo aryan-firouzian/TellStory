@@ -27,7 +27,7 @@ namespace TellStoryTogether.Controllers
             ViewBag.serial = articles.Count == 0 ? 1 : articles.Last().Serial + 1;
             ViewBag.genre = articles.Count == 0 ? -1 : articles[0].Genre.GenreId;
             ViewBag.language = articles.Count == 0 ? -1 : articles[0].Language.LanguageId;
-            ViewBag.TextDirection = articles.Count == 0 ? "ltr" : articles[0].Language.RightToLeft ? "rtl" : "ltr";
+            ViewBag.TextDirection = articles.Count == 0 ? "ltr" : articles[0].Language.TextDirection;
             ViewBag.identifier = identifier;
             
 

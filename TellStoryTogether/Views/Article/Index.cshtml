@@ -85,10 +85,11 @@
                         start = start + articleList.length;
                         $.each(articleList, function(i, v) {
                             var $newShow = $show.clone();
+                            var textDirection = v.Language.TextDirection;
                             $newShow.find('.image').attr('src', v.PictureUrl);
-                            $newShow.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
+                            $newShow.find('.title').attr('dir', textDirection).attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
                             $newShow.find('.owner').attr('href', myAppUrlSettings.myArticleUrl +'?key=User&value=' + v.Owner.UserId).html(v.Owner.UserName);
-                            $newShow.find('.text').html(v.Text);
+                            $newShow.find('.text').attr('dir',textDirection).html(v.Text);
                             $newShow.find('.label.yellow').html(v.Favorite);
                             $newShow.find('.label.red').html(v.Point);
                             $section.append($newShow);

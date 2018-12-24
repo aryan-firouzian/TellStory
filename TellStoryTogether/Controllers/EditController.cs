@@ -19,6 +19,7 @@ namespace TellStoryTogether.Controllers
             Article article = dal.GetArticles("ArticleId", aricleId, true, 0, 1).First();
             ViewBag.genres = dal.GetGenres();
             ViewBag.languages = dal.GetLanguages();
+            ViewBag.TextDirection = article.Language.TextDirection;
             return dal.UserId() == article.Owner.UserId ? View(article) : View();
         }
 

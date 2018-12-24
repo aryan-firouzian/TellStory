@@ -406,3 +406,5 @@ C:\Users\afirouzi\Projects\TellStory\TellStoryTogether\obj\Debug\TellStoryTogeth
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.AddIsLastPropertyToArticle.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.TopArticleInitId_inArticleModel.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.RightToLeft_toLanguageTable.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageTableTextDirectionAdded.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Debug\TellStoryTogether.Migrations.LanguageTableRightToLeftRemoved.resources

@@ -136,10 +136,11 @@
                             if (articleList.length > 0) {
                                 $.each(articleList, function(i, v) {
                                     var $newSliderItem = $sliderItem.clone();
+                                    var textDirection = v.Language.TextDirection;
                                     $newSliderItem.find('.image').attr('src', v.PictureUrl);
-                                    $newSliderItem.find('.title').attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
+                                    $newSliderItem.find('.title').attr('dir', textDirection).attr('href', myAppUrlSettings.myReadUrl + '?identifier=' + v.ArticleId).html(v.Title);
                                     $newSliderItem.find('.owner').attr('href', myAppUrlSettings.myArticleUrl + '?key=User&value=' + v.Owner.UserId).html(v.Owner.UserName);
-                                    $newSliderItem.find('.text').html(v.Text);
+                                    $newSliderItem.find('.text').attr('dir',textDirection).html(v.Text);
                                     $newSliderItem.find('.label.yellow').html(v.Favorite);
                                     $newSliderItem.find('.label.red').html(v.Point);
                                     $newShow.find('.slickcarousel').append($newSliderItem);

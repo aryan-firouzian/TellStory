@@ -310,6 +310,14 @@
     <Compile Include="Migrations\201812231029592_RightToLeft_toLanguageTable.Designer.cs">
       <DependentUpon>201812231029592_RightToLeft_toLanguageTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812241347212_LanguageTableTextDirectionAdded.cs" />
+    <Compile Include="Migrations\201812241347212_LanguageTableTextDirectionAdded.Designer.cs">
+      <DependentUpon>201812241347212_LanguageTableTextDirectionAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.cs" />
+    <Compile Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.Designer.cs">
+      <DependentUpon>201812241348380_LanguageTableRightToLeftRemoved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Article.cs" />
@@ -736,6 +744,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812231029592_RightToLeft_toLanguageTable.resx">
       <DependentUpon>201812231029592_RightToLeft_toLanguageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241347212_LanguageTableTextDirectionAdded.resx">
+      <DependentUpon>201812241347212_LanguageTableTextDirectionAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.resx">
+      <DependentUpon>201812241348380_LanguageTableRightToLeftRemoved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

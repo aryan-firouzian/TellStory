@@ -160,7 +160,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>12/23/2018 15:41:57</publishTime>
+      <publishTime>12/24/2018 16:11:40</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -1125,8 +1125,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Account/_SetPasswordPartial.cshtml">
       <publishTime>11/05/2018 23:51:06</publishTime>
     </File>
+    <File Include="Views/Article/Index.cshtml">
+      <publishTime>12/24/2018 15:52:44</publishTime>
+    </File>
     <File Include="Views/Create/Index.cshtml">
-      <publishTime>12/23/2018 15:32:19</publishTime>
+      <publishTime>12/24/2018 15:56:02</publishTime>
     </File>
     <File Include="Views/Edit/Index.cshtml">
       <publishTime>12/23/2018 11:50:01</publishTime>
@@ -1144,7 +1147,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/20/2018 22:28:57</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/17/2018 20:31:53</publishTime>
+      <publishTime>12/24/2018 15:52:38</publishTime>
     </File>
     <File Include="Views/Read/Index.cshtml">
       <publishTime>12/23/2018 15:22:33</publishTime>

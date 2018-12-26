@@ -16,10 +16,6 @@ namespace TellStoryTogether.Helper
         private readonly UserProfile _user;
         private readonly int _userId = -1;
         public Article CurrentArticle;
-        private const int LikePoint = 3;
-        private const int FavoritePoint = 1;
-        private const int CreatePoint = 5;
-        private const int ForkedPoint = 3;
 
         public DAL()
         {
@@ -123,7 +119,7 @@ namespace TellStoryTogether.Helper
                 IsLast = true
             };
             _context.Articles.Add(newArticle);
-            _user.UserPoint = _user.UserPoint + CreatePoint;
+            _user.UserPoint = _user.UserPoint + Constant.CreatePoint;
             _context.SaveChanges();
             string newIdentifier = newArticle.ArticleInitId == -1
                 ? newArticle.ArticleId.ToString()
@@ -212,27 +208,87 @@ namespace TellStoryTogether.Helper
         public void AddNotificationRecord(string state)
         {
             int articleId = CurrentArticle.ArticleId;
-            Notification existingNotification =
-                _context.Notifications.FirstOrDefault(p => p.User.UserId == _userId && p.Article.ArticleId == articleId);           
-            if (existingNotification != null)
+            switch (state)
             {
-                if (!existingNotification.State.Contains(state))
-                {
-                    existingNotification.State = existingNotification.State + state;
-                }
-            }
-            else
-            {
-                Notification newNotification = new Notification
-                {
-                    User = _user,
-                    Article = CurrentArticle,
-                    Seen = false,
-                    State = state,
-                    Time = DateTime.Now,
-                    Identifier = CurrentArticle.Identifier
-                };
-                _context.Notifications.Add(newNotification);
+                case Constant.CreateState:
+                    Notification newCreateNotif = new Notification
+                    {
+                        User = _user,
+                        Article = CurrentArticle,
+                        Visited = false,
+                        Seen = false,
+                        CreateState = true,
+                        Time = DateTime.Now,
+                        Identifier = CurrentArticle.Identifier
+                    };
+                    _context.Notifications.Add(newCreateNotif);
+                    break;
+
+                case Constant.CommentState:
+                    if (_context.Notifications.Any(p =>
+                        p.User.UserId == _userId && p.Article.ArticleId == articleId &&
+                        (p.CreateState || p.CommentState)))
+                    {
+                        return;
+                    }
+                    var favoriteNotifs =
+                        _context.Notifications.Where(
+                            p => p.User.UserId == _userId && p.Article.ArticleId == articleId && p.FavoriteState);
+                    if (favoriteNotifs.Any())
+                    {
+                        foreach (Notification favoriteNotif in favoriteNotifs)
+                        {
+                            favoriteNotif.CommentState = true;
+                        }
+                    }
+                    else
+                    {
+                        Notification newCommentNotif = new Notification
+                        {
+                            User = _user,
+                            Article = CurrentArticle,
+                            Visited = false,
+                            Seen = false,
+                            CommentState = true,
+                            Time = DateTime.Now,
+                            Identifier = CurrentArticle.Identifier
+                        };
+                        _context.Notifications.Add(newCommentNotif);
+                    }
+                    break;
+
+                case Constant.FavoriteState:
+                    if (_context.Notifications.Any(p =>
+                        p.User.UserId == _userId && p.Article.ArticleId == articleId &&
+                        (p.CreateState||p.FavoriteState)))
+                    {
+                        return;
+                    }
+                    var commentNotifs =
+                        _context.Notifications.Where(
+                            p => p.User.UserId == _userId && p.Article.ArticleId == articleId && p.CommentState);
+                    if (commentNotifs.Any())
+                    {
+                        foreach (Notification commentNotif in commentNotifs)
+                        {
+                            commentNotif.FavoriteState = true;
+                        }
+                    }
+                    else
+                    {
+                        Notification newFavoriteNotif = new Notification
+                        {
+                            User = _user,
+                            Article = CurrentArticle,
+                            Visited = false,
+                            Seen = false,
+                            FavoriteState = true,
+                            Time = DateTime.Now,
+                            Identifier = CurrentArticle.Identifier
+                        };
+                        _context.Notifications.Add(newFavoriteNotif);
+                    }
+                    break;
             }
             _context.SaveChanges();
         }
@@ -240,16 +296,40 @@ namespace TellStoryTogether.Helper
         public void RemoveNotificationRecord(string state)
         {
             int articleId = CurrentArticle.ArticleId;
-            Notification notification = _context.Notifications.FirstOrDefault(
-                p => p.User.UserId == _userId && p.Article.ArticleId == articleId);
-            if (notification != null)
+            switch (state)
             {
-                if (notification.State.Contains(state))
-                {
-                    notification.State = notification.State.Replace(state,"");
-                }
+                case Constant.FavoriteState:
+                    var favoriteNotifs = _context.Notifications.Where(
+                        p => p.User.UserId == _userId && p.Article.ArticleId == articleId && p.FavoriteState);
+                    if (favoriteNotifs.Any())
+                    {
+                        if (favoriteNotifs.First().CommentState)
+                        {
+                            foreach (Notification favoriteNotif in favoriteNotifs)
+                            {
+                                favoriteNotif.FavoriteState = false;
+                            }
+                        }
+                        else
+                        {
+                            _context.Notifications.RemoveRange(favoriteNotifs);
+                        }
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+
+                case Constant.CommentState:
+                    return;
+                    break;
+                   
+                case Constant.CreateState:
+                    return;
+                    break;
             }
-            _context.SaveChanges();
         }
 
         public void SubscribeForkNotificationForEarlierArticles(string identifier)
@@ -261,7 +341,7 @@ namespace TellStoryTogether.Helper
             _context.Notifications.Where(
                 p =>
                     p.Article.ArticleId == articleId && p.User.UserId != _userId &&
-                    (p.State.Contains("All") || p.State.Contains("Favorite"))).ForEach(p =>
+                    (p.CreateState || p.FavoriteState)).ForEach(p =>
                     {
                         p.Forked++;
                         p.Seen = false;
@@ -269,7 +349,7 @@ namespace TellStoryTogether.Helper
                     });
             UserProfile articleOwner = _context.Articles.Include(p => p.Owner).First(p => p.ArticleId == articleId).Owner;
             if(articleOwner.UserId!=_userId){
-                articleOwner.UserPoint = articleOwner.UserPoint + ForkedPoint;
+                articleOwner.UserPoint = articleOwner.UserPoint + Constant.ForkedPoint;
             }
             s.RemoveAt(0);
             int articleIntId = articleId;
@@ -280,7 +360,7 @@ namespace TellStoryTogether.Helper
                 var nextArticle =
                     _context.Articles.First(p => p.ArticleInitId == articleIntId && p.Parallel == parallel1);
                 _context.Notifications.Where(p => p.Article.ArticleId == nextArticle.ArticleId && p.User.UserId != _userId &&
-                    (p.State.Contains("All") || p.State.Contains("Favorite")))
+                    (p.CreateState || p.FavoriteState))
                     .ForEach(p =>
                     {
                         p.Forked++;
@@ -290,7 +370,7 @@ namespace TellStoryTogether.Helper
                 articleOwner = _context.Articles.Include(p => p.Owner).First(p => p.ArticleId == nextArticle.ArticleId).Owner;
                 if (articleOwner.UserId != _userId)
                 {
-                    articleOwner.UserPoint = articleOwner.UserPoint + ForkedPoint;
+                    articleOwner.UserPoint = articleOwner.UserPoint + Constant.ForkedPoint;
                 }
                 articleIntId = nextArticle.ArticleId;
             }
@@ -303,7 +383,7 @@ namespace TellStoryTogether.Helper
             UserProfile articleOwner = _context.Articles.Include(p=>p.Owner).First(p => p.ArticleId == articleId).Owner;
             switch (action)
             {
-                case "Comment":
+                case Constant.CommentAction:
                     _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId).ForEach(p =>
                     {
                         p.Commented++;
@@ -311,8 +391,8 @@ namespace TellStoryTogether.Helper
                         p.Time = DateTime.Now;
                     });
                     break;
-                case "Like":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.State.Contains("All"))
+                case Constant.LikeAction:
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
                         .ForEach(p =>
                         {
                             p.Liked++;
@@ -321,11 +401,11 @@ namespace TellStoryTogether.Helper
                         });
                     if (articleOwner.UserId != _userId)
                     {
-                        articleOwner.UserPoint = articleOwner.UserPoint + LikePoint;
+                        articleOwner.UserPoint = articleOwner.UserPoint + Constant.LikePoint;
                     }
                     break;
-                case "UnLike":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.State.Contains("All"))
+                case Constant.UnLikeAction:
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
                         .ForEach(p =>
                         {
                             p.Liked--;
@@ -334,11 +414,11 @@ namespace TellStoryTogether.Helper
                         });
                     if (articleOwner.UserId != _userId)
                     {
-                        articleOwner.UserPoint = articleOwner.UserPoint - LikePoint;
+                        articleOwner.UserPoint = articleOwner.UserPoint - Constant.LikePoint;
                     }
                     break;
-                case "Favorite":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.State.Contains("All"))
+                case Constant.FavoriteAction:
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
                         .ForEach(p =>
                         {
                             p.Favorited++;
@@ -347,11 +427,11 @@ namespace TellStoryTogether.Helper
                         });
                     if (articleOwner.UserId != _userId)
                     {
-                        articleOwner.UserPoint = articleOwner.UserPoint + FavoritePoint;
+                        articleOwner.UserPoint = articleOwner.UserPoint + Constant.FavoritePoint;
                     }
                     break;
-                case "UnFavorite":
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.State.Contains("All"))
+                case Constant.UnFavoriteAction:
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
                         .ForEach(p =>
                         {
                             p.Favorited--;
@@ -360,7 +440,7 @@ namespace TellStoryTogether.Helper
                         });
                     if (articleOwner.UserId != _userId)
                     {
-                        articleOwner.UserPoint = articleOwner.UserPoint - FavoritePoint;
+                        articleOwner.UserPoint = articleOwner.UserPoint - Constant.FavoritePoint;
                     }
                     break;
             }

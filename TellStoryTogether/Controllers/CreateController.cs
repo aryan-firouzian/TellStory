@@ -56,7 +56,7 @@ namespace TellStoryTogether.Controllers
                 // informs previous articles in seri that there is a new article in tail
                 dal.SubscribeForkNotificationForEarlierArticles(identifier);
                 // store this article to get future notifications
-                dal.AddNotificationRecord("All");
+                dal.AddNotificationRecord(Constant.CreateState);
 
                 return Json(Message.AddedWithMessage(newIdentifier));
             }

@@ -197,6 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Constant.cs" />
     <Compile Include="Helper\NavPanel.cs" />
     <Compile Include="Helper\LinqExtension.cs" />
     <Compile Include="Helper\ClassHelper.cs" />
@@ -317,6 +318,10 @@
     <Compile Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.cs" />
     <Compile Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.Designer.cs">
       <DependentUpon>201812241348380_LanguageTableRightToLeftRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812250859071_NotificationTable-AddVisited-ForkedArticleIds.cs" />
+    <Compile Include="Migrations\201812250859071_NotificationTable-AddVisited-ForkedArticleIds.Designer.cs">
+      <DependentUpon>201812250859071_NotificationTable-AddVisited-ForkedArticleIds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -653,7 +658,9 @@
     <Content Include="Views\Create\Index.cshtml" />
     <Content Include="Views\Favorite\Index.cshtml" />
     <None Include="Views\Article\Index.cshtml" />
-    <None Include="Views\Edit\Index.cshtml" />
+    <Content Include="Views\Edit\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Script\Index.cshtml" />
   </ItemGroup>
@@ -750,6 +757,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812241348380_LanguageTableRightToLeftRemoved.resx">
       <DependentUpon>201812241348380_LanguageTableRightToLeftRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812250859071_NotificationTable-AddVisited-ForkedArticleIds.resx">
+      <DependentUpon>201812250859071_NotificationTable-AddVisited-ForkedArticleIds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

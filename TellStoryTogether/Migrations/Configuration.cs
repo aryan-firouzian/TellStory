@@ -19,6 +19,7 @@ namespace TellStoryTogether.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(TellStoryTogether.Models.UsersContext context)

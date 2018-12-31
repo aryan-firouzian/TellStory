@@ -82,6 +82,8 @@ namespace TellStoryTogether.Helper
         public string Content { get; set; }
 
         public string Identifier { get; set; }
+
+        public string ForkArticleIds { get; set; }
     }
 
     public class HomeFeed
@@ -217,22 +219,18 @@ namespace TellStoryTogether.Helper
             List<NotificationShow> notificationShows = new List<NotificationShow>();
             foreach (Notification notification in source)
             {
-                NotificationShow notificationShow = new NotificationShow();
-                notificationShow.NotificationId = notification.NotificationId;
-                notificationShow.ArticleTitle = notification.Article.Title;
-                notificationShow.ArticleText = notification.Article.Text;
-                notificationShow.Identifier = notification.Identifier;
-                notificationShow.Content = notification.Content;
+                NotificationShow notificationShow = new NotificationShow
+                {
+                    NotificationId = notification.NotificationId,
+                    ArticleTitle = notification.Article.Title,
+                    ArticleText = notification.Article.Text,
+                    Identifier = notification.Identifier,
+                    Content = notification.Content,
+                    ForkArticleIds = notification.ForkedArticleIds
+                };
                 if (thereAreUnseen)
                 {
                     if (notification.Seen == false)
-                    {
-                        notificationShow.Bold = true;
-                    }
-                }
-                else
-                {
-                    if ((DateTime.Now - notification.Time).TotalDays < 2)
                     {
                         notificationShow.Bold = true;
                     }

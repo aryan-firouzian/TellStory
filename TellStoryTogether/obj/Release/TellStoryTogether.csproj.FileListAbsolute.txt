@@ -215,3 +215,4 @@ D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogethe
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.RightToLeft_toLanguageTable.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.LanguageTableTextDirectionAdded.resources
 D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.LanguageTableRightToLeftRemoved.resources
+D:\Projects\MVC\TellStoryTogether\TellStoryTogether\obj\Release\TellStoryTogether.Migrations.NotificationTableAddVisitedForkedArticleIds.resources

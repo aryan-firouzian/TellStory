@@ -17,7 +17,8 @@ namespace TellStoryTogether.Helper
         public const string FavoriteAction = "Favorite";
         public const string UnFavoriteAction = "UnFavorite";
         public const string ForkAction = "Fork";
-        
+
+        public const string New = "new";
 
         public const int LikePoint = 3;
         public const int FavoritePoint = 1;

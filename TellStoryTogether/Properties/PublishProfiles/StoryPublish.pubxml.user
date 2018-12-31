@@ -160,7 +160,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2018 20:26:21</publishTime>
     </File>
     <File Include="bin/TellStoryTogether.dll">
-      <publishTime>12/24/2018 16:11:40</publishTime>
+      <publishTime>12/30/2018 00:09:55</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>10/01/2018 20:26:41</publishTime>
@@ -763,7 +763,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/07/2017 17:58:55</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>12/20/2018 22:28:57</publishTime>
+      <publishTime>12/24/2018 22:40:46</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>10/01/2018 20:26:13</publishTime>
@@ -1132,7 +1132,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/24/2018 15:56:02</publishTime>
     </File>
     <File Include="Views/Edit/Index.cshtml">
-      <publishTime>12/23/2018 11:50:01</publishTime>
+      <publishTime>12/24/2018 15:58:20</publishTime>
     </File>
     <File Include="Views/Favorite/Index.cshtml">
       <publishTime>11/17/2018 20:20:54</publishTime>

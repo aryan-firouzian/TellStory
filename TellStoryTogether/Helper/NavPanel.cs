@@ -21,7 +21,7 @@ namespace TellStoryTogether.Helper
         {
             var dal = new DAL(WebSecurity.CurrentUserId);
             _point = dal.UserPoint();
-            Tuple<int, NotificationShow[]> notification = dal.GeteNotification();
+            Tuple<int, NotificationShow[]> notification = dal.GetNotification();
             _countUnseenNotification = notification.Item1;
             _allNotifications = notification.Item2;
             _countAllNotification = _allNotifications.Length;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using TellStoryTogether.Models;
 using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
@@ -58,7 +59,7 @@ namespace TellStoryTogether.Helper
         {
             List<Article> articles = new List<Article>();
 
-            if (identifier == "new")
+            if (identifier == Constant.New)
             {
 
             }
@@ -219,6 +220,8 @@ namespace TellStoryTogether.Helper
                         Seen = false,
                         CreateState = true,
                         Time = DateTime.Now,
+                        ForkedArticleIds = "",
+                        Content = "",
                         Identifier = CurrentArticle.Identifier
                     };
                     _context.Notifications.Add(newCreateNotif);
@@ -251,6 +254,8 @@ namespace TellStoryTogether.Helper
                             Seen = false,
                             CommentState = true,
                             Time = DateTime.Now,
+                            ForkedArticleIds = "",
+                            Content = "",
                             Identifier = CurrentArticle.Identifier
                         };
                         _context.Notifications.Add(newCommentNotif);
@@ -284,6 +289,8 @@ namespace TellStoryTogether.Helper
                             Seen = false,
                             FavoriteState = true,
                             Time = DateTime.Now,
+                            ForkedArticleIds = "",
+                            Content = "",
                             Identifier = CurrentArticle.Identifier
                         };
                         _context.Notifications.Add(newFavoriteNotif);
@@ -334,151 +341,139 @@ namespace TellStoryTogether.Helper
 
         public void SubscribeForkNotificationForEarlierArticles(string identifier)
         {
-            if (identifier == "new") return;
+            if (identifier == Constant.New) return;
+            string newArticleId = CurrentArticle.ArticleId.ToString();
             List<int> s = identifier.Split('-').Select(Int32.Parse).ToList();
             int articleId = s[0];
-            // subscribe notification for first article
-            _context.Notifications.Where(
+            Article firstArticle = _context.Articles.Include(p=>p.Owner).First(p => p.ArticleInitId == -1 && p.ArticleId==articleId);
+            List<Article> articleTail = new List<Article> {firstArticle};
+            s.RemoveAt(0);
+            int articleIntId = articleId;
+            
+            foreach (int parallel in s)
+            {
+                var nextArticle =
+                    _context.Articles.Include(p=>p.Owner).First(p => p.ArticleInitId == articleIntId && p.Parallel == parallel);
+                articleIntId = nextArticle.ArticleId;
+                articleTail.Add(nextArticle);
+            }
+
+            List<int> articleIdsFiltered =
+                articleTail.Where(p => p.Owner.UserId != _userId)
+                    .GroupBy(p => p.Owner.UserId)
+                    .Select(p => p.Last())
+                    .Select(p => p.ArticleId)
+                    .ToList();
+
+            foreach (int id in articleIdsFiltered)
+            {
+                _context.Notifications.Where(
                 p =>
-                    p.Article.ArticleId == articleId && p.User.UserId != _userId &&
+                    p.Article.ArticleId == id && p.User.UserId != _userId && !p.Seen &&
                     (p.CreateState || p.FavoriteState)).ForEach(p =>
                     {
                         p.Forked++;
-                        p.Seen = false;
                         p.Time = DateTime.Now;
+                        p.ForkedArticleIds = p.ForkedArticleIds==""
+                            ? newArticleId
+                            : p.ForkedArticleIds + "|" + newArticleId;
                     });
-            UserProfile articleOwner = _context.Articles.Include(p => p.Owner).First(p => p.ArticleId == articleId).Owner;
-            if(articleOwner.UserId!=_userId){
-                articleOwner.UserPoint = articleOwner.UserPoint + Constant.ForkedPoint;
             }
-            s.RemoveAt(0);
-            int articleIntId = articleId;
-            // subscribe notification for rest of articles
-            foreach (int parallel in s)
-            {
-                var parallel1 = parallel;
-                var nextArticle =
-                    _context.Articles.First(p => p.ArticleInitId == articleIntId && p.Parallel == parallel1);
-                _context.Notifications.Where(p => p.Article.ArticleId == nextArticle.ArticleId && p.User.UserId != _userId &&
-                    (p.CreateState || p.FavoriteState))
-                    .ForEach(p =>
-                    {
-                        p.Forked++;
-                        p.Seen = false;
-                        p.Time = DateTime.Now;
-                    });
-                articleOwner = _context.Articles.Include(p => p.Owner).First(p => p.ArticleId == nextArticle.ArticleId).Owner;
-                if (articleOwner.UserId != _userId)
-                {
-                    articleOwner.UserPoint = articleOwner.UserPoint + Constant.ForkedPoint;
-                }
-                articleIntId = nextArticle.ArticleId;
-            }
+
             _context.SaveChanges();
         }
 
         public void SubscribeNotification(string action)
         {
             int articleId = CurrentArticle.ArticleId;
-            UserProfile articleOwner = _context.Articles.Include(p=>p.Owner).First(p => p.ArticleId == articleId).Owner;
+            //UserProfile articleOwner = _context.Articles.Include(p=>p.Owner).First(p => p.ArticleId == articleId).Owner;
+           
             switch (action)
             {
                 case Constant.CommentAction:
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId).ForEach(p =>
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && !p.Seen).ForEach(p =>
                     {
                         p.Commented++;
-                        p.Seen = false;
                         p.Time = DateTime.Now;
                     });
                     break;
                 case Constant.LikeAction:
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState && !p.Seen)
                         .ForEach(p =>
                         {
                             p.Liked++;
-                            p.Seen = false;
                             p.Time = DateTime.Now;
                         });
-                    if (articleOwner.UserId != _userId)
-                    {
-                        articleOwner.UserPoint = articleOwner.UserPoint + Constant.LikePoint;
-                    }
                     break;
                 case Constant.UnLikeAction:
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState && !p.Seen)
                         .ForEach(p =>
                         {
                             p.Liked--;
-                            p.Seen = false;
                             p.Time = DateTime.Now;
                         });
-                    if (articleOwner.UserId != _userId)
-                    {
-                        articleOwner.UserPoint = articleOwner.UserPoint - Constant.LikePoint;
-                    }
                     break;
                 case Constant.FavoriteAction:
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState && !p.Seen)
                         .ForEach(p =>
                         {
                             p.Favorited++;
-                            p.Seen = false;
                             p.Time = DateTime.Now;
                         });
-                    if (articleOwner.UserId != _userId)
-                    {
-                        articleOwner.UserPoint = articleOwner.UserPoint + Constant.FavoritePoint;
-                    }
                     break;
                 case Constant.UnFavoriteAction:
-                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState)
+                    _context.Notifications.Where(p => p.Article.ArticleId == articleId && p.User.UserId != _userId && p.CreateState && !p.Seen)
                         .ForEach(p =>
                         {
                             p.Favorited--;
-                            p.Seen = false;
                             p.Time = DateTime.Now;
                         });
-                    if (articleOwner.UserId != _userId)
-                    {
-                        articleOwner.UserPoint = articleOwner.UserPoint - Constant.FavoritePoint;
-                    }
                     break;
             }
             _context.SaveChanges();
         }
 
-        public Tuple<int, NotificationShow[]> GeteNotification()
+        public Tuple<int, NotificationShow[]> GetNotification()
         {
             if (_userId < 0)
             {
                 return new Tuple<int, NotificationShow[]>(0, new NotificationShow[] { });
             }
-            else
-            {
-                Notification[] notifications = _context.Notifications.Where(
-                    p =>
-                        p.User.UserId == _userId && (
-                            (p.Commented > 0 || p.Favorited > 0 || p.Forked > 0 || p.Liked > 0) ||
-                            DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)).Include(p => p.Article).ToArray();
-                notifications = notifications.OrderByDescending(p => p.Time).Select(p => p.Seen ? p : new ClassHelper().CreateContent(p)).ToArray();
-                int unseen = notifications.Count(p => p.Seen == false);
-                _context.SaveChanges();
-                return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
-            }
-
+            // removed (DbFunctions.DiffDays(DateTime.Now, p.Time) < 30)
+            Notification[] notifications = _context.Notifications.Where(
+                p =>
+                    p.User.UserId == _userId && (p.Commented > 0 || p.Favorited > 0 || p.Forked > 0 || p.Liked > 0)).Include(p => p.Article).ToArray();
+            notifications = notifications.OrderByDescending(p => p.Time).Select(p => p.Seen ? p : new ClassHelper().CreateContent(p)).ToArray();
+            int unseen = notifications.Count(p => !p.Seen);
+            _context.SaveChanges();
+            return new Tuple<int, NotificationShow[]>(unseen, notifications.ToNotificationShows().ToArray());
         }
 
         public bool SeeNotification()
         {
-            var unseenNotification = _context.Notifications.Where(p => p.User.UserId == _userId && p.Seen == false);
+            var unseenNotification = _context.Notifications.Include(p => p.Article).Include(p => p.User).Where(p => p.User.UserId == _userId && p.Seen == false && p.Content != "");
             foreach (Notification notification in unseenNotification)
             {
                 notification.Seen = true;
-                notification.Time = DateTime.Now;
-                notification.Favorited = 0;
-                notification.Commented = 0;
-                notification.Forked = 0;
-                notification.Liked = 0;
+                Notification newNotification = new Notification
+                {
+                    User = notification.User,
+                    Article = notification.Article,
+                    Identifier = notification.Identifier,
+                    Time = DateTime.Now,
+                    Favorited = 0,
+                    Commented = 0,
+                    Forked = 0,
+                    Liked = 0,
+                    Seen = false,
+                    Visited = false,
+                    ForkedArticleIds = "",
+                    CreateState = notification.CreateState,
+                    CommentState = notification.CommentState,
+                    FavoriteState = notification.FavoriteState,
+                    Content = ""
+                };
+                _context.Notifications.Add(newNotification);
             }
             _context.SaveChanges();
             return true;
